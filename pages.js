@@ -35,25 +35,24 @@ $(document).ready(function() {
 });*/
 
 $(document).ready(function(){
-    $('#editTabContent img.image-md').click(function () {
+    $('#tabEditContent img.image-md').click(function () {
         $('#tabEditContent img.image-md.select').removeClass('select');
         $(this).addClass('select');
-        $(this + ' #fileToSelect').val(this);
-      })
+        $('#tabEditContent #fileToEdit').val(this.id);
+    });
+    $('#editTab a.nav-link').click(function(){
+        $('#tabEditContent div.tab-pane.active input').val('');
+    });
 });
 
 //form navbar(upload)
-function nav_switch(clicked){
+function nav_switch(){
     $("#tabContent div.tab-pane.active input").val("");
-    clicked = clicked.replace('-tab','');
-    $("#"+clicked).addClass('active');
-    $("#"+clicked+ "input").attr('disabled', false);
-
 }
 
 function fileToSelect(clicked){
     $("#tabContent img.image-md.select").removeClass('select');
-    //$('#'+clicked).addClass('select');
+    $('#'+clicked).addClass('select');
     $("#tabContent #fileToSelect").val(clicked);
 
 }

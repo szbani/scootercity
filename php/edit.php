@@ -42,24 +42,24 @@ if(isset($_SESSION['edit'])) {
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="Select-Image">Kép:</label>
                     </div>
-                    <input type="text" class="form-control" name="fileToSelect" value="<?php echo $edits[3];?>" id="fileToSelect" readonly />
+                    <input type="text" class="form-control" name="fileToSelect" value="<?php echo $edits[3];?>" id="fileToEdit" readonly />
                     <div class="overflow-auto pt-1 mt-1" style="max-height:150px;" >
                     <?php
                        $dirname = "sec_images/";
                        $images = glob($dirname."*.jpg");
                       foreach($images as $image) {
                         $id = str_replace("sec_images/", "", $image);
-                        echo '<img class="image-md ms-1 mt-1" onclick="fileToSelect(this.id)" id="'.$id.'" style="cursor: pointer;"  loading="lazy" alt="'.$image.'" src="'.$image.'"/>';
+                        echo '<img class="image-md ms-1 mt-1" id="'.$id.'" style="cursor: pointer;"  loading="lazy" alt="'.$image.'" src="'.$image.'"/>';
                         }
                        $images = glob($dirname."*.png");
                       foreach($images as $image) {
                         $id = str_replace("sec_images/", "", $image);
-                        echo '<img class="image-md ms-1 mt-1" onclick="fileToSelect(this.id)" id="'.$id.'" style="cursor: pointer;"  loading="lazy" alt="'.$image.'" src="'.$image.'"/>';
+                        echo '<img class="image-md ms-1 mt-1" id="'.$id.'" style="cursor: pointer;"  loading="lazy" alt="'.$image.'" src="'.$image.'"/>';
                         }
                        $images = glob($dirname."*.jpeg");
                       foreach($images as $image) {
                         $id = str_replace("sec_images/", "", $image);
-                        echo '<img class="image-md ms-1 mt-1" onclick="fileToSelect(this.id)" id="'.$id.'" style="cursor: pointer;"  loading="lazy" alt="'.$image.'" src="'.$image.'"/>';
+                        echo '<img class="image-md ms-1 mt-1" id="'.$id.'" style="cursor: pointer;"  loading="lazy" alt="'.$image.'" src="'.$image.'"/>';
                         }
                       ?>
                     </div>

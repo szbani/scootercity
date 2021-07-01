@@ -76,10 +76,10 @@
             
               <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
                 <li class="nav-item" style="cursor: pointer;" >
-                  <a class="nav-link  active" data-bs-toggle="tab" data-bs-target="#prodUpload" role="tab" aria-controls="prodUpload" aria-selected="true" id="prod-upload-tab">Új feltöltése</a>    
+                  <a class="nav-link  active" onclick="nav_switch()" data-bs-toggle="tab" data-bs-target="#prodUpload" role="tab" aria-controls="prodUpload" aria-selected="true" id="prod-upload-tab">Új feltöltése</a>    
                 </li>
                 <li class="nav-item" style="cursor: pointer;">
-                  <a class="nav-link" data-bs-toggle="tab" data-bs-target="#prodSelect" role="tab" aria-controls="prodSelect" aria-selected="false" id="prod-select-tab">Már meglévő kiválasztás</a>    
+                  <a class="nav-link" data-bs-toggle="tab" onclick="nav_switch()" data-bs-target="#prodSelect" role="tab" aria-controls="prodSelect" aria-selected="false" id="prod-select-tab">Már meglévő kiválasztás</a>    
                 </li>
               </ul>
 

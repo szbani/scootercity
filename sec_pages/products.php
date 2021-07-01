@@ -100,19 +100,19 @@
                       foreach($images as $image) {
                         $image = str_replace("../", "",$image);
                         $id = str_replace("sec_images/", "", $image);
-                        echo '<img class="image-md ms-1 mt-1" onclick="fileToSelect(this.id)" id="'.$id.'" style="cursor: pointer;"  loading="lazy" alt="'.$image.'" src="'.$image.'"/>';
+                        echo '<img class="image-md ms-1 mt-1" onclick="fileToSelect(this)" id="'.$id.'" style="cursor: pointer;"  loading="lazy" alt="'.$image.'" src="'.$image.'"/>';
                         }
                        $images = glob($dirname."*.png");
                       foreach($images as $image) {
                         $image = str_replace("../", "",$image);
                         $id = str_replace("sec_images/", "", $image);
-                        echo '<img class="image-md ms-1 mt-1" onclick="fileToSelect(this.id)" id="'.$id.'" style="cursor: pointer;"  loading="lazy" alt="'.$image.'" src="'.$image.'"/>';
+                        echo '<img class="image-md ms-1 mt-1" onclick="fileToSelect(this)" id="'.$id.'" style="cursor: pointer;"  loading="lazy" alt="'.$image.'" src="'.$image.'"/>';
                         }
                        $images = glob($dirname."*.jpeg");
                       foreach($images as $image) {
                         $image = str_replace("../", "",$image);
                         $id = str_replace("sec_images/", "", $image);
-                        echo '<img class="image-md ms-1 mt-1" onclick="fileToSelect(this.id)" id="'.$id.'" style="cursor: pointer;"  loading="lazy" alt="'.$image.'" src="'.$image.'"/>';
+                        echo '<img class="image-md ms-1 mt-1" onclick="fileToSelect(this)" id="'.$id.'" style="cursor: pointer;"  loading="lazy" alt="'.$image.'" src="'.$image.'"/>';
                         }
                       ?>
                     </div>

@@ -13,7 +13,7 @@ $(document).ready(function() {
         pageURL =  pageURL.replace('#','');
     if(pageURL != ''){
         $("#body").load("sec_pages/"+pageURL+".php #body");
-        $("a.nav-link.active").removeClass('active');
+        $("#sidebarMenu a.nav-link.active").removeClass('active');
         $('#'+pageURL).addClass('active');
     }else{
         $("#body").load("sec_pages/dashboard.php #body");
@@ -41,18 +41,18 @@ $(document).ready(function(){
         $('#tabEditContent #fileToEdit').val(this.id);
     });
     $('#editTab a.nav-link').click(function(){
-        $('#tabEditContent div.tab-pane.active input').val('');
+        $('#fileToUpload').val('');
     });
 });
 
 //form navbar(upload)
 function nav_switch(){
-    $("#tabContent div.tab-pane.active input").val("");
+    $("#fileToUpload").val("");
 }
 
 function fileToSelect(clicked){
     $("#tabContent img.image-md.select").removeClass('select');
-    $('#'+clicked).addClass('select');
-    $("#tabContent #fileToSelect").val(clicked);
+    $(clicked).addClass('select');
+    $("#tabContent #fileToSelect").val(clicked.id);
 
 }

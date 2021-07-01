@@ -49,17 +49,17 @@ if(isset($_SESSION['edit'])) {
                        $images = glob($dirname."*.jpg");
                       foreach($images as $image) {
                         $id = str_replace("sec_images/", "", $image);
-                        echo '<img class="image-md ms-1 mt-1" id="'.$id.'" style="cursor: pointer;"  loading="lazy" alt="'.$image.'" src="'.$image.'"/>';
+                        echo '<img class="image-md ms-1 mt-1 '; if($edits[3] == $id){echo 'select';} echo '" id="'.$id.'" style="cursor: pointer;"  loading="lazy" alt="'.$image.'" src="'.$image.'"/>';
                         }
                        $images = glob($dirname."*.png");
                       foreach($images as $image) {
                         $id = str_replace("sec_images/", "", $image);
-                        echo '<img class="image-md ms-1 mt-1" id="'.$id.'" style="cursor: pointer;"  loading="lazy" alt="'.$image.'" src="'.$image.'"/>';
+                        echo '<img class="image-md ms-1 mt-1 '; if($edits[3] == $id){echo 'select';} echo '" id="'.$id.'" style="cursor: pointer;"  loading="lazy" alt="'.$image.'" src="'.$image.'"/>';
                         }
                        $images = glob($dirname."*.jpeg");
                       foreach($images as $image) {
                         $id = str_replace("sec_images/", "", $image);
-                        echo '<img class="image-md ms-1 mt-1" id="'.$id.'" style="cursor: pointer;"  loading="lazy" alt="'.$image.'" src="'.$image.'"/>';
+                        echo '<img class="image-md ms-1 mt-1 '; if($edits[3] == $id){echo 'select';} echo '" id="'.$id.'" style="cursor: pointer;"  loading="lazy" alt="'.$image.'" src="'.$image.'"/>';
                         }
                       ?>
                     </div>

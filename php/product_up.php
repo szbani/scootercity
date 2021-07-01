@@ -9,11 +9,11 @@ if(isset($_POST["product_upload"]) || isset($_POST["product_edit_confirm"]))
     $filetoupload = "";
 
     if (empty($_POST['name'])) { array_push($errors, "Hiányzik a termék neve!"); }
-    if (empty($_POST['price'])) { array_push($errors, "Hiányzik a termék ára!"); }
     if (empty($_POST['desc'])) { array_push($errors, "Hiányzik a termék leírás!"); }
-    
-    if(ctype_digit($_POST['price']) == false){ array_push($errors, $_POST['price']);
-        array_push($errors, "Nem megfelelő az ár formátuma"); }
+    if (empty($_POST['price'])) { array_push($errors, "Hiányzik a termék ára!");}
+
+    else if(ctype_digit($_POST['price']) == false){
+        array_push($errors, "Nem megfelelő az ár formátuma: " .$_POST['price']); }
 
     if($_FILES['fileToUpload']['name'] != ""){
         if(count($errors) == 0){

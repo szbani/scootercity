@@ -15,7 +15,7 @@ if(isset($_SESSION['edit'])) {
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
         
-        <form class="row g-3" action="/webshop_test/php/product_up.php" method="post" enctype="multipart/form-data">
+        <form class="row g-3" action="php/product_up.php" method="post" enctype="multipart/form-data">
         <div class="modal-body">
             <div class="col-12">
                 <label for="inputname" class="form-label">Termék neve</label>

@@ -38,7 +38,7 @@
                   <td class="align-middle">'.$row["price"].'</td>
                   <td class="align-middle">'.$row["description"].'</td>
                   <td class="col-auto text-end">
-                    <form action="/webshop_test/php/product_edit.php" method="POST">
+                    <form action="php/product_edit.php" method="POST">
                     <input type="submit" value="Szerkesztés" class="btn btn-info btn-sm" name="prod_edit">
                     <input type="submit" value="Törlés" class="btn btn-danger btn-sm" name="prod_del">
                     <input type="hidden" name="id" value="'.$row["id"].'" />

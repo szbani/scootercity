@@ -74,3 +74,12 @@
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
   }
+
+  .bg-blue2{
+    background-color: ghostwhite !important;
+  }
+
+  .status{
+    width: 24px;
+    height: 24px;
+  }

@@ -1,45 +1,48 @@
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-5">
     <div class="row row-cols-2 row-cols-md-5">
+
         <div class="col">
-            <div class="card" style="width: 18rem;">
+            <div class="card " data-bs-toggle="modal" data-bs-target="#termek_modal" onclick="" style="width: 18rem;">
                 <img src="/scootercity/pics/placeholder7.jpg" class="card-img-top" alt="Termék">
                 <div class="card-body">
                 <h5 class="card-title">termék neve</h5>
                 <p class="card-text">Ár: *******</p>
                 </div>
                 <ul class="list-group list-group-flush d-flex">
-                    <li class="list-group-item d-flex">
-                        <div class="container p-0">
-                            <div class="row">
-                                <div class="col col-6">Raktáron:</div>
-                                <div class="col text-end"><img src="/scootercity/pics/raktar_ok.png" class="status" alt=""></div>
-                            </div>
-                        </div>
-
+                    <li class="list-group-item">
+                        Raktáron:
+                        <img src="/scootercity/pics/raktar_ok.png" class="status float-end" alt="">
+                    </li>
+                    <li class="list-group-item d-none">
+                        Raktáron:
+                        <img src="/scootercity/pics/raktar_ok.png" class="status float-end" alt="">
                     </li>
                 </ul>
+                <div class="card_click">
+                </div>
             </div>
-        </div>
-        <div class="col">
-        <div class="card" style="width: 18rem;">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-        </div>
-        </div>
-        <div class="col">
-        <div class="card" style="width: 18rem;">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-        </div>
         </div>
     
     </div>
     <!--row end-->
+<div class="modal fade" id="termek_modal" aria-hidden="true" aria-labelledby="termek_modal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalToggleLabel">Termék neve</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group list-group-flush d-flex">
+            <li class="list-group-item">
+                Raktáron:
+                <img src="/scootercity/pics/raktar_ok.png" class="status float-end" alt="">
+            </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+      

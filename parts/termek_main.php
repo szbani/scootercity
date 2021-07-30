@@ -4,7 +4,7 @@
     $i = 0;
      while ($i < 50){
          echo('<div class="col">
-         <div class="card " data-bs-toggle="modal" data-bs-target="#termek_modal" onclick="" style="width: 16rem;">
+         <div class="card " data-bs-toggle="modal" data-bs-target="#termek_modal" onclick="">
              <img src="/scootercity/pics/placeholder7.jpg" class="card-img-top" alt="Termék">
              <div class="card-body">
              <h5 class="card-title">termék neve</h5>

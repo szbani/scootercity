@@ -2,6 +2,7 @@
 include_once "../parts/head_start.html";
 ?>
     <link rel="stylesheet" href="/scootercity/assets/sidebar.css">
+    <script src="/scootercity/assets/termek.js"></script>
 <?php
 include_once "../parts/head_end.html";
 include_once "../parts/navbar.html";

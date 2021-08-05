@@ -1,5 +1,5 @@
 html *{
-  color: #557495;
+  color: #e6e2dd;
 }
 /*
  * Slideshow
@@ -85,9 +85,10 @@ html *{
 /*
  * BG
  #373a36
+ #303085
  */  
  .bg-1{
-	background-color: #161f35 !important;
+	background-color: #393977 !important;
 }
 
 .bg-2{
@@ -102,9 +103,19 @@ html *{
 }
 
 footer{
-  background-color: #557495;
+  background-color: #384055;
   position: relative;
   z-index: 150;
+}
+footer *{
+  color: #201f1f;
+}
+.link-secondary{
+  color: #FF7F50;
+}
+
+.link-secondary:hover{
+  color: #6495ED;
 }
 
 /*
@@ -123,14 +134,18 @@ footer{
   background-color: rgba(255, 255, 255, .1);
   border-color: rgba(255, 255, 255, .1);
 }
+.form-control-dark:hover,
 .form-control-dark:focus {
   border-color: transparent;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
 }
 .nav-link{
-  color: #c2cad8;
+  color: #FF7F50;
+  font-size: 1.1rem;
 }
-
+.nav-link:hover{
+  color: #6495ED;
+}
 
 /*
  * container filler

@@ -6,15 +6,18 @@
                 <img src="/scootercity/pics/placeholder7.jpg" class="card-img-top" alt="Termék">
                 <div class="card-body">
                 <h5 class="card-title" id="Param_Nev">Termék neve</h5>
-                <p class="card-text" id="Param_Ar">Ár: *******</p>
+                <p class="card-text" id="Param_Ar">Ár: 5000</p>
                 </div>
                 <ul class="list-group list-group-flush d-flex">
                     <li class="list-group-item">
                         Raktáron:
-                        <img src="/scootercity/media/products/raktar_ok.png" class="status float-end" alt="">
+                        <img src="/scootercity/media/products/termek_ok.png" id="Param_Raktar" class="status float-end" alt="">
                     </li>
-                    <li class="list-group-item d-none">
-                        Raktáron:
+                    <li class="d-none" id="Param_Leiras">
+                      
+                    </li>
+                    <li class="d-none" id="Param_Felsorolas">
+                      
                     </li>
                 </ul>
                 <div class="card_click">
@@ -32,8 +35,16 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body p-0">
-        <img id="Termek_Img" src="/scootercity/pics/placeholder7.jpg" class="modal-img w-100">
-        <div class="image-blur"></div>
+        <img id="Termek_Img" src="/scootercity/pics/placeholder7.jpg" class="modal-img image-zoom w-100">
+      </div>
+      <div class="overflow-scroll bg-secondary">
+        <img>
+        <img>asd
+        <img>
+      </div>
+      <div class="modal-body border">
+        <h5>Leírás:</h5>
+        <h6>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h6>
       </div>
       <div class="modal-body">
         
@@ -51,8 +62,8 @@
         
       </div>
       <div class="modal-footer justify-content-between">
-        <h5>Ár: *******</h5>
-        <h5>Raktáron:<img src="/scootercity/media/products/raktar_ok.png" class="status float-end" alt=""></h5>
+        <h5 id="Termek_Ara">Ár: *******</h5>
+        <h5>Raktáron:<img src="/scootercity/media/products/termek_ok.png" id="Termek_Raktar" class="status float-end" alt=""></h5>
           
       </div>
     </div>

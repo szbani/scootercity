@@ -1,3 +1,6 @@
+html *{
+  color: unset
+}
 
   .btn-toggle {
     display: inline-flex;
@@ -117,7 +120,17 @@
     background-repeat: no-repeat;
     background-size: cover;
     height: 250px;
+    overflow: hidden;
   }
   .list-group-item{
     background-color: unset;
   }
+
+/*
+ * modal image view
+ */
+
+.image-zoom:hover{
+  overflow: hidden;
+  transform: scale(2);
+}

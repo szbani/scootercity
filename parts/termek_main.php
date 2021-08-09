@@ -2,7 +2,7 @@
     <div class="row row-cols-2 row-cols-md-5">
     <?php
     $i = 0;
-     while ($i < 50){
+     while ($i < 20){
          echo('<div class="col">
          <div class="card " data-bs-toggle="modal" data-bs-target="#termek_modal" id="termek'.$i.'" onclick="modal_show(this)">
              <img src="/scootercity/pics/placeholder7.jpg" class="card-img-top" alt="Termék">
@@ -13,11 +13,10 @@
              <ul class="list-group list-group-flush d-flex">
                  <li class="list-group-item">
                      Raktáron:
-                     <img src="/scootercity/pics/raktar_ok.png" class="status float-end" alt="">
+                     <img src="/scootercity/media/products/termek_ok.png" class="status float-end" alt="">
                  </li>
                  <li class="list-group-item d-none">
                      Raktáron:
-                     <img src="/scootercity/pics/raktar_ok.png" class="status float-end" alt="">
                  </li>
              </ul>
              <div class="card_click">

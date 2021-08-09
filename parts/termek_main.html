@@ -2,7 +2,7 @@
     <div class="row row-cols-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
 
         <div class="col">
-            <div class="card" data-bs-toggle="modal" data-bs-target="#termek_modal" id="termek" onclick="modal_show()">
+            <div class="card" data-bs-toggle="modal" data-bs-target="#termek_modal" id="termek" onclick="modal_show(this)">
                 <img src="/scootercity/pics/placeholder7.jpg" class="card-img-top" alt="Termék">
                 <div class="card-body">
                   <h5 class="card-title" id="Param_Nev">Lorem ipsum</h5>
@@ -57,7 +57,7 @@
             </div>
           </div>
           <div class="product-photos-side">
-            <div class="swiper-container">
+            <div class="swiper-container mb-2">
               <div class="swiper-wrapper">
                 <div class="swiper-slide">
                   <div class="swiper-zoom-container">
@@ -74,25 +74,18 @@
           </div>
         </div>
 
-      <div class="modal-body border">
+      <div class="modal-body border pe-4">
         
         <h5>Leírás:</h5>
         <h6>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h6>
       </div>
-      <div class="modal-body">
-        
-        <ul class="list-group list-group-flush d-flex">
-          <li class="list-group-item">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          </li>
-          <li class="list-group-item">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          </li>  
-          <li class="list-group-item">
-            Lorem ipsum dolor sit amet,
-          </li>
-        </ul>
-        
+      <div class="modal-body pe-5">
+        <div class="row row-cols-2 ">
+          <div class="col col-9">Lorem ipsum dolor sit amet,</div>
+          <div class="col col-3 float-end text-end">igen</div>
+          <div class="col col-9">Lorem ipsum dolor sit amet,</div>
+          <div class="col col-3 float-end text-end">igen</div>
+        </div>
       </div>
       <div class="modal-footer justify-content-between">
         <h5 id="Termek_Ara">Ár: *******</h5>
@@ -109,6 +102,11 @@
         <div class="swiper-slide">
           <div class="swiper-zoom-container">
             <img src="/scootercity/pics/placeholder1.jpg" draggable="false" ondragstart="return false;">
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="swiper-zoom-container">
+            <img src="/scootercity/pics/placeholder2.jpg" draggable="false" ondragstart="return false;">
           </div>
         </div>
       </div>

@@ -1,81 +1,3 @@
-*,
-*:after,
-*:before {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  word-wrap: break-word;
-  -webkit-tap-highlight-color: transparent;
-}
-
-html,
-body {
-  min-height: 100vh;
-}
-
-html {
-  background-color: #FFF;
-  text-rendering: optimizeLegibility;
-  -webkit-text-size-adjust: 100%;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-body {
-  color: #444;
-  background-attachment: fixed;
-  font-family: "Noto Sans", sans-serif;
-  font-weight: normal;
-  font-style: normal;
-}
-
-.container {
-  margin: auto;
-  padding: 25px 0;
-  max-width: 1025px;
-}
-
-article {
-  padding: 15px 0;
-}
-h1, h2, p {
-  margin-bottom: 15px;
-}
-h1, h2 {
-  line-height: 1em;
-}
-.center {
-  text-align: center;
-}
-h2.subtitle {
-  font-size: inherit;
-  font-style: italic;
-  font-weight: normal;
-}
-span.keyboard-key {
-  background: #EFF0F2;
-  margin: 0 4px;
-  padding: 4px 8px;
-  border-radius: 4px;
-  border-top: 1px solid #F5F5F5;
-  box-shadow: inset 0 0 25px #E8E8E8, 0 1px 0 #C3C3C3, 0 2px 0 #C9C9C9, 0 2px 3px #333;
-  line-height: 23px;
-  font-family: "Arial", sans-serif;
-  font-size: 12px;
-  font-weight: bold;
-  text-shadow: 0px 1px 0px #F5F5F5;
-  white-space: nowrap;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-}
-a {
-  color: inherit;
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-}
 
 .swiper-container,
 .swiper-container * {
@@ -99,7 +21,7 @@ a:hover {
 }
 
 .product-gallery .product-photo-main {
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 .product-gallery .product-photos-side .swiper-container {
@@ -111,6 +33,7 @@ a:hover {
 }
 
 .product-gallery .product-photos-side .swiper-slide {
+  border: 2px solid gray;
   width: 70px;
   opacity: .4;
   transition: 225ms opacity ease-in-out;
@@ -132,8 +55,12 @@ a:hover {
 
 .product-gallery img {
   max-height: 100%;
-  max-width: 100%;
+  width: 100%;
+  object-fit: unset;
 }
+
+
+
 /* full screen product gallery */
 
 .product-gallery-full-screen {
@@ -172,8 +99,8 @@ a:hover {
 
 .product-gallery-full-screen .swiper-slide img,
 .product-photos-side .swiper-slide img {
-  max-height: 100%;
-  max-width: 100%;
+  height: 100%;
+  width: 100%;
 }
 .product-gallery-full-screen .swiper-slide img {
   cursor: zoom-in;

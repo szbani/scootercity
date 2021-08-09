@@ -3,7 +3,7 @@ $(document).ready(function() {
   var swiperSide = new Swiper('.product-photos-side .swiper-container', {
     direction: 'horizontal',
     centeredSlides: true,
-    spaceBetween: 30,
+    spaceBetween: 10,
     slidesPerView: 'auto',
     touchRatio: 0.2,
     slideToClickedSlide: true,

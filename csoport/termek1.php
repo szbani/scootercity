@@ -2,7 +2,7 @@
 include_once "../parts/head_start.html";
 ?>
     <link rel="stylesheet" href="/scootercity/assets/sidebar.css">
-    <script src="/scootercity/assets/termek.js"></script>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.0/css/swiper.min.css'><link rel="stylesheet" href="/scootercity/assets/gallery.css">
 <?php
 include_once "../parts/head_end.html";
 include_once "../parts/navbar.html";
@@ -11,4 +11,11 @@ include_once "../parts/termek_sidebar.html";
 include_once "../parts/termek_main.html";
 
 include_once "../parts/footer.html";
+?>
+<script src="/scootercity/assets/termek.js"></script>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.0/js/swiper.min.js'></script>
+<script  src="/scootercity/assets/gallery.js"></script>
+<?php
+include_once "../parts/html_end.html";
 ?>

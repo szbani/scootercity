@@ -111,7 +111,9 @@ html *{
     background-color: rgba(202, 202, 202, 0.25);
     cursor: pointer;
   }
-
+  .card-img-top{
+    height: 200px;
+  }
 /*
  * modal
  */

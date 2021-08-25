@@ -1,4 +1,4 @@
-$(document).ready(function() {
+function swiper() {
   // --- VARIABLES ---
   var swiperSide = new Swiper('.product-photos-side .swiper-container', {
     direction: 'horizontal',
@@ -147,4 +147,4 @@ $(document).ready(function() {
     swiperProduct.onResize();
   });
 
-});
+};

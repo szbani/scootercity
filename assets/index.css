@@ -140,6 +140,9 @@ footer *{
   border-color: transparent;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
 }
+.nav-item{
+  color: #e6e2dd;
+}
 .nav-link{
   color: #FF7F50;
   font-size: 1.1rem;

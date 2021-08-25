@@ -1,10 +1,10 @@
 $(document).ready(function(){
     var $default2 = $("#default2");
     $(window).scroll(function(){
-      if ( $(this).scrollTop() > 100 && $default2.hasClass("navbar-light bg-light default2") ){
-        $default2.removeClass("navbar-light bg-light default2").addClass("navbar-dark bg-dark fixed-top");
-      } else if($(this).scrollTop() <= 100 && $default2.hasClass("navbar-dark bg-dark fixed-top")) {
-        $default2.removeClass("navbar-dark bg-dark fixed-top").addClass("navbar-light bg-light default2");
+      if ( $(this).scrollTop() > 100 && $default2.hasClass("navbar-bg default2") ){
+        $default2.removeClass("bg-light default2").addClass("navbar-bg fixed-top");
+      } else if($(this).scrollTop() <= 100 && $default2.hasClass("navbar-bg fixed-top")) {
+        $default2.removeClass("bg-dark fixed-top").addClass("navbar-bg default2");
       }
     });//scroll
   });

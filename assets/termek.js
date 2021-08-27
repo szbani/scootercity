@@ -20,6 +20,8 @@ function modal_show(clicked){
         success: function (result) {
     $('#termek_modal').replaceWith(result);
     $('#termek_modal').modal('show');
-    swiper();}
+    swiper();
+    $('select[name="colorpicker"]').simplecolorpicker({theme: 'fontawesome'});
+    }
     })
 }

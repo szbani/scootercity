@@ -16,6 +16,7 @@ include_once "../parts/footer.html";
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.0/js/swiper.min.js'></script>
 <script  src="/scootercity/assets/gallery.js"></script>
+<script  src="/scootercity/assets/colorpicker.js"></script>
 <?php
 include_once "../parts/html_end.html";
 ?>

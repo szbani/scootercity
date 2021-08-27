@@ -21,15 +21,17 @@ function request_modal(){
   if($mennyiseg > 2){$raktar='ok.png"';}
   else if($mennyiseg > 0){$raktar='some.png"';}
   else{$raktar='cancel.png"';}
-  echo ('<div class="row row-cols-1 row-cols-sm-2">
+  echo ('
   <div class="modal fade" id="termek_modal" aria-hidden="true" aria-labelledby="termek_modal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-    <div class="col">
       <div class="modal-header py-2">
+      
         <h5 class="modal-title">'.$name.'</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <div class="row row-cols-1 row-cols-sm-2">
+      <div class="col">
 
       <div class="product-gallery">
           <div class="product-photo-main">
@@ -67,15 +69,27 @@ function request_modal(){
           </div>
         </div>
 
-      </div>
+      
+        </div>
       <div class="col">
         <div class="modal-body border-top py-1 pe-4">
         
         <h5>Termék leírása:</h5>
         <h6>'.$leiras.'
           </h6>
-      </div>
+        </div>
       <div class="modal-body pe-5">
+      <select name="colorpicker">
+            <option >Green</option>
+            <option >cyan</option>
+            <option >Blue</option>
+            <option >Turquoise</option>
+            <option >Lightgreen</option>
+            <option >Yellow</option>
+            <option >Orange</option>
+            <option >Red</option>
+
+          </select>
         <div class="row row-cols-2 ">
           <div class="col col-9">Súlya:</div>
           <div class="col col-3 float-end text-end">1220 g</div>
@@ -83,11 +97,12 @@ function request_modal(){
           <div class="col col-3 float-end text-end">4</div>
         </div>
       </div>
+      </div>
+      </div>
       <div class="modal-footer justify-content-between">
         <h5>Ár: '.$price.'</h5>
         <h5>Raktáron:<img src="/scootercity/media/products/termek_'.$raktar.' class="status float-end" alt=""></h5>
           
-      </div>
       </div>
     </div>
   </div>
@@ -151,7 +166,6 @@ function request_modal(){
         </ul>
       </div>
     </div>
-  </div>
   </div>
 </div>');
 

@@ -15,13 +15,33 @@ function request_modal(){
       $name = $row['nev'];
       $price = $row['ar'];
       $mennyiseg = $row['mennyiseg'];
+      $szin = $row['szin'];
+
     //}
   }
 
   if($mennyiseg > 2){$raktar='ok.png"';}
   else if($mennyiseg > 0){$raktar='some.png"';}
   else{$raktar='cancel.png"';}
-  echo ('
+
+
+  //kep lekeres
+
+  $sql = "SELECT k.kep, k.type FROM kepek k WHERE k.term_id = '$prod_name' AND k.term_szin = '$szin'"; 
+  $result = mysqli_query($conn, $sql);
+  $kepek = '';
+  if(mysqli_num_rows($result) > 0){
+
+    while($row = mysqli_fetch_assoc($result)){
+      $kepek = $kepek . '<div class="swiper-slide">
+                      <div class="swiper-zoom-container">
+                        <img src="/scootercity/media/products/'.$row['kep'].$row['type'].'">
+                      </div>
+                    </div>';
+    }
+  }
+
+  echo '
   <div class="modal fade" id="termek_modal" aria-hidden="true" aria-labelledby="termek_modal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -33,38 +53,20 @@ function request_modal(){
       <div class="row row-cols-1 row-cols-sm-2">
       <div class="col">
 
-      <div class="product-gallery">
+      <div class="product-gallery" id="gallery">
           <div class="product-photo-main">
             <div class="swiper-container">
-              <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                  <div class="swiper-zoom-container">
-                    <img src="/scootercity/media/products/product1.jpg">
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="swiper-zoom-container">
-                    <img src="/scootercity/media/products/product1_1.jpg">
-                  </div>
-                </div>
-              </div>
+              <div class="swiper-wrapper">'
+                .$kepek.
+              '</div>
               <div class="swiper-pagination"></div>
             </div>
           </div>
           <div class="product-photos-side">
             <div class="swiper-container mb-2">
-              <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                  <div class="swiper-zoom-container">
-                    <img src="/scootercity/media/products/product1.jpg">
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="swiper-zoom-container">
-                    <img src="/scootercity/media/products/product1_1.jpg">
-                  </div>
-                </div>
-              </div>
+              <div class="swiper-wrapper">'
+                .$kepek.
+              '</div>
             </div>
           </div>
         </div>
@@ -79,17 +81,17 @@ function request_modal(){
           </h6>
         </div>
       <div class="modal-body pe-5">
-      <select name="colorpicker">
-            <option >Green</option>
-            <option >cyan</option>
-            <option >Blue</option>
-            <option >Turquoise</option>
-            <option >Lightgreen</option>
-            <option >Yellow</option>
-            <option >Orange</option>
-            <option >Red</option>
-
-          </select>
+      <select name="colorpicker">';
+        $sql = "SELECT p.term_id, p.szin, sz.hex FROM params p INNER JOIN szinek sz ON sz.szin = p.szin WHERE p.term_id = '$prod_name'";
+        $result = mysqli_query($conn, $sql);
+        if(mysqli_num_rows($result) > 0){
+            while($row = mysqli_fetch_assoc($result)){
+              echo '<option value="'.$row['hex'].'">'.$row['szin'].'</option>';
+            }
+        }
+        echo '
+        </select>
+        
         <div class="row row-cols-2 ">
           <div class="col col-9">Súlya:</div>
           <div class="col col-3 float-end text-end">1220 g</div>
@@ -99,7 +101,7 @@ function request_modal(){
       </div>
       </div>
       </div>
-      <div class="modal-footer justify-content-between">
+      <div class="modal-footer justify-content-between" id="modal-footer">
         <h5>Ár: '.$price.'</h5>
         <h5>Raktáron:<img src="/scootercity/media/products/termek_'.$raktar.' class="status float-end" alt=""></h5>
           
@@ -167,10 +169,12 @@ function request_modal(){
       </div>
     </div>
   </div>
-</div>');
+</div>';
 
   //SELECT t.nev, t.ar, t.leiras, p.szin, p.mennyiseg FROM termek t INNER JOIN params p ON t.nev = p.term_id WHERE t.nev = 'AGV K6 Hyphen bukósisak Fehér/Piros/Kék'
-
+  //SELECT p.term_id, p.szin FROM params p WHERE p.term_id = 'AGV K6 Hyphen bukósisak Fehér/Piros/Kék'; 
+  //SELECT k.kep, k.type FROM kepek k WHERE k.term_id = 'AGV K6 Hyphen bukósisak Fehér/Piros/Kék' AND k.term_szin = 'Fehér';
+  //SELECT k.kep, k.type FROM kepek k WHERE k.term_id = 'AGV K6 Hyphen bukósisak Fehér/Piros/Kék' AND k.term_szin = 'Fehér'; 
 }
 request_modal();
 ?>

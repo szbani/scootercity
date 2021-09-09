@@ -12,7 +12,7 @@
 
         while($row = mysqli_fetch_assoc($result)){
           $price = str_replace(',00','',numfmt_format_currency($fmt, $row['ar'], "HUF"));
-          echo '<div class="col">
+          echo '<div class="col mt-3">
           <div type="submit" class="card" id="'.$row['nev'].'" onclick="modal_show(this)">
               <img src="/scootercity/media/products/'.$row['index_kep'].'" class="card-img-top" alt="Termék">
               <div class="card-body">

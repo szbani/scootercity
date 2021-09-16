@@ -161,7 +161,12 @@
         if ($(e.target).is('[data-disabled]') === false) {
           this.selectColorSpan($(e.target));
           this.$select.trigger('change');
-          alert($(e.target).attr('title'));
+          //alert($(e.target).attr('title'));
+          modal_c_change($(e.target).attr('title'));
+          
+          
+
+
         }
       },
   

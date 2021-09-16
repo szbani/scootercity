@@ -1,7 +1,10 @@
 <?php 
+session_start();
 function request_modal(){
-
-  $prod_name = $_POST['prod_name'];
+  
+    $prod_name = $_POST['prod_name'];
+    $_SESSION['prod_name'] = $prod_name;
+  
   include '../query/conn.php';
 
   $sql = "SELECT t.nev, t.ar, t.leiras, p.szin, p.mennyiseg FROM termek t INNER JOIN params p ON t.nev = p.term_id WHERE t.nev = '$prod_name'";
@@ -70,8 +73,6 @@ function request_modal(){
             </div>
           </div>
         </div>
-
-      
         </div>
       <div class="col">
         <div class="modal-body border-top py-1 pe-4">
@@ -81,7 +82,8 @@ function request_modal(){
           </h6>
         </div>
       <div class="modal-body pe-5">
-      <select name="colorpicker">';
+      <select id="colorpicker" name="colorpicker">';
+
         $sql = "SELECT p.term_id, p.szin, sz.hex FROM params p INNER JOIN szinek sz ON sz.szin = p.szin WHERE p.term_id = '$prod_name'";
         $result = mysqli_query($conn, $sql);
         if(mysqli_num_rows($result) > 0){
@@ -89,6 +91,8 @@ function request_modal(){
               echo '<option value="'.$row['hex'].'">'.$row['szin'].'</option>';
             }
         }
+
+
         echo '
         </select>
         
@@ -103,7 +107,7 @@ function request_modal(){
       </div>
       <div class="modal-footer justify-content-between" id="modal-footer">
         <h5>Ár: '.$price.'</h5>
-        <h5>Raktáron:<img src="/scootercity/media/products/termek_'.$raktar.' class="status float-end" alt=""></h5>
+        <h5>Raktáron:<img src="/scootercity/media/products/termek_'.$raktar.' id="raktar_status" class="status float-end" alt=""></h5>
           
       </div>
     </div>
@@ -175,6 +179,10 @@ function request_modal(){
   //SELECT p.term_id, p.szin FROM params p WHERE p.term_id = 'AGV K6 Hyphen bukósisak Fehér/Piros/Kék'; 
   //SELECT k.kep, k.type FROM kepek k WHERE k.term_id = 'AGV K6 Hyphen bukósisak Fehér/Piros/Kék' AND k.term_szin = 'Fehér';
   //SELECT k.kep, k.type FROM kepek k WHERE k.term_id = 'AGV K6 Hyphen bukósisak Fehér/Piros/Kék' AND k.term_szin = 'Fehér'; 
+  //SELECT p.mennyiseg, k.kep, k.type FROM params p INNER JOIN kepek k ON p.szin = k.term_szin AND p.term_id = k.term_id WHERE p.term_id = 'AGV K6 Hyphen bukósisak Fehér/Piros/Kék' AND p.szin = 'Fekete';
+
+  //SELECT p.mennyiseg FROM params p WHERE p.term_id = 'AGV K6 Hyphen bukósisak Fehér/Piros/Kék' AND p.szin = 'Fehér'; 
+  //SELECT k.kep, k.type FROM kepek k WHERE k.term_id = 'AGV K6 Hyphen bukósisak Fehér/Piros/Kék' AND k.term_szin = 'Fekete'; 
 }
 request_modal();
 ?>

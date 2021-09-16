@@ -25,3 +25,27 @@ function modal_show(clicked){
     }
     })
 }
+function modal_c_change(szin){
+    $.ajax({
+        url:"/scootercity/parts/modal_change.php",
+        type: 'post',
+        data: {
+            prod_szin: szin
+        },
+    success: function (result) {
+        alert(result)
+        var mennyiseg = result[0].mennyiseg;
+        var kepek = result[0].kepek;
+        var raktar = "/scootercity/media/products/termek_";
+        if(mennyiseg > 2){raktar=raktar + 'ok.png"';}
+        else if(mennyiseg > 0){raktar=raktar + 'some.png"';}
+        else{raktar=raktar + 'cancel.png"';}
+        //raktar_status
+        }
+    })
+}
+
+
+
+
+

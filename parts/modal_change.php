@@ -16,28 +16,29 @@ if(mysqli_num_rows($result) > 0){
 
 }
 
-$sql = "SELECT k.kep, k.type FROM kepek k WHERE k.term_id = 'AGV K6 Hyphen bukósisak Fehér/Piros/Kék' AND k.term_szin = 'Fekete'";
+$sql = "SELECT k.kep, k.type FROM kepek k WHERE k.term_id = '$prod_name' AND k.term_szin = '$szin'";
 $result = mysqli_query($conn, $sql);
 $kepek = '';
 
 if(mysqli_num_rows($result) > 0){
     while($row = mysqli_fetch_assoc($result)){
-        $kepek = $kepek . '<div class="swiper-slide">
+        $kepek = $kepek . ' <div class="swiper-slide">
                             <div class="swiper-zoom-container">
                             <img src="/scootercity/media/products/'.$row['kep'].$row['type'].'">
                             </div>
-                        </div>';
+                            </div>';
     }
 }else{
-    $kepek = '<div class="swiper-slide">
+    $kepek = '  <div class="swiper-slide">
                 <div class="swiper-zoom-container">
                 <img src="/scootercity/media/products/nincskep.jpg">
                 </div>
-            </div>';
+                </div>
+            ';
 }
 
-$return_arr[] = array("mennyiseg" => $mennyiseg,
-                      "kepek" => $kepek  );
+$return_arr = array('mennyiseg' => $mennyiseg,
+                    'kepek' => $kepek  );
 
 echo json_encode($return_arr);
 

@@ -59,7 +59,7 @@ function request_modal(){
       <div class="product-gallery" id="gallery">
           <div class="product-photo-main">
             <div class="swiper-container">
-              <div class="swiper-wrapper">'
+              <div class="swiper-wrapper"id="kepek">'
                 .$kepek.
               '</div>
               <div class="swiper-pagination"></div>
@@ -67,7 +67,7 @@ function request_modal(){
           </div>
           <div class="product-photos-side">
             <div class="swiper-container mb-2">
-              <div class="swiper-wrapper">'
+              <div class="swiper-wrapper"id="kepek1">'
                 .$kepek.
               '</div>
             </div>

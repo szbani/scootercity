@@ -24,6 +24,8 @@ function swiper() {
     pagination: '.swiper-pagination',
     paginationType: 'fraction',
     spaceBetween: 10,
+    observer: true,
+    observeParents: true,
     keyboardControl: true,
     noSwiping: true,
     zoom: true,

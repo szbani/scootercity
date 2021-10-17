@@ -115,17 +115,8 @@ function request_modal(){
 
   <div class="product-gallery-full-screen">
     <div class="swiper-container gallery-top">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">
-          <div class="swiper-zoom-container">
-            <img src="/scootercity/media/products/product1.jpg" draggable="false" ondragstart="return false;">
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <div class="swiper-zoom-container">
-            <img src="/scootercity/media/products/product1_1.jpg" draggable="false" ondragstart="return false;">
-          </div>
-        </div>
+      <div class="swiper-wrapper" id="kepek2">
+        '.$kepek.'
       </div>
       <div class="swiper-button-next swiper-button-white">
         <svg fill="#FFFFFF" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

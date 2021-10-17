@@ -31,7 +31,7 @@ if(mysqli_num_rows($result) > 0){
 }else{
     $kepek = '  <div class="swiper-slide">
                 <div class="swiper-zoom-container">
-                <img src="/scootercity/media/products/nincskep.jpg">
+                <img src="/scootercity/media/products/product-placeholder.png">
                 </div>
                 </div>
             ';

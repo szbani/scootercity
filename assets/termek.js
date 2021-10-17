@@ -45,6 +45,7 @@ function modal_c_change(szin){
         $('#raktar_status').attr('src', raktar);
         $('#kepek').html(kepek);
         $('#kepek1').html(kepek);
+        $('#kepek2').html(kepek);
         }
     })
 }

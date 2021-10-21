@@ -34,7 +34,6 @@ function request_modal(){
   $result = mysqli_query($conn, $sql);
   $kepek = '';
   if(mysqli_num_rows($result) > 0){
-
     while($row = mysqli_fetch_assoc($result)){
       $kepek = $kepek . '<div class="swiper-slide">
                       <div class="swiper-zoom-container">
@@ -42,7 +41,14 @@ function request_modal(){
                       </div>
                     </div>';
     }
-  }
+  }else{
+    $kepek = '  <div class="swiper-slide">
+                <div class="swiper-zoom-container">
+                <img src="/scootercity/media/products/product-placeholder.png">
+                </div>
+                </div>
+            ';
+}
 
   echo '
   <div class="modal fade" id="termek_modal" aria-hidden="true" aria-labelledby="termek_modal" tabindex="-1">

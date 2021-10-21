@@ -1,5 +1,6 @@
 html *{
   color: #e6e2dd;
+  scroll-behavior: smooth;
 }
 /*
  * Slideshow

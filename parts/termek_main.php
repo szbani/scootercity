@@ -1,5 +1,5 @@
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" style="margin-top: 140px;">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="row row-cols-2 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
       <?php
       $fmt = numfmt_create( 'hu-HU', NumberFormatter::CURRENCY );
       include '../query/conn.php';

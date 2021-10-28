@@ -51,7 +51,7 @@ function request_modal(){
 }
 
   echo '
-  <div class="modal fade" id="termek_modal" aria-hidden="true" aria-labelledby="termek_modal" tabindex="-1">
+  <div class="modal" id="termek_modal" aria-hidden="true" aria-labelledby="termek_modal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header py-2">

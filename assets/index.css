@@ -1,3 +1,5 @@
+@import "navbar.css";
+
 html *{
   color: #e6e2dd;
   scroll-behavior: smooth;
@@ -117,38 +119,6 @@ footer *{
 }
 
 .link-secondary:hover{
-  color: #6495ED;
-}
-
-/*
- * navbar
- */
-
- @media all and (min-width: 992px) {
-	.navbar .nav-item .dropdown-menu{ display: none;}
-	.navbar .nav-item:hover .dropdown-menu{ display: block; }
-	.navbar .nav-item .dropdown-menu{ margin-top:0; }
-}	
-/*.navbar .nav-link{ margin:20px 0 20px 0;}*/
-
- .form-control-dark {
-  color: #fff;
-  background-color: rgba(255, 255, 255, .1);
-  border-color: rgba(255, 255, 255, .1);
-}
-.form-control-dark:hover,
-.form-control-dark:focus {
-  border-color: transparent;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
-}
-.nav-item{
-  color: #e6e2dd;
-}
-.nav-link{
-  color: #FF7F50;
-  font-size: 1.1rem;
-}
-.nav-link:hover{
   color: #6495ED;
 }
 

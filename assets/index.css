@@ -4,6 +4,47 @@ html *{
   color: #e6e2dd;
   scroll-behavior: smooth;
 }
+body{
+	background-image: url('/scootercity/media/main/bg.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+/*
+ * BG
+ #373a36
+ #303085
+ */  
+
+ .bg-2{
+	background-color: #232335 !important;
+}
+
+.navbar-bg{
+  background-color: #232335;
+}
+.offnavbar{
+  background-color: #2b2b3f;
+}
+
+footer{
+  background-color: #384055;
+  position: relative;
+  z-index: 150;
+}
+footer *{
+  color: unset;
+}
+.link-secondary{
+  color: #FF7F50;
+}
+
+.link-secondary:hover{
+  color: #6495ED;
+}
+
+
+
 /*
  * Slideshow
  */
@@ -85,42 +126,7 @@ html *{
   cursor: pointer;
 }
 
-/*
- * BG
- #373a36
- #303085
- */  
- .bg-1{
-	background-image: url('/scootercity/media/main/bg.jpg');
-  background-size: cover;
-}
 
-.bg-2{
-	background-color: #232335 !important;
-}
-
-.navbar-bg{
-  background-color: #232335;
-}
-.offnavbar{
-  background-color: #2b2b3f;
-}
-
-footer{
-  background-color: #384055;
-  position: relative;
-  z-index: 150;
-}
-footer *{
-  color: unset;
-}
-.link-secondary{
-  color: #FF7F50;
-}
-
-.link-secondary:hover{
-  color: #6495ED;
-}
 
 /*
  * container filler

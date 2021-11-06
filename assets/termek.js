@@ -47,6 +47,42 @@ function modal_c_change(szin){
 }
 
 
+//sidebar
 
+$(document).ready(function (){
+    $(":checkbox:not(:checked)").map(function () { 
+        var search = sessionStorage.getItem(this.value);
+        if(search == "checked"){
+            this.checked = true;
+        }
+    });
+    $(":checkbox").on("change", function () {
+        var search = $('checkbox').map(function () {
+            return this;
+          });
+        if(search.checked == true){
+            sessionStorage.setItem(this.value, 'checked');
+        }
+        else{
+            sessionStorage.setItem(this.value,null);
+        }
+    });
+});
 
+$(function() {
+
+    $(".form-check-input").on("change", function() {
+        var search = $(".form-check-input:checked").map(function() {
+            
+            sessionStorage.setItem(this.value,'checked');
+            return this.value;
+        }).toArray();
+        search = search.join("|");
+        if(search != ''){
+            location.search = "termek="+search;
+        }else{
+            location.search = ''; 
+        }
+    });
+});
 

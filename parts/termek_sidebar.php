@@ -17,14 +17,13 @@
               $result = mysqli_query($conn, $sql);
 
               if(mysqli_num_rows($result) > 0){
-
                 while($row = mysqli_fetch_assoc($result)){
+                  $param = $row['kat_nev'];
                   echo '
                     <li>
-                      <a href="#" class="link-dark rounded">
-                      
-                        <label class="form-check-label" for="flexCheckDefault">'.$row['kat_nev'].'</label>
-                        <input class="form-check-input ms-2" type="checkbox" value="" id="flexCheckDefault">
+                      <a class="link-dark rounded">
+                        <label class="form-check-label" for="'.$param.'">'.$param.'</label>
+                        <input class="form-check-input ms-2" type="checkbox" value="'.$param.'" id="'.$param.'">
                       </a>
                     </li>
                   ';

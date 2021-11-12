@@ -15,6 +15,7 @@
               $params = str_replace("|","' OR ".$kat,$params);
             }
           }
+          
           $sql = "SELECT t.nev, t.index_kep, t.ar, t.kategoria FROM termek t ".$params." ORDER BY t.kategoria;";
           $result = mysqli_query($conn, $sql);
     
@@ -40,8 +41,6 @@
     
           }
         
-      
-      
       ?>
 
     </div>

@@ -27,8 +27,8 @@
                   if(mysqli_num_rows($c_result) > 0){
                     $count = mysqli_fetch_assoc($c_result);
                   }
-                  
-                  echo '
+                  if(intval($count['count']) > 0){
+                    echo '
                     <li>
                       <a class="link-dark rounded">
                         <label class="form-check-label" for="'.$param.'">'.$param.'</label>
@@ -37,6 +37,8 @@
                       </a>
                     </li>
                   ';
+                  }
+
                 }
 
               }

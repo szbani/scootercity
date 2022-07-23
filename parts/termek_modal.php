@@ -90,6 +90,7 @@ function request_modal(){
       <div class="modal-body pe-5">
       <select id="colorpicker" name="colorpicker">';
 
+      //szin lekeres 
         $sql = "SELECT p.term_id, p.szin, sz.hex FROM params p INNER JOIN szinek sz ON sz.szin = p.szin WHERE p.term_id = '$prod_name'";
         $result = mysqli_query($conn, $sql);
         if(mysqli_num_rows($result) > 0){
@@ -182,7 +183,12 @@ function request_modal(){
   //SELECT k.kep, k.type FROM kepek k WHERE k.term_id = 'AGV K6 Hyphen bukósisak Fehér/Piros/Kék' AND k.term_szin = 'Fekete'; 
 }
 request_modal();
+
 ?>
+
+
+
+
 
 
 

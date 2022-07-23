@@ -42,6 +42,7 @@ function modal_c_change(szin){
         $('#kepek').html(kepek);
         $('#kepek1').html(kepek);
         $('#kepek2').html(kepek);
+        swiper();
         }
     })
 }

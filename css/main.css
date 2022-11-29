@@ -1,0 +1,150 @@
+
+
+:root {
+  --green1:#76C893;
+  --green2:#52B69A;
+  --cyan1:#34A0A4;
+  --cyan2:#168AAD;
+  --blue1:#6495ED;
+  --blue2:#1363DF;
+  --lightblue1:#47B5FF;
+  --darkblue1:#06283D;
+}
+.bg-green1{
+  background-color: var(--green1);
+}
+.bg-green2{
+  background-color: var(--green2);
+}
+.bg-blue1{
+  background-color: var(--blue1);
+}
+.bg-blue2{
+  background-color: var(--blue2);
+}
+.bg-lightblue1{
+  background-color: var(--lightblue1);
+}
+.bg-darkblue1{
+  background-color: var(--darkblue1);
+}
+
+html *{
+  scroll-behavior: smooth;
+}
+body{
+  background-color: white;
+}
+
+/*
+  BG
+ #373a36
+ #303085
+ */  
+
+/*navbar*/
+
+
+
+.topnav{
+  z-index: 160;
+}
+
+.logo{
+  width: 22.5vh;
+}
+
+.navbar.scrolled{
+  width: 100vh !important;
+  max-height: 0 !important;
+  transition: max-height 0.1s linear !important;
+  background-color: none !important;
+  transition: background-color 2000ms linear !important;
+}
+
+/*navbar end*/
+
+.main-pic{
+  background-image: url('../media/main/bg2.jpg');
+  background-size: cover;
+  min-height: 75vh;
+  color: rgb(46, 46, 46);
+}
+.main-text{
+  text-align: center;
+}
+
+.image-blur{
+  width: 100%;
+  height: 75vh;
+  background-color: rgba(255, 255, 255, 0.4);
+  background-size: cover;
+}
+
+.image-group{
+  height: 65vh;
+  background-size: cover;
+  border: 5px solid var(--blue2);
+}
+
+.object_hover{
+  top: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: background-color 0.25s ease;
+}
+.object_hover:hover{
+  background-color: #f7f4e93d;
+  cursor: pointer;
+}
+.image-text-c{
+  position: absolute;
+  top: 45%;
+  left: 35%;
+}
+.image-text-border{
+  border: 3px solid #6495EDc0;
+  background-color: #e2e2e2b4;
+}
+.image-text-border h2{
+  text-align: center;
+  color: #343a40;
+}
+
+
+/* 
+footer 
+*/
+footer{
+  background-color: var(--darkblue1);
+  position: relative;
+  z-index: 150;
+}
+footer *{
+  color: unset;
+}
+.link-secondary{
+  color: #FF7F50 !important;
+}
+.link-secondary:hover{
+  color: #6495ED !important;
+}
+
+
+
+/*
+ * Termék képek
+ */
+
+
+
+
+
+/*
+ * container filler
+ */
+
+.filler-box{
+  background-color: none;
+}

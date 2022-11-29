@@ -3,7 +3,7 @@
       <?php
         
           $fmt = numfmt_create( 'hu-HU', NumberFormatter::CURRENCY );
-          include '../query/conn.php';
+          include 'query/conn.php';
           //SELECT t.nev, k.kep, k.type FROM termek t INNER JOIN kepek k ON t.nev = k.term_id
           //SELECT t.nev, t.index_kep, t.ar FROM termek t
           $params = '';

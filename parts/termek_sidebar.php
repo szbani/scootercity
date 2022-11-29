@@ -13,7 +13,7 @@
           <ul class="btn-toggle-nav mx-auto list-unstyled pb-1">
               <?php 
               //termek tipus(kategoria) szinek ar
-              include '../query/conn.php';
+              include 'query/conn.php';
 
               $sql = "SELECT * FROM kategoriak";
               $result = mysqli_query($conn, $sql);

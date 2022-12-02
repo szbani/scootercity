@@ -33,12 +33,12 @@
                                     ?>
                                     <form method="POST" action="">
                                         <div class="form-floating mb-3">
-                                            <input class="form-control" id="inputEmail" type="text" name="username" placeholder="felhasználónév" required />
-                                            <label for="inputEmail">Felhasználónév</label>
+                                            <input class="form-control" id="inputEmail" type="email" name="email" placeholder="felhasználónév" required />
+                                            <label for="inputEmail">Email cím</label>
                                         </div>
                                         <div class="form-floating mb-3">
                                             <input class="form-control" id="inputPassword" type="password" name="pw" placeholder="jelszó" required />
-                                            <label for="inputPassword">jelszó</label>
+                                            <label for="inputPassword">Jelszó</label>
                                         </div>
                                         <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                             <Button type="submit" name="loginPage" class="btn btn-primary btn-lg">Login</Button>

@@ -24,3 +24,54 @@ window.addEventListener('DOMContentLoaded', event => {
     }
 
 });
+
+//modify
+const sel = document.getElementById("md_select");
+const inp = document.getElementById("inputcheck");
+
+function modifyAll(id){
+    scrollTo(top);
+    document.getElementById("md_select").value = id;
+    modif_switch_t();
+}
+
+function modif_switch(){
+    if(sel.value == "")
+        modif_switch_f();
+    else
+        modif_switch_t();
+}
+
+function modif_switch_f(){
+    inp.checked = false;
+    inp.disabled = true;
+    sub_text();
+}
+
+function modif_switch_t(){
+    inp.checked = true;
+    inp.disabled = false;
+    sub_text();
+}
+function sub_text(){
+    if(inp.checked == true)
+        document.getElementById("sub").textContent = "Módosit";
+    else
+        document.getElementById("sub").textContent = "Feltölt";;
+}
+
+function del_btn(id){
+    document.getElementById("del_id").innerHTML = id;
+    document.getElementById('del_hidden').value = id;
+}
+
+//success
+function showSuccess(){
+    var toastLiveExample = document.getElementById('successToast')
+    var toastName = document.getElementById('succesName');
+    toastName.textContent = document.getElementById('pageName').textContent;
+    var toast = new bootstrap.Toast(toastLiveExample)
+    toast.show()
+}
+
+

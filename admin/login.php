@@ -1,3 +1,7 @@
+<?php
+    session_start();
+    require_once('query/conn.php');
+?>
 <!DOCTYPE html>
 <html lang="hu">
 
@@ -13,10 +17,6 @@
 </head>
 
 <body class="bg-primary">
-    <?php
-    session_start();
-    require_once('query/conn.php');
-    ?>
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">
             <main>
@@ -31,7 +31,7 @@
                                     <?php
                                     include_once 'query/errors.php';
                                     ?>
-                                    <form method="POST" action="">
+                                    <form method="POST" action="query/login.php">
                                         <div class="form-floating mb-3">
                                             <input class="form-control" id="inputEmail" type="email" name="email" placeholder="felhasználónév" required />
                                             <label for="inputEmail">Email cím</label>
@@ -69,12 +69,6 @@
             </footer>
         </div>
     </div>
-    <?php
-        if(($_SERVER["REQUEST_METHOD"] == "POST")){
-        require_once('query/login.php');
-        unset($_POST['loginPage']);
-        login_page($conn);
-    }?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
 </body>

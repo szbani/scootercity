@@ -31,7 +31,6 @@ if(isset($_POST['submit'])){
                 mysqli_query($conn, $sql);
                 $_SESSION['succes'] = 'Sikeres Felvétel';
                 back();
-                die();
             }else{array_push($errors, "A fiók már létezik!");}
         }
         //edit
@@ -40,14 +39,15 @@ if(isset($_POST['submit'])){
             $check = "SELECT * FROM admin_users WHERE email = '$name'";
             $result = mysqli_query($conn, $check);
             $row = mysqli_fetch_assoc($result);
-            if($_SESSION['user'] == $inputemail || $$row['main'] == 0){
+            if($_SESSION['user'] == $inputemail || $row['main'] == 0){
                 $sql = "UPDATE admin_users SET password = '$inputpass'
                 WHERE id = '$md_name'";
                 mysqli_query($conn, $sql);
                 $_SESSION['succes'] = 'Sikeres módosítás';
-                $_SESSION['pass'] = $inputpass;
+                if($_SESSION['user'] == $inputemail){
+                    $_SESSION['pass'] = $inputpass;
+                }
                 back();
-                die();
             }else{array_push($errors, "Nincs jogod a fiók módosításához!");}
          }
     }
@@ -63,11 +63,14 @@ else if(isset($_POST['delete'])){
     $sql = "DELETE FROM admin_users where id = '$id'";
     mysqli_query($conn, $sql);
     $_SESSION['succes'] = 'Sikeres törlés';
+}else{
+    back();
 }
-back();
+
 
 function back()
 {
     header('location: ../fiokok.php');
+    die();
 }
 ?>

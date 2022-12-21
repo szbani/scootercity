@@ -1,0 +1,12 @@
+.nav-link2{
+    color: rgba(255, 255, 255, 0.5)!important;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+.nav-link2:hover{
+    color: rgba(255, 255, 255, 0.75)!important;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+
+}

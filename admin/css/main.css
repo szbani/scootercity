@@ -1,12 +1,91 @@
-.nav-link2{
-    color: rgba(255, 255, 255, 0.5)!important;
-    padding-right: 0.5rem;
-    padding-left: 0.5rem;
-    cursor: pointer;
-    text-decoration: none;
+ :root{
+    /*
+    --color-main:#FFE15D;
+    --color-navbar:#DC3535;
+    --color-sidebar:#DC3535;
+    --color-sidebar-text:#FFE150;
+    --color-sidebar-hover:#F49D1A;
+    /*#F49D1A*/
+    --color-main:#FFFBEB;
+    --color-body-main:#495579;
+    --color-text:#FFFBEB;
+    --color-hover:#cac6b1;
+    --color-body-main-darker:#263159;
+    --color-body-main-lowopacity:#2631592b;
 }
-.nav-link2:hover{
-    color: rgba(255, 255, 255, 0.75)!important;
-    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 
+.bg-body-main{
+    background-color: var(--color-body-main);
+}
+.bg-body-dark{
+    background-color: var(--color-body-main-darker);
+}
+.bg-body-darklow{
+    background-color: var(--color-body-main-lowopacity);
+}
+.bg-main-light{
+    background-color: var(--color-main);
+}
+
+.sb-sidenav-color{
+    background-color: var(--color-body-main);
+    color: var(--color-text);
+}
+.sb-sidenav-color a{
+    color: var(--color-text);
+}
+.sb-sidenav-color a:hover,.sb-sidenav-color a:focus{
+    color: var(--color-hover);
+}
+.sb-sidenav-footer{
+    background-color: var(--color-body-main-lowopacity);
+}
+
+.navbar-color, .navbar-color a,.navbar-color path,.navbar-color ul{
+    background-color: var(--color-body-main);
+    color: var(--color-text);
+    transition: 0.15s;
+}
+.navbar-color a:hover{
+    color: var(--color-hover);
+}
+.navbar-color .dropdown-menu a:hover{
+    background-color: var(--color-body-main-lowopacity);
+    color: var(--color-hover);
+}
+.search-btn{
+    background-color: #251749;
+    opacity: 0.6;
+}
+.search-field{
+    opacity: 0.5;
+    transition: 0.25s;
+}
+.search-btn:hover,.search-field:focus, .search-field:hover{
+    opacity: 0.8;
+}
+
+.btn-fab{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:50px;
+	right:40px;
+	background-color:var(--color-body-main);
+    border: 3px solid var(--color-body-main);
+	color: var(--color-main);
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+    transition: 0.3s;
+}
+.btn-fab svg{
+    margin-top: 20px;
+}
+.btn-fab:hover{
+    color: var(--color-main);
+    background-color: var(--color-body-main-darker);
+    border-color: var(--color-body-main-darker);
+    box-shadow: 4px 4px 6px #a6acc7;
+    transition: color 0.15s ease-in-out,background-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out;
 }

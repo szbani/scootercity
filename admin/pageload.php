@@ -4,7 +4,7 @@ $page= trim($_GET['page']);
   if(file_exists($page)){
     include($page);
   }else{
-   include('404.html');
+   include('404.php');
   }
 }
 else{

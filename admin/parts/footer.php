@@ -1,8 +1,12 @@
+<?php
+include_once "query/errorsF.php";
+include_once "query/success.php";
+?>
 <footer class="py-4 bg-light mt-auto">
     <!-- keszitette -->
     <div class="container-fluid px-4">
         <div class="d-flex align-items-center justify-content-between small">
-            <div class="text-muted">Copyright &copy; Scootercity 2022</div>
+            <div class="text-muted">Copyright &copy; Scootercity <?php echo date("Y")?></div>
             <div>
                 <a href="#">Privacy Policy</a>
                 &middot;

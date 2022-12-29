@@ -1,4 +1,5 @@
 <?php
+//nincs használva
 
 function mod_menu($conn){
 echo'

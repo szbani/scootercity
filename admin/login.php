@@ -1,6 +1,6 @@
 <?php
-    session_start();
-    require_once('query/conn.php');
+session_start();
+require_once('query/conn.php');
 ?>
 <!DOCTYPE html>
 <html lang="hu">
@@ -13,49 +13,36 @@
     <meta name="author" content="" />
     <title>Login - Scootercity</title>
     <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/login.css" rel="stylesheet">
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 
-<body class="bg-primary">
+<body>
     <div id="layoutAuthentication">
-        <div id="layoutAuthentication_content">
-            <main>
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-5">
-                            <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                <div class="card-header">
-                                    <h3 class="text-center font-weight-light my-4">Login</h3>
-                                </div>
-                                <div class="card-body">
-                                    <?php
-                                    include_once 'query/errors.php';
-                                    ?>
-                                    <form method="POST" action="query/login.php">
-                                        <div class="form-floating mb-3">
-                                            <input class="form-control" id="inputEmail" type="email" name="email" placeholder="felhasználónév" required />
-                                            <label for="inputEmail">Email cím</label>
-                                        </div>
-                                        <div class="form-floating mb-3">
-                                            <input class="form-control" id="inputPassword" type="password" name="pw" placeholder="jelszó" required />
-                                            <label for="inputPassword">Jelszó</label>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                            <Button type="submit" name="loginPage" class="btn btn-primary btn-lg">Login</Button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="card-footer text-center py-3">
-                                    <div class="small"></div>
-                                </div>
-                            </div>
-                        </div>
+        <div id="layoutAuthentication_content" class="text-center mt-5">
+            <main class="form-signin">
+                <form method="POST" action="query/login.php">
+                    <h1 class="h3 mb-3 fw-normal">Bejelentkezés</h1>
+
+                    <div class="form-floating">
+                        <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com" required>
+                        <label for="floatingInput">Email cím</label>
                     </div>
-                </div>
+                    <div class="form-floating">
+                        <input type="password" name="pw" class="form-control" id="floatingPassword" placeholder="Jelszó" required>
+                        <label for="floatingPassword">Jelszó</label>
+                    </div>
+
+                    <button class="w-100 btn btn-lg btn-primary" type="submit" name="loginPage">Bejelentkezés</button>
+                    <!-- <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p> -->
+                </form>
             </main>
         </div>
+        <?php
+        include_once 'query/errorsF.php';
+        ?>
         <div id="layoutAuthentication_footer">
-            <footer class="py-4 bg-light mt-auto">
+            <footer class="py-4 mt-auto bg-light">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
                         <div class="text-muted">Copyright &copy; Your Website 2022</div>
@@ -69,8 +56,15 @@
             </footer>
         </div>
     </div>
+
+    <script>
+        function showToast(id) {
+            var toastLiveExample = document.getElementById(id)
+            var toast = new bootstrap.Toast(toastLiveExample)
+            toast.show()
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="js/scripts.js"></script>
 </body>
 
 </html>

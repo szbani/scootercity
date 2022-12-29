@@ -1,4 +1,5 @@
 <?php
+
 function loadArray($conn){
 
 $sql = "SELECT * FROM admin_users";
@@ -37,9 +38,9 @@ if(mysqli_num_rows($result) > 0){
         }
         echo
         '<td class="align-middle">';
-        if(($_SESSION['main'] != 1 && $array[$i][2] == 1) || $_SESSION['user'] == $array[$i][1]){
+        if(($_SESSION['main'] == 0 && $array[$i][2] == 1) || $_SESSION['user'] == $array[$i][1]){
             echo
-            '<input type="button" onClick="modify(\''.$array[$i][0].'\')" value="Szerkesztés" class="btn btn-warning btn-sm">';
+            '<input type="button" data-bs-toggle="modal" data-bs-target="#modifyModal" onClick="modify(\''.$array[$i][0].'\')" value="Módosítás" class="btn btn-warning btn-sm">';
         }
         if($array[$i][2] == 1 && $_SESSION['main'] == 0){
             echo
@@ -63,5 +64,3 @@ function select_mod($conn){
         }
     }
 }
-?>
-

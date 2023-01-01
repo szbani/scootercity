@@ -37,8 +37,8 @@
                         </a>
                         <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link link" href="login.html">Nevek</a>
-                                <a class="nav-link link" href="register.html">Tulajdonságok</a>
+                                <a class="nav-link link" href="kat-nevek.php">Nevek</a>
+                                <a class="nav-link link" href="kat-tulajdonsagok.php">Tulajdonságok</a>
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
@@ -48,12 +48,12 @@
                         <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link link" href="meretek.php">Méretek</a>
-                                <a class="nav-link link" href="500.html">Színek</a>
+                                <a class="nav-link link" href="szinek.php">Színek</a>
                             </nav>
                         </div>
                     </nav>
                 </div>
-                <a class="nav-link link" href="charts.html">
+                <a class="nav-link link" href="kepek.php">
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                     Képek
                 </a>

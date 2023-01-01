@@ -1,14 +1,13 @@
 <?php
 
-function loadLogs($conn)
+function loadLogs($conn, $sql)
 {
     //tul sok rekordnál lehet lassú lesz a lekérdezés
-    $sql = "SELECT * FROM logs";
     $result = mysqli_query($conn, $sql);
 
     $array = array();
     if (mysqli_num_rows($result) > 0) {
-        while ($row = mysqli_fetch_array($result,1)) {
+        while ($row = mysqli_fetch_array($result, 1)) {
             array_push($array, $row);
         }
     }
@@ -21,5 +20,33 @@ function loadLogs($conn)
             '<td id="' . $key . '" class="' . $font . ' align-middle">' . $val . '</td>';
         }
         echo '</tr>';
+    }
+}
+function loadSzurok($conn, $sql)
+{
+    $result = mysqli_query($conn, $sql);
+
+    $array = array();
+    if (mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_array($result, 1)) {
+            array_push($array, $row);
+        }
+    }
+    echo
+    '<thead>
+        <tr>';
+        foreach($array as $key => $val){
+            echo '<th>'.$key.'</th>';
+            
+        };
+        
+        // <th>Felhasználó</th>
+        // <th>#</th>
+        echo'</tr>
+    </thead>';
+    foreach ($array as $val) {
+        echo '<tr id="' . $val . '">
+        <td id="' . $val . '" class="fs-5 align-middle">' . $val . '</td>
+        </tr>';
     }
 }

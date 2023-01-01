@@ -3,7 +3,7 @@ session_start();
 require_once 'query/conn.php';
 require_once 'query/login.php';
 
-require_once 'query/Q_fiokok.php';
+require_once 'query/logs.php';
 
 if (empty($_GET['page'])) {
 ?>
@@ -61,7 +61,7 @@ if (empty($_GET['page'])) {
                                 </tfoot>
                                 <tbody>
                                     <?php
-                                    loadArray($conn);
+                                    loadSzurok($conn, "SELECT * FROM meretek;");
                                     ?>
                                 </tbody>
                             </table>

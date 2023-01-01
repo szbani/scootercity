@@ -62,7 +62,7 @@ if (empty($_GET['page'])) {
                             </tfoot>
                             <tbody>
                                 <?php
-                                loadLogs($conn);
+                                loadLogs($conn,"SELECT * FROM logs");
                                 ?>
                             </tbody>
                         </table>

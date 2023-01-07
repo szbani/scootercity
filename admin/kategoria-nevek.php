@@ -3,6 +3,7 @@ session_start();
 require_once 'query/conn.php';
 require_once 'query/login.php';
 
+require_once 'query/Q_fiokok.php';
 require_once 'query/logs.php';
 
 if (empty($_GET['page'])) {
@@ -17,7 +18,7 @@ if (empty($_GET['page'])) {
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>ScooterCity - Admin</title>
-        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="css/styles.css" />
         <link rel="stylesheet" type="text/css" href="css/main.css" />
     </head>
@@ -37,39 +38,35 @@ if (empty($_GET['page'])) {
             }
                 ?>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4" id="pageName">Fiókok</h1>
-                    <div class="card mb-4">
+                    <h1 class="mt-4" id="pageName">Kategória Nevek</h1>
+                    <div class="card mb-4 card-50">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
-                            Felhasználók
+                            Kategóriák Nevek
                         </div>
                         <div class="card-body">
-                            <table id="datatablesSimple">
+                            <table>
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Felhasználó</th>
+                                        <th>Név</th>
                                         <th>#</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Felhasználónév</th>
+                                        <th>név</th>
                                         <th>#</th>
                                     </tr>
                                 </tfoot>
-                                <tbody>
-                                    <?php
-                                    loadSzurok($conn, "SELECT * FROM meretek;");
-                                    ?>
-                                </tbody>
+                                <?php
+                                loadLogs($conn, "SELECT * FROM kat_nev;", false, true, true);
+                                ?>
                             </table>
                         </div>
                     </div>
                 </div>
-                </main>
-                <?php if($_SESSION['main'] == 0) {?>
                 <a href="#" type="button" class="btn-fab" data-bs-toggle='modal' data-bs-target="#uploadModal">
                     <i class="fa fa-plus fa-lg"></i>
                 </a>
@@ -102,7 +99,7 @@ if (empty($_GET['page'])) {
                                     <div class="row g-3">
                                         <div class="col">
                                             <label for="inputNev" class="form-label">Email cím:</label>
-                                            <input class="form-control" type="Email" name="email"/>
+                                            <input class="form-control" type="Email" name="email" />
                                         </div>
                                     </div>
                                     <div class="row g-3">
@@ -125,53 +122,15 @@ if (empty($_GET['page'])) {
                         </div>
                     </div>
                 </form>
-                <?php }?>
-                <form action="query/U_fiokok.php" method="POST" autocomplete="off">
-                    <div class="modal fade" id="modifyModal" tabindex="-1" aria-labelledby="modifyModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                    Fiók Módosítása
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row g-3">
-                                        <div class="col-3">
-                                            <label for="inputId" class="form-label">Id</label>
-                                            <input class="form-control" id="inputId" type="text" name="id" readonly />
-                                        </div>
-                                        <div class="col">
-                                            <label for="inputNev" class="form-label">Email cím:</label>
-                                            <input class="form-control" id="inputEmail" type="Email" name="email" readonly />
-                                        </div>
-                                    </div>
-                                    <div class="row g-3">
-                                        <div class="col">
-                                            <label for="inputBank" class="form-label">Új jelszó:</label>
-                                            <input class="form-control" type="password" id="inputPass1" name="pass1">
-                                        </div>
-                                    </div>
-                                    <div class="row g-3">
-                                        <div class="col">
-                                            <label for="inputBank" class="form-label">Új jelszó megerősítés:</label>
-                                            <input class="form-control" type="password" id="inputPass2" name="pass2">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary" name="submit" id="sub">Módosítás</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                </main>
                 <?php
                 if (empty($_GET['page'])) {
                     include_once 'parts/footer.php';
-                    
                 }
                 ?>
-                <script src="js/fiokok.js"></script>
+                <script>
+                    loadTablesSortable();
+                </script>
     </body>
 
     </html>

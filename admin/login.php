@@ -17,46 +17,38 @@ require_once('query/conn.php');
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
-    <div id="layoutAuthentication">
-        <div id="layoutAuthentication_content" class="text-center mt-5">
-            <main class="form-signin">
-                <form method="POST" action="query/login.php">
-                    <h1 class="h3 mb-3 fw-normal">Bejelentkezés</h1>
-
-                    <div class="form-floating">
-                        <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com" required>
-                        <label for="floatingInput">Email cím</label>
-                    </div>
-                    <div class="form-floating">
-                        <input type="password" name="pw" class="form-control" id="floatingPassword" placeholder="Jelszó" required>
-                        <label for="floatingPassword">Jelszó</label>
-                    </div>
-
-                    <button class="w-100 btn btn-lg btn-primary" type="submit" name="loginPage">Bejelentkezés</button>
-                    <!-- <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p> -->
-                </form>
-            </main>
-        </div>
-        <?php
-        include_once 'query/errorsF.php';
-        ?>
-        <div id="layoutAuthentication_footer">
-            <footer class="py-4 mt-auto bg-light">
-                <div class="container-fluid px-4">
-                    <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Your Website 2022</div>
-                        <div>
-                            <a href="#">Privacy Policy</a>
-                            &middot;
-                            <a href="#">Terms &amp; Conditions</a>
-                        </div>
+<body class="img js-fullheight" style="background-image: url(assets/img/bg.jpg);">
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center mb-5">
+                    <h2 class="heading-section">Scootercity - Admin</h2>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-4">
+                    <div class="login-wrap p-0">
+                        <h3 class="mb-4 text-center">Bejelentkezés</h3>
+                        <form method="POST" action="query/login.php" class="signin-form">
+                            <div class="form-group">
+                                <input type="text" name="email" class="form-control" placeholder="Username" required>
+                            </div>
+                            <div class="form-group">
+                                <input id="password-field" name="pw" type="password" class="form-control" placeholder="Password" required>
+                                <span toggle="#password-field" id="togglePw" onclick="showPw(this)" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" name="loginPage" class="form-control btn btn-primary submit px-3">Sign In</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            </footer>
+            </div>
         </div>
-    </div>
-
+    </section>
+    <?php
+    include_once 'query/errorsF.php';
+    ?>
     <script>
         function showToast(id) {
             var toastLiveExample = document.getElementById(id)
@@ -64,7 +56,9 @@ require_once('query/conn.php');
             toast.show()
         }
     </script>
+    <script src="../js/jquery.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="js/login.js"></script>
 </body>
 
 </html>

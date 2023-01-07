@@ -1,91 +1,107 @@
- :root{
-    /*
+:root {
+  /*
     --color-main:#FFE15D;
     --color-navbar:#DC3535;
     --color-sidebar:#DC3535;
     --color-sidebar-text:#FFE150;
     --color-sidebar-hover:#F49D1A;
     /*#F49D1A*/
-    --color-main:#FFFBEB;
-    --color-body-main:#495579;
-    --color-text:#FFFBEB;
-    --color-hover:#cac6b1;
-    --color-body-main-darker:#263159;
-    --color-body-main-lowopacity:#2631592b;
+  --color-main: #fffbeb;
+  --color-body-main: #495579;
+  --color-text: #fffbeb;
+  --color-hover: #cac6b1;
+  --color-body-main-darker: #263159;
+  --color-body-main-lowopacity: #2631592b;
 }
 
-.bg-body-main{
-    background-color: var(--color-body-main);
+.bg-body-main {
+  background-color: var(--color-body-main);
 }
-.bg-body-dark{
-    background-color: var(--color-body-main-darker);
+.bg-body-dark {
+  background-color: var(--color-body-main-darker);
 }
-.bg-body-darklow{
-    background-color: var(--color-body-main-lowopacity);
+.bg-body-darklow {
+  background-color: var(--color-body-main-lowopacity);
 }
-.bg-main-light{
-    background-color: var(--color-main);
-}
-
-.sb-sidenav-color{
-    background-color: var(--color-body-main);
-    color: var(--color-text);
-}
-.sb-sidenav-color a{
-    color: var(--color-text);
-}
-.sb-sidenav-color a:hover,.sb-sidenav-color a:focus{
-    color: var(--color-hover);
-}
-.sb-sidenav-footer{
-    background-color: var(--color-body-main-lowopacity);
+.bg-main-light {
+  background-color: var(--color-main);
 }
 
-.navbar-color, .navbar-color a,.navbar-color path,.navbar-color ul{
-    background-color: var(--color-body-main);
-    color: var(--color-text);
-    transition: 0.15s;
+.sb-sidenav-color {
+  background-color: var(--color-body-main);
+  color: var(--color-text);
 }
-.navbar-color a:hover{
-    color: var(--color-hover);
+.sb-sidenav-color a {
+  color: var(--color-text);
 }
-.navbar-color .dropdown-menu a:hover{
-    background-color: var(--color-body-main-lowopacity);
-    color: var(--color-hover);
+.sb-sidenav-color a:hover,
+.sb-sidenav-color a:focus {
+  color: var(--color-hover);
 }
-.search-btn{
-    background-color: #251749;
-    opacity: 0.6;
-}
-.search-field{
-    opacity: 0.5;
-    transition: 0.25s;
-}
-.search-btn:hover,.search-field:focus, .search-field:hover{
-    opacity: 0.8;
+.sb-sidenav-footer {
+  background-color: var(--color-body-main-lowopacity);
 }
 
-.btn-fab{
-	position:fixed;
-	width:60px;
-	height:60px;
-	bottom:60px;
-	right:50px;
-	background-color:var(--color-body-main);
-    border: 3px solid var(--color-body-main);
-	color: var(--color-main);
-	border-radius:50px;
-	text-align:center;
-	box-shadow: 2px 2px 3px #999;
-    transition: 0.3s;
+.navbar-color,
+.navbar-color a,
+.navbar-color path,
+.navbar-color ul {
+  background-color: var(--color-body-main);
+  color: var(--color-text);
+  transition: 0.15s;
 }
-.btn-fab svg{
-    margin-top: 20px;
+.navbar-color a:hover {
+  color: var(--color-hover);
 }
-.btn-fab:hover{
-    color: var(--color-main);
-    background-color: var(--color-body-main-darker);
-    border-color: var(--color-body-main-darker);
-    box-shadow: 4px 4px 6px #a6acc7;
-    transition: color 0.15s ease-in-out,background-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out;
+.navbar-color .dropdown-menu a:hover {
+  background-color: var(--color-body-main-lowopacity);
+  color: var(--color-hover);
 }
+.search-btn {
+  background-color: #251749;
+  opacity: 0.6;
+}
+.search-field {
+  opacity: 0.5;
+  transition: 0.25s;
+}
+.search-btn:hover,
+.search-field:focus,
+.search-field:hover {
+  opacity: 0.8;
+}
+.toast-body strong{
+  color: rgb(26, 25, 25) !important;
+}
+
+.btn-fab {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 60px;
+  right: 50px;
+  background-color: var(--color-body-main);
+  border: 3px solid var(--color-body-main);
+  color: var(--color-main);
+  border-radius: 50px;
+  text-align: center;
+  box-shadow: 2px 2px 3px #999;
+  transition: 0.3s;
+}
+.btn-fab svg {
+  margin-top: 20px;
+}
+.btn-fab:hover {
+  color: var(--color-main);
+  background-color: var(--color-body-main-darker);
+  border-color: var(--color-body-main-darker);
+  box-shadow: 4px 4px 6px #a6acc7;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+}
+
+.card-50{
+  width: fit-content!important;
+  min-width: 50%;
+}
+

@@ -1,8 +1,7 @@
 <?php
 
-function loadLogs($conn, $sql)
+function loadLogs($conn, $sql, $reverse, $modify, $delete)
 {
-    //tul sok rekordnál lehet lassú lesz a lekérdezés
     $result = mysqli_query($conn, $sql);
 
     $array = array();
@@ -11,42 +10,47 @@ function loadLogs($conn, $sql)
             array_push($array, $row);
         }
     }
-    foreach (array_reverse($array) as $arr) {
-        echo '<tr id="' . $arr['id'] . '">';
-        foreach ($arr as $key => $val) {
-            if ($key == "id") $font = "fs-6";
-            else $font = "fs-5";
-            echo
-            '<td id="' . $key . '" class="' . $font . ' align-middle">' . $val . '</td>';
+    echo '<tbody>';
+    if ($reverse) {
+        foreach (array_reverse($array) as $arr) {
+            arrayEcho($arr, $delete, $modify);
         }
-        echo '</tr>';
+    } else {
+        foreach ($array as $arr) {
+            arrayEcho($arr, $delete, $modify);
+        }
     }
+    echo '</tbody>';
 }
-function loadSzurok($conn, $sql)
-{
-    $result = mysqli_query($conn, $sql);
 
-    $array = array();
-    if (mysqli_num_rows($result) > 0) {
-        while ($row = mysqli_fetch_array($result, 1)) {
-            array_push($array, $row);
-        }
+function arrayEcho($arr, $delete, $modify)
+{
+    echo '<tr id="' . $arr['id'] . '">';
+    foreach ($arr as $key => $val) {
+        if ($key == "id") $font = "fs-6";
+        else $font = "fs-5";
+        echo
+        '<td id="' . $key . '" class="' . $font . ' align-middle overflow-auto">' . $val . '</td>';
     }
-    echo
-    '<thead>
-        <tr>';
-        foreach($array as $key => $val){
-            echo '<th>'.$key.'</th>';
-            
-        };
-        
-        // <th>Felhasználó</th>
-        // <th>#</th>
-        echo'</tr>
-    </thead>';
-    foreach ($array as $val) {
-        echo '<tr id="' . $val . '">
-        <td id="' . $val . '" class="fs-5 align-middle">' . $val . '</td>
-        </tr>';
+    if ($modify) {
+        modif($arr['id']);
+        if (!$delete) echo '</td></tr>';
     }
+    if ($delete) {
+        if (!$modify) echo '<td class="align-middle">';
+        delete($arr['id']);
+    }
+    if (!$modify && !$delete) echo '</tr>';
+}
+function modif($id)
+{
+    echo '<td class="align-middle">';
+    echo '<input type="button" data-bs-toggle="modal" data-bs-target="#modifyModal"
+     onClick="modify(\'' . $id . '\')" value="Módosítás" class="btn btn-warning btn-sm">';
+}
+function delete($id)
+{
+    echo '<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delModal"
+     onClick="del_btn(' . $id . ')" >Törlés</button> 
+     </td></tr>';
 }

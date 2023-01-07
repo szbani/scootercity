@@ -44,7 +44,7 @@ if (empty($_GET['page'])) {
                             Felhasználók
                         </div>
                         <div class="card-body">
-                            <table id="datatablesSimple">
+                            <table>
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -68,7 +68,6 @@ if (empty($_GET['page'])) {
                         </div>
                     </div>
                 </div>
-                </main>
                 <?php if($_SESSION['main'] == 0) {?>
                 <a href="#" type="button" class="btn-fab" data-bs-toggle='modal' data-bs-target="#uploadModal">
                     <i class="fa fa-plus fa-lg"></i>
@@ -165,13 +164,15 @@ if (empty($_GET['page'])) {
                         </div>
                     </div>
                 </form>
+                </main>
                 <?php
                 if (empty($_GET['page'])) {
                     include_once 'parts/footer.php';
-                    
                 }
                 ?>
                 <script src="js/fiokok.js"></script>
+                <script>loadTables();</script>
+
     </body>
 
     </html>

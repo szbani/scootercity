@@ -40,8 +40,7 @@ $(document).on('click','a.link', function(e){
         dataType: "html",                  
         success: function(data){ 
           
-         $('#pageContent').html(data);    
-         loadTables();       
+         $('#pageContent').html(data);           
         }
     });
  });

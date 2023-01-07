@@ -38,30 +38,46 @@ if (empty($_GET['page'])) {
                 <div class="card mb-4">
                     <div class="card-header">
                         <i class="fas fa-table me-1"></i>
-                        DataTable Example
+                        Termékek
                     </div>
                     <div class="card-body">
                         <table>
                             <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Felhasználó</th>
-                                    <th>Tevékenység</th>
-                                    <th>Idő</th>
-                                    <th>IP</th>
+                                    <th>Terméknév</th>
+                                    <th>Ár(Ft)</th>
+                                    <th>Index Kép</th>
+                                    <th>Termék Képek</th>
+                                    <th>leírás</th>
+                                    <th>Kategória</th>
+                                    <th>Tulajdonságok</th>
+                                    <th>#</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Felhasználó</th>
-                                    <th>Tevékenység</th>
-                                    <th>Idő</th>
-                                    <th>IP</th>
+                                    <th>Terméknév</th>
+                                    <th>Ár(Ft)</th>
+                                    <th>Index Kép</th>
+                                    <th>Termék Képek</th>
+                                    <th>leírás</th>
+                                    <th>Kategória</th>
+                                    <th>Tulajdonságok</th>
+                                    <th>#</th>
                                 </tr>
                             </tfoot>
                             <?php
-                            loadLogs($conn, "SELECT * FROM logs", true, false, false);
+                            $sql = "SELECT t.id,t.nev,t.ar,CONCAT(ke.kep, ke.type) AS indexkep,
+                            GROUP_CONCAT(CONCAT(ke.kep, ke.type) SEPARATOR', ') as kepek,
+                            t.leiras,kn.kat_nev,t.tulajdonsagok FROM `termekek` t 
+                            INNER JOIN `kat_nev` kn ON kn.id = t.kategoria 
+                            INNER JOIN `kepek` ke ON ke.id = t.index_kep
+                            INNER JOIN `kepek_fk` kef ON kef.termid = t.id
+                            INNER JOIN `kepek` k on kef.kepid = k.id
+                            GROUP BY t.nev;";
+                            loadLogs($conn, $sql, false, true, true);
                             ?>
                         </table>
                     </div>
@@ -73,9 +89,18 @@ if (empty($_GET['page'])) {
                 }
                 ?>
                 <script>
-                    loadTables();
+                    loadTablesSortable();
                 </script>
 
     </body>
 
     </html>
+
+    <!-- SELECT t.id,t.nev,t.ar,CONCAT(ke.kep, ke.type) AS indexkep,
+GROUP_CONCAT(CONCAT(ke.kep, ke.type) SEPARATOR', ') as kepek,
+t.leiras,kn.kat_nev,t.tulajdonsagok FROM `termekek` t 
+INNER JOIN `kat_nev` kn ON kn.id = t.kategoria 
+INNER JOIN `kepek` ke ON ke.id = t.index_kep
+INNER JOIN `kepek_fk` kef ON kef.termid = t.id
+INNER JOIN `kepek` k on kef.kepid = k.id
+GROUP BY t.nev; -->

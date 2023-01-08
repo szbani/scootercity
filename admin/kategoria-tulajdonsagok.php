@@ -12,15 +12,7 @@ if (empty($_GET['page'])) {
     <html lang="hu">
 
     <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>ScooterCity - Admin</title>
-        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" type="text/css" href="css/styles.css" />
-        <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <?php require_once 'parts/head.php'; ?>
     </head>
 
     <body class="sb-nav-fixed">
@@ -39,13 +31,13 @@ if (empty($_GET['page'])) {
                 ?>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4" id="pageName">kategória Tulajdonságok</h1>
-                    <div class="card mb-4 card-50">
+                    <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
                             Kategóriák Tulajdonságok
                         </div>
                         <div class="card-body">
-                            <table>
+                            <table id="table" class="table table-striped table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -53,13 +45,6 @@ if (empty($_GET['page'])) {
                                         <th>#</th>
                                     </tr>
                                 </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Tulajdonság</th>
-                                        <th>#</th>
-                                    </tr>
-                                </tfoot>
                                 <?php
                                 loadLogs($conn, "SELECT * FROM kat_tul;", false, true, true);
                                 ?>

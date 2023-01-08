@@ -11,15 +11,7 @@ if (empty($_GET['page'])) {
     <html lang="hu">
 
     <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>ScooterCity - Admin</title>
-        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-        <link rel="stylesheet" type="text/css" href="css/styles.css" />
-        <link rel="stylesheet" type="text/css" href="css/main.css" />
+        <?php require_once 'parts/head.php'; ?>
     </head>
 
     <body class="sb-nav-fixed">
@@ -44,7 +36,7 @@ if (empty($_GET['page'])) {
                             Felhasználók
                         </div>
                         <div class="card-body">
-                            <table>
+                            <table id="table" class="table table-striped table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -52,13 +44,6 @@ if (empty($_GET['page'])) {
                                         <th>#</th>
                                     </tr>
                                 </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Felhasználónév</th>
-                                        <th>#</th>
-                                    </tr>
-                                </tfoot>
                                 <tbody>
                                     <?php
                                     loadArray($conn);
@@ -68,63 +53,63 @@ if (empty($_GET['page'])) {
                         </div>
                     </div>
                 </div>
-                <?php if($_SESSION['main'] == 0) {?>
-                <a href="#" type="button" class="btn-fab" data-bs-toggle='modal' data-bs-target="#uploadModal">
-                    <i class="fa fa-plus fa-lg"></i>
-                </a>
-                <form action="query/U_fiokok.php" method="POST">
-                    <div class="modal fade" id="delModal" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="delModalLabel">Biztos törlöd a fiókot?(<a class="text-danger" id="del_id"></a>)</h5>
-                                    <input type="text" id="del_hidden" name="id" value="" hidden>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégsem</button>
-                                    <button type="submit" name="delete" class="btn btn-primary">Törlés</button>
+                <?php if ($_SESSION['main'] == 0) { ?>
+                    <a href="#" type="button" class="btn-fab" data-bs-toggle='modal' data-bs-target="#uploadModal">
+                        <i class="fa fa-plus fa-lg"></i>
+                    </a>
+                    <form action="query/U_fiokok.php" method="POST">
+                        <div class="modal fade" id="delModal" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="delModalLabel">Biztos törlöd a fiókot?(<a class="text-danger" id="del_id"></a>)</h5>
+                                        <input type="text" id="del_hidden" name="id" value="" hidden>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégsem</button>
+                                        <button type="submit" name="delete" class="btn btn-primary">Törlés</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </form>
-                <form action="query/U_fiokok.php" method="POST" autocomplete="off">
-                    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                    Fiók létrehozása
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row g-3">
-                                        <div class="col">
-                                            <label for="inputNev" class="form-label">Email cím:</label>
-                                            <input class="form-control" type="Email" name="email"/>
+                    </form>
+                    <form action="query/U_fiokok.php" method="POST" autocomplete="off">
+                        <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                        Fiók létrehozása
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row g-3">
+                                            <div class="col">
+                                                <label for="inputNev" class="form-label">Email cím:</label>
+                                                <input class="form-control" type="Email" name="email" />
+                                            </div>
+                                        </div>
+                                        <div class="row g-3">
+                                            <div class="col">
+                                                <label for="inputBank" class="form-label">Jelszó:</label>
+                                                <input class="form-control" type="password" name="pass1">
+                                            </div>
+                                        </div>
+                                        <div class="row g-3">
+                                            <div class="col">
+                                                <label for="inputBank" class="form-label">Jelszó megerősítés:</label>
+                                                <input class="form-control" type="password" name="pass2">
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="row g-3">
-                                        <div class="col">
-                                            <label for="inputBank" class="form-label">Jelszó:</label>
-                                            <input class="form-control" type="password" name="pass1">
-                                        </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary" name="submit">Feltölt</button>
                                     </div>
-                                    <div class="row g-3">
-                                        <div class="col">
-                                            <label for="inputBank" class="form-label">Jelszó megerősítés:</label>
-                                            <input class="form-control" type="password" name="pass2">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary" name="submit">Feltölt</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </form>
-                <?php }?>
+                    </form>
+                <?php } ?>
                 <form action="query/U_fiokok.php" method="POST" autocomplete="off">
                     <div class="modal fade" id="modifyModal" tabindex="-1" aria-labelledby="modifyModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
@@ -171,7 +156,9 @@ if (empty($_GET['page'])) {
                 }
                 ?>
                 <script src="js/fiokok.js"></script>
-                <script>loadTables();</script>
+                <script>
+                    loadTables();
+                </script>
 
     </body>
 

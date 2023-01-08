@@ -1,7 +1,7 @@
 <?php
 $sql = "SELECT t.id,t.nev,t.ar,CONCAT(ke.kep, ke.type) AS indexkep,
 GROUP_CONCAT(CONCAT(ke.kep, ke.type) SEPARATOR', ') as kepek,
-t.leiras,kn.kat_nev FROM `termekek` t 
+t.leiras,kn.kat_nev,t.tulajdonsagok FROM `termekek` t 
 INNER JOIN `kat_nev` kn ON kn.id = t.kategoria 
 INNER JOIN `kepek` ke ON ke.id = t.index_kep
 INNER JOIN `kepek_fk` kef ON kef.termid = t.id

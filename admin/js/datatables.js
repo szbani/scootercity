@@ -1,11 +1,14 @@
 function format(d) {
   // `d` is the original data object for the row
+  for()
   return (
     '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
     "<tr>" +
     "<td>További képek:</td>" +
     "<td>" +
+    '<img src="../media/products/'+
     d.kepek +
+    '" class="img-fluid img-table" alt=""> '+
     "</td>" +
     "</tr>" +
     "<tr>" +
@@ -16,7 +19,9 @@ function format(d) {
     "</tr>" +
     "<tr>" +
     "<td>Tulajdonságok:</td>" +
-    "<td>And any further details here (images etc)...</td>" +
+    "<td>"+
+    d.tulajdonsagok+
+    "</td>" +
     "</tr>" +
     "</table>"
   );
@@ -37,7 +42,15 @@ function createTable() {
       },
       { data: "id" },
       { data: "nev" },
-      { data: "indexkep" },
+      {
+        data: "indexkep",
+        render: function (data, type) {
+          if( type === 'display'){
+            return '<img src="../media/products/' +data + '" class="img-fluid img-table" alt=""> ';
+          }
+          return data;
+          }
+      },
       { data: "ar" },
       { data: "kat_nev" },
     ],
@@ -46,7 +59,7 @@ function createTable() {
       {
         text: "My button",
         action: function (e, dt, node, config) {
-          console.log(table.row('.selected').data());
+          console.log(table.row(".selected").data());
         },
       },
     ],

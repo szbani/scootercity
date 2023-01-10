@@ -42,23 +42,114 @@ if (empty($_GET['page'])) {
                                     <th>Index Kép</th>
                                     <th>Ár(Ft)</th>
                                     <th>Kategória</th>
-                                    <!-- <th>#</th> -->
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
-                            <?php
-                            // $sql = "SELECT t.id,t.nev,t.ar,CONCAT(ke.kep, ke.type) AS indexkep,
-                            // GROUP_CONCAT(CONCAT(ke.kep, ke.type) SEPARATOR', ') as kepek,
-                            // t.leiras,kn.kat_nev,t.tulajdonsagok FROM `termekek` t 
-                            // INNER JOIN `kat_nev` kn ON kn.id = t.kategoria 
-                            // INNER JOIN `kepek` ke ON ke.id = t.index_kep
-                            // INNER JOIN `kepek_fk` kef ON kef.termid = t.id
-                            // INNER JOIN `kepek` k on kef.kepid = k.id
-                            // GROUP BY t.nev;";
-                            // loadTermekek($conn, $sql);
-                            ?> 
                         </table>
                     </div>
                 </div>
+                <form action="query/U_fiokok.php" id="Modal" method="POST" autocomplete="off">
+                    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg modal-fullscreen-lg-down">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                    Termék felvétele
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row g-3">
+                                        <div class="col">
+                                            <label for="inputNev" class="form-label">Termék neve:</label>
+                                            <input class="form-control" id="inputNev" type="text" name="nev" />
+                                        </div>
+                                    </div>
+                                    <div class="row g-3">
+                                        <div class="col">
+                                            <label for="inputAr" class="form-label">Termék Ára:</label>
+                                            <input class="form-control" id="inputAr" type="number" name="ar">
+                                        </div>
+                                        <div class="col">
+                                            <label for="inputKategoria" class="form-label">Termék kategóriája:</label>
+                                            <div class="form-check ps-0">
+                                                <select id="inputKategoria" name="kategoria" class="form-select">
+                                                    <option>option1</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row g-3">
+                                        <div class="col-3">
+                                            <label for="inputTulajdonsag" class="form-label">Termék Tulajdonságai:</label>
+                                            <label for="inputTulajdonsag" class="form-label">Tulajdonság neve:</label>
+                                            <input class="form-control" id="inputTulajdonsag" type="text" name="tulajdonsag">
+                                        </div>
+                                        <div class="col-3">
+                                            <label for="inputTulajdonsag" class="form-label">Értéke:</label>
+                                            <input class="form-control" id="inputTulajdonsag" type="text" name="tulajdonsag">
+                                        </div>
+                                        <div class="col-3">
+                                            <label for="inputTulajdonsag" class="form-label">Termék Tulajdonságai:</label>
+                                            <label for="inputTulajdonsag" class="form-label">Tulajdonság neve:</label>
+                                            <input class="form-control" id="inputTulajdonsag" type="text" name="tulajdonsag">
+                                        </div>
+                                        <div class="col-3">
+                                            <label for="inputTulajdonsag" class="form-label">Értéke:</label>
+                                            <input class="form-control" id="inputTulajdonsag" type="text" name="tulajdonsag">
+                                        </div>
+                                    </div>
+                                    <div class="row g-3">
+                                        <div class="col">
+                                            <label for="inputBank" class="form-label">Termék képei:</label>
+                                            <div class="container">
+                                                <div class="row align-items-center">
+                                                    <div class="col-3 text-center">
+                                                        <fieldset class="form-group">
+                                                            <a href="javascript:void(0)" onclick="$('#pro-image').click()"><i class="fa-solid fa-cloud-arrow-up fa-6x"></i></a>
+                                                            <input type="file" id="pro-image" name="pro-image" style="display: none" class="form-control" multiple />
+                                                        </fieldset>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="preview-images-zone">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row g-3">
+                                        <div class="col">
+                                            <label for="inputBank" class="form-label">Termék Leírása:</label>
+                                            <textarea class="form-control" name="pass1"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" id="modalSubmit" class="btn btn-primary" name="upload">Feltölt</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <form action="query/U_termekek.php" method="POST">
+                    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="delModalLabel">Biztos törlöd ezt a terméket?:<br>
+                                        (ID:<a class="text-danger" id="delId"></a>) <a id="delNev"><a></h5>
+                                    <input type="text" id="delHidden" name="id" value="" hidden>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégsem</button>
+                                    <button type="submit" name="delete" class="btn btn-primary">Törlés</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
                 </main>
                 <?php
                 if (empty($_GET['page'])) {
@@ -67,17 +158,9 @@ if (empty($_GET['page'])) {
                 ?>
                 <script>
                     createTable();
+                    imageZone();
                 </script>
 
     </body>
 
     </html>
-
-    <!-- SELECT t.id,t.nev,t.ar,CONCAT(ke.kep, ke.type) AS indexkep,
-GROUP_CONCAT(CONCAT(ke.kep, ke.type) SEPARATOR', ') as kepek,
-t.leiras,kn.kat_nev,t.tulajdonsagok FROM `termekek` t 
-INNER JOIN `kat_nev` kn ON kn.id = t.kategoria 
-INNER JOIN `kepek` ke ON ke.id = t.index_kep
-INNER JOIN `kepek_fk` kef ON kef.termid = t.id
-INNER JOIN `kepek` k on kef.kepid = k.id
-GROUP BY t.nev; -->

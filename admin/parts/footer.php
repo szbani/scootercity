@@ -19,7 +19,7 @@ include_once "query/success.php";
 </div>
 <script src="../js/bootstrap.bundle.js" crossorigin="anonymous"></script>
 <script src="../js/jquery.js" crossorigin="anonymous"></script>
-
+<script src="jquery-ui/jquery-ui.min.js" crossorigin="anonymous"></script>
 
 <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 <script src="js/scripts.js"></script>

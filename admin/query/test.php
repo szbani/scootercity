@@ -1,8 +1,9 @@
 <?php
-include 'conn.php';
+require 'conn.php';
+
 $sql = "SELECT t.id,t.nev,t.ar,
-(SELECT CONCAT(kep,type) FROM kepek WHERE id =kef.kepid ORDER by sorrend) as indexkep,
-JSON_ARRAYAGG(CONCAT(k.kep, k.type) ORDER BY sorrend) as kepek,
+(SELECT kep FROM kepek WHERE id =kef.kepid ORDER by sorrend) as indexkep,
+JSON_ARRAYAGG(k.kep ORDER BY sorrend) as kepek,
 t.leiras,kn.kat_nev,t.tulajdonsagok FROM `termekek` t 
 INNER JOIN `kat_nev` kn ON kn.id = t.kategoria 
 INNER JOIN `kepek_fk` kef ON kef.termid = t.id
@@ -17,7 +18,6 @@ GROUP BY t.nev;";
             array_push($array, $row);
         }
     }
-
     echo json_encode($array,0,512);
 
 

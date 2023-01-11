@@ -12,21 +12,23 @@ function format(d) {
     $kepek =
       '<img src="../media/products/product-placeholder.png" class="img-fluid img-table" alt="">';
   }
-  var tul = "<label>";
+  var tul = '';
   try {
     var json = JSON.parse(d.tulajdonsagok);
+    console.log(json);
     $.each(json, function (id, value) {
-      tul += id + ": " + value + ",&ensp;";
+      $.each(value,function(id,value){
+        tul += id + ": " + value + ",&ensp;";
+        });
     });
     tul = tul.slice(0, -7);
-    tul += "</label>";
   } catch {
     tul = "nincs megadva tulajdonság.";
   }
   return ('<div class="slider">' +
     '<table class="table" cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
     "<tr>" +
-    "<td>További képek:</td>" +
+    "<td class='child-row'>További képek:</td>" +
     "<td>" +
     kepek +
     "</td>" +
@@ -95,13 +97,13 @@ function createTable() {
       { data: "kat_nev" },
       {
         data: null,
-        className: "dt-center editor-edit",
+        className: "dt-center edit",
         defaultContent: '<i class="fa fa-pencil"/>',
         orderable: false,
       },
       {
         data: null,
-        className: "dt-center editor-delete",
+        className: "dt-center delete",
         defaultContent: '<i class="fa fa-trash"/>',
         orderable: false,
       },
@@ -162,7 +164,7 @@ function loadTablesSortable() {
 //regi vege
 
 function del(table) {
-  table.on("click", "td.editor-delete", function (e) {
+  table.on("click", "td.delete", function (e) {
     e.preventDefault();
     var tr = $(this).closest("tr");
     var row = table.row(tr);
@@ -173,7 +175,7 @@ function del(table) {
   });
 }
 function edit(table) {
-  $(table).on("click", "td.editor-edit", function (e) {
+  table.on("click", "td.edit", function (e) {
     e.preventDefault();
     $('#modal').modal("show");
     $('#modalSubmit').attr('name', 'edit');

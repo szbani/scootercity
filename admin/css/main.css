@@ -121,6 +121,9 @@ div.slider {
 table.dataTable tbody td.no-padding {
   padding: 0;
 }
+.child-row{
+  width: 125px;
+}
 
 /* image selector */
 .preview-images-zone {
@@ -193,4 +196,17 @@ table.dataTable tbody td.no-padding {
 }
 .fa-cloud-arrow-up:hover{
   color: #495579;
+}
+
+/* modal */
+.modal-scroll-zone{
+  max-height: 175px;
+}
+.del-row{
+  cursor: pointer;
+  color: var(--color-body-main-darker);
+}
+.add-row{
+  cursor: pointer;
+  color: var(--color-body-main-darker);
 }

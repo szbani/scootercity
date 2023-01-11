@@ -50,6 +50,43 @@ function showToast(id) {
     toast.show();
 }
 
+//bs tooltips
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+
+
+//modal row management
+$(document).ready(function(){
+    //add row
+    $(document).on("click",".add-row",function(){
+        var newRow = '<div class="col-16">'+
+                    '<div class="row g-1">'+
+                    '<div class="col-4">'+
+                    '<input class="form-control" id="inputTulajdonsag" type="text" name="tulajdonsag">'+
+                    '</div>'+
+                    '<div class="col-4">'+
+                    '<input class="form-control" id="inputTulajdonsag" type="text" name="tulajdonsag">'+
+                    '</div>'+
+                    '<div class="col-4">'+
+                    '<a class="del-row" data-bs-toggle="tooltip" data-bs-placement="right" title="Sor törlése">'+
+                    '<i class="fa-solid fa-minus fa-2x" ></i>'+
+                    '</a>'+
+                    '</div>'+
+                    '</div>'+
+                    '</div>';
+        $(".modal-scroll-zone").append(newRow);
+    });
+    //delete row
+    $(document).on("click",".del-row",function(){
+        $(this).tooltip('hide');
+        $(this).closest(".col-16").remove();
+    });
+})
+
+
+
 //multiple image
 function imageZone() {
     // document

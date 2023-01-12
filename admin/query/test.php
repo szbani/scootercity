@@ -2,7 +2,6 @@
 require 'conn.php';
 
 $sql = "SELECT t.id,t.nev,t.ar,
-(SELECT kep FROM kepek WHERE id =kef.kepid ORDER by sorrend) as indexkep,
 JSON_ARRAYAGG(k.kep ORDER BY sorrend) as kepek,
 t.leiras,kn.kat_nev,t.tulajdonsagok FROM `termekek` t 
 INNER JOIN `kat_nev` kn ON kn.id = t.kategoria 
@@ -18,7 +17,7 @@ GROUP BY t.nev;";
             array_push($array, $row);
         }
     }
-    echo json_encode($array,0,512);
+    echo json_encode($array,JSON_UNESCAPED_UNICODE,512);
 
 
 

@@ -34,38 +34,6 @@ if (isset($_POST['upload'])) {
 
     //kell csinalnom egy keresest ami kiszuri a nemhasznalt a nemhasznalt FK kat es kitorli oket az editnel.
     //hozza kell adnom a termekekhez egy mennyiseg mezot.
-    if ($_FILES['images']) {
-        $file_ary = reArrayFiles($_FILES['images']);
-
-        $target_dir = '../../media/products/';
-        $i = 0;
-        $insertValues = '';
-        foreach ($file_ary as $file) {
-            $file['name'] = $inputNev . '-' . $i . '.jpg';
-            $target_file = $target_dir . basename($file['name']);
-
-            if (move_uploaded_file($file["tmp_name"], $target_file)) {
-                echo "Sikeres fájl feltöltés " . htmlspecialchars(basename($file["name"])) . ".";
-            } else {
-                array_push($errors, 'Nem sikerült a képek feltöltése');
-                back();
-            }
-
-            $fileNev = $file['name'];
-            $sqlKepId = "SELECT id FROM kepek WHERE kep = '$fileNev'";
-            $result = mysqli_query($conn, $sqlKepId);
-            
-            if (mysqli_num_rows($result) == 0) {
-                if (!empty($insertValues)) $insertValues .= ',';
-                $insertValues .= "('$fileNev')";
-            }
-            $i++;
-        }
-        if (!empty($insertValues)) {
-            $sqlKepek = "INSERT INTO kepek(kep)VALUES" . $insertValues . ";";
-            mysqli_query($conn, $sqlKepek);
-        }
-    }
     
     //tulajdonsagok json re alakitasa eleje
     $tempTulajdonsagok = array();
@@ -82,7 +50,7 @@ if (isset($_POST['upload'])) {
             array_push($tempTulajdonsagok, [$tulNev => $tulErtek]);
         }
     }
-    $inputTulajdonsagok = json_encode($tempTulajdonsagok, 0, 512);
+    $inputTulajdonsagok = json_encode($tempTulajdonsagok, JSON_UNESCAPED_UNICODE, 512);
     //tulajdonsagok json re alakitasa vege
 
     //termek feltoltese eleje
@@ -99,11 +67,51 @@ if (isset($_POST['upload'])) {
     $termekId = $row['id'];
     //termek id lekeres vege
 
+    
+    if ($_FILES['images']) {
+        //file feltoltes eleje
+        $file_ary = reArrayFiles($_FILES['images']);
+        
+        $target_dir = '../../media/products/';
+        $i = 0;
+        $insertValues = '';
+        foreach ($file_ary as $file) {
+            $file['name'] = $termekId . '-' . $i . '.jpg';
+            $target_file = $target_dir . basename($file['name']);
+
+            if (move_uploaded_file($file["tmp_name"], $target_file)) {
+                echo "Sikeres fájl feltöltés " . htmlspecialchars(basename($file["name"])) . ".";
+            } else {
+                array_push($errors, 'Nem sikerült a képek feltöltése');
+                back();
+            }
+            //file feltoltes vege
+
+            //file adatb be toltes eleje
+            $fileNev = $file['name'];
+            $sqlKepId = "SELECT id FROM kepek WHERE kep = '$fileNev'";
+            $result = mysqli_query($conn, $sqlKepId);
+            
+            if (mysqli_num_rows($result) == 0) {
+                if (!empty($insertValues)) $insertValues .= ',';
+                $insertValues .= "('$fileNev')";
+            }
+            $i++;
+            //file adatb be toltes vege
+        }
+        if (!empty($insertValues)) {
+            $sqlKepek = "INSERT INTO kepek(kep)VALUES" . $insertValues . ";";
+            mysqli_query($conn, $sqlKepek);
+        }
+        
+    }
+    
+
     if ($_FILES['images']) {
         //kep id lekeres eleje
         $kepek = '';
         for ($i = 0; $i < count($file_ary); $i++) {
-            $fileNev = $inputNev . '-' . $i . '.jpg';
+            $fileNev = $termekId . '-' . $i . '.jpg';
             if (!empty($kepek)) $kepek .= ',';
             $kepek .= "'" . $fileNev . "'";
         }
@@ -128,8 +136,12 @@ if (isset($_POST['upload'])) {
         $sqlKepekFk = "INSERT INTO kepek_fk(termid,kepid,sorrend)
                     VALUES('$termekId','9','1')";
     }
+    // var_dump($sqlKepekFk);
     mysqli_query($conn, $sqlKepekFk);
+    logAction($conn, "Létrehozta ezt a terméket: " . $inputNev . ".", $_SESSION['user']);
+    $_SESSION['success'] = 'Sikeres Termék Felvétel';
     back();
+    // */
 
 } else if (isset($_POST['edit'])) {
     //

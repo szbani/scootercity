@@ -81,12 +81,12 @@ function createTable() {
       { data: "id" },
       { data: "nev" },
       {
-        data: "indexkep",
+        data: "kepek",
         render: function (data, type) {
           if (type === "display") {
             return (
               '<img src="../media/products/' +
-              data +
+              JSON.parse(data)[0] +
               '" class="img-fluid img-table" alt=""> '
             );
           }

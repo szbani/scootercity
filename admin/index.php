@@ -3,7 +3,6 @@ session_start();
 require_once 'query/conn.php';
 require_once 'query/login.php';
 
-require_once 'query/logs.php';
 if (empty($_GET['page'])) {
 ?>
 
@@ -39,10 +38,6 @@ if (empty($_GET['page'])) {
                                     <th>IP</th>
                                 </tr>
                             </thead>
-                            
-                            <?php
-                            loadLogs($conn, "SELECT * FROM logs", true, false, false);
-                            ?>
                         </table>
                     </div>
                 </div>
@@ -53,7 +48,7 @@ if (empty($_GET['page'])) {
                 }
                 ?>
                 <script>
-                    loadTables();
+                    createTableLogs();
                 </script>
 
     </body>

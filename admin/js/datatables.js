@@ -1,31 +1,38 @@
 function format(d) {
-  // `d` is the original data object for the row
   var kepek = "";
   try {
-    $.each(JSON.parse(d.kepek), function (id, value) {
-      kepek +=
-        '<img src="../media/products/' +
-        value +
-        '" class="img-fluid img-table" alt="">';
-    });
+    if (d.szkepek > 0) {
+      for (i = 0; i < d.szkepek; i++) {
+        kepek +=
+          '<img src="../media/products/' +
+          d.id +
+          "-" +
+          i +
+          ".jpg" +
+          '" class="img-fluid img-table" alt="">';
+      }
+    } else {
+      kepek = "product-placeholder.png";
+    }
   } catch {
     $kepek =
       '<img src="../media/products/product-placeholder.png" class="img-fluid img-table" alt="">';
   }
-  var tul = '';
+  var tul = "";
   try {
     var json = JSON.parse(d.tulajdonsagok);
     console.log(json);
     $.each(json, function (id, value) {
-      $.each(value,function(id,value){
+      $.each(value, function (id, value) {
         tul += id + ": " + value + ",&ensp;";
-        });
+      });
     });
     tul = tul.slice(0, -7);
   } catch {
     tul = "nincs megadva tulajdonság.";
   }
-  return ('<div class="slider">' +
+  return (
+    '<div class="slider">' +
     '<table class="table" cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
     "<tr>" +
     "<td class='child-row'>További képek:</td>" +
@@ -46,11 +53,12 @@ function format(d) {
     "</td>" +
     "</tr>" +
     "</table>" +
-    '</div>'
+    "</div>"
   );
 }
 
-function createTable() {
+var childRows = null;
+function createTableTermekek() {
   var table = $("#table").DataTable({
     dom:
       '<"row"' +
@@ -68,8 +76,10 @@ function createTable() {
     },
     responsive: true,
     ajax: {
-      url: "query/test.php",
+      url: "query/jsonQuery.php",
       dataSrc: "",
+      data: { table: "termekek" },
+      type: "POST",
     },
     columns: [
       {
@@ -81,12 +91,14 @@ function createTable() {
       { data: "id" },
       { data: "nev" },
       {
-        data: "kepek",
-        render: function (data, type) {
+        data: "szkepek",
+        render: function (data, type, row) {
           if (type === "display") {
+            var img = "product-placeholder.png";
+            if (data > 0) img = row.id + "-" + 0 + ".jpg";
             return (
               '<img src="../media/products/' +
-              JSON.parse(data)[0] +
+              img +
               '" class="img-fluid img-table" alt=""> '
             );
           }
@@ -94,7 +106,8 @@ function createTable() {
         },
       },
       { data: "ar" },
-      { data: "kat_nev" },
+      { data: "knev" },
+      { data: "mennyiseg" },
       {
         data: null,
         className: "dt-center edit",
@@ -112,21 +125,27 @@ function createTable() {
       {
         text: "Új termék",
         action: function (e, dt, node, config) {
-          $('#modal').modal("show");
-          $('#modalSubmit').attr('name', 'upload');
+          $("#modal").modal("show");
+          if ($("#modalSubmit").attr("name") != "upload") {
+            $("#form").trigger("reset");
+            console.log("if statement");
+            $("#modalSubmit").attr("name", "upload");
+            $('#modalSubmit').text("Feltöltés");
+            $("#modalTitle").text("Termék felvétele");
+            resetPics();
+          }
         },
       },
     ],
   });
   //edit data
-  edit(table);
+  editTermekek(table);
   //delete data
   del(table);
   //child row
   $("#table tbody").on("click", "td.dt-control", function () {
     var tr = $(this).closest("tr");
     var row = table.row(tr);
-    console.log(row.data());
     if (row.child.isShown()) {
       // This row is already open - close it
       $("div.slider", row.child()).slideUp(function () {
@@ -140,28 +159,27 @@ function createTable() {
       $("div.slider", row.child()).slideDown();
     }
   });
+
+  setInterval(function () {
+    childRows = table.rows($(".shown"));
+    table.ajax.reload(null, false);
+  }, 30000);
+  table.on("draw", function () {
+    // If reloading table then show previously shown rows
+    if (childRows) {
+      childRows.every(function (rowIdx, tableLoop, rowLoop) {
+        d = this.data();
+        this.child($(format(d))).show();
+        this.nodes().to$().addClass("shown");
+        $("div.slider", this.child()).slideDown();
+      });
+
+      // Reset childRows so loop is not executed each draw
+      childRows = null;
+    }
+  });
 }
 
-//regi
-function loadTables() {
-  var table = $("#table").DataTable({
-    ordering: false,
-    fixedHeader: {
-      header: true,
-      headerOffset: $("#navbar").outerHeight(true),
-    },
-  });
-}
-function loadTablesSortable() {
-  $("#table").DataTable({
-    ordering: true,
-    fixedHeader: {
-      header: true,
-      headerOffset: $("#navbar").outerHeight(true),
-    },
-  });
-}
-//regi vege
 
 function del(table) {
   table.on("click", "td.delete", function (e) {
@@ -169,37 +187,235 @@ function del(table) {
     var tr = $(this).closest("tr");
     var row = table.row(tr);
     $("#deleteModal").modal("show");
-    $("#delId").text(table.cell(row, 1).data());
-    $("#delNev").text(table.cell(row, 2).data());
-    $("#delHidden").attr('value', table.cell(row, 1).data());
+    $("#delId").text(row.data().id);
+    $("#delNev").text(row.data().nev);
+    $("#delHidden").attr("value", row.data().id);
   });
 }
-function edit(table) {
+function editTermekek(table) {
   table.on("click", "td.edit", function (e) {
     e.preventDefault();
-    $('#modal').modal("show");
-    $('#modalSubmit').attr('name', 'edit');
+    var tr = $(this).closest("tr");
+    var row = table.row(tr);
+    $("#modalSubmit").attr("name", "edit");
+    $('#modalSubmit').text("Szerkesztés");
+    $("#modalTitle").text("Termék szerkesztése");
+    $("#modal").modal("show");
+    $("#form").trigger("reset");
+    resetPics();
+    $("#inputId").val(table.cell(row, 1).data());
+    $("#inputNev").val(table.cell(row, 2).data());
+    $("#inputAr").val(table.cell(row, 4).data());
+    $("#inputMennyiseg").val(table.cell(row, 6).data());
+    $("#inputLeiras").val(row.data().leiras);
+    $("#inputKategoria").val(row.data().kategoria);
+    if (row.data().szkepek > 0) {
+      var output = $(".preview-images-zone");
+      var html = "";
+      for (i = 0; i < row.data().szkepek; i++) {
+        html =
+          '<div id="' +
+          i +
+          '"class="preview-image preview-show-' +
+          i +
+          '">' +
+          '<div class="image-cancel" data-no="' +
+          i +
+          '">x</div>' +
+          '<div class="image-zone"><img id="pro-img-' +
+          i +
+          '"src="../media/products/' +
+          row.data().id +
+          "-" +
+          i +
+          ".jpg" +
+          '"></div>';
+
+        output.append(html);
+
+        var url = getBase64Image(
+          "../media/products/" + row.data().id + "-" + i + ".jpg"
+        );
+        var blob = dataURItoBlob(url);
+        var fd = new FormData();
+        fd.append("file", blob, "tempFile-" + i);
+        var temp = new DataTransfer();
+        temp.items.add(fd.get("file"));
+        num = i;
+        var input = document.createElement("input");
+        input.type = "file";
+        input.name = "images[]";
+        input.hidden = true;
+        input.files = temp.files;
+        $(".preview-show-" + i).append(input);
+      }
+    }
+    try {
+      var json = JSON.parse(row.data().tulajdonsagok);
+      var tulnevek = $('input[name="tul-nev[]"]');
+      var tulertekek = $('input[name="tul-ertek[]"]');
+      for (i = tulnevek.length; i < json.length; i++) {
+        $(".add-row").trigger("click");
+      }
+      $.each(json, function (jsonid, value) {
+        $.each(value, function (id, value) {
+          $(tulnevek[jsonid]).val(id);
+          $(tulertekek[jsonid]).val(value);
+        });
+      });
+    } catch {}
   });
 }
 
+function createTableLogs() {
+  var table = $("#table").DataTable({
+    order: [[0, "desc"]],
+    fixedHeader: {
+      header: true,
+      headerOffset: $("#navbar").outerHeight(true),
+    },
+    responsive: true,
+    ajax: {
+      url: "query/jsonQuery.php",
+      dataSrc: "",
+      data: { table: "logs" },
+      type: "POST",
+    },
+    columns: [
+      { data: "id" },
+      { data: "user" },
+      { data: "action" },
+      { data: "time" },
+      { data: "ip" },
+    ],
+  });
+  setInterval(function () {
+    table.ajax.reload(null, false);
+  }, 30000);
+}
 
-// frissites idokozonkent
-// setInterval(function () {
-//       $('#example').DataTable().ajax.reload();
-//   }, 10000);
-//
-//   setInterval( function () {
-//
-//       $.ajax ({
-//               "url": "http://85.192.41.18:5000/getsixvar",
-//               "type": "GET",
-//               "dataType": "json",
-//               "dataSrc": "data",
-//               "csrfmiddlewaretoken": "{{ csrf_token }}",
-//           success: function(result) {
-//               document.getElementById('p1').innerHTML = result['p1'];
-//               document.getElementById('p2').innerHTML = result['p2'];
-//               console.log(result);
-//               },
-//           })
-//       }, 5000);
+function createTableFiokok() {
+  var table = $("#table").DataTable({
+    dom:
+      '<"row"' +
+      '<"col-sm-12 col-md-2"B>' +
+      '<"col-sm-12 col-md-6"l>' +
+      '<"col-sm-12 col-md-4"f>>' +
+      "t" +
+      '<"row"' +
+      '<"col-sm-12 col-md-6"i>' +
+      '<"col-sm-12 col-md-6"p>>',
+    order: [[1, "desc"]],
+    fixedHeader: {
+      header: true,
+      headerOffset: $("#navbar").outerHeight(true),
+    },
+    responsive: true,
+    ajax: {
+      url: "query/jsonQuery.php",
+      dataSrc: "",
+      data: { table: "fiokok" },
+      type: "POST",
+    },
+    columns: [
+      { data: "id" },
+      { data: "email" },
+      { data: "edit" },
+      { data: "delete" },
+    ],
+    buttons: [
+      {
+        text: "Új fiók",
+        action: function (e, dt, node, config) {
+          $("#modal").modal("show");
+          if ($("#modalSubmit").attr("name") != "upload") {
+            $("#form").trigger("reset");
+            console.log("if statement");
+            $("#modalSubmit").attr("name", "upload");
+            $("#modalTitle").text("Fiók hozzáadása");
+          }
+        },
+      },
+    ],
+  });
+  setInterval(function () {
+    table.ajax.reload(null, false);
+  }, 30000);
+}
+
+function createTableKategoriak() {
+  var table = $("#table").DataTable({
+    dom:
+      '<"row"' +
+      '<"col-sm-12 col-md-2"B>' +
+      '<"col-sm-12 col-md-6"l>' +
+      '<"col-sm-12 col-md-4"f>>' +
+      "t" +
+      '<"row"' +
+      '<"col-sm-12 col-md-6"i>' +
+      '<"col-sm-12 col-md-6"p>>',
+    order: [[1, "asc"]],
+    fixedHeader: {
+      header: true,
+      headerOffset: $("#navbar").outerHeight(true),
+    },
+    responsive: true,
+    ajax: {
+      url: "query/jsonQuery.php",
+      dataSrc: "",
+      data: { table: "kategoriak" },
+      type: "POST",
+    },
+    columns: [
+      { data: 'id'},
+      { data: 'nev'},
+      { data: 'hasznalva'},
+      {
+        data: null,
+        className: "dt-center edit",
+        defaultContent: '<i class="fa fa-pencil"/>',
+        orderable: false,
+      },
+      {
+        data: null,
+        className: "dt-center delete",
+        defaultContent: '<i class="fa fa-trash"/>',
+        orderable: false,
+      },
+    ],
+    buttons: [
+      {
+        text: "Új kategória",
+        action: function (e, dt, node, config) {
+          $("#modal").modal("show");
+          if ($("#modalSubmit").attr("name") != "upload") {
+            $("#form").trigger("reset");
+            $("#modalSubmit").attr("name", "upload");
+            $('#modalSubmit').text("Feltöltés");
+            $("#modalTitle").text("Kategória hozzáadása");
+          }
+        },
+      },
+    ],
+  });
+  editKategoriak(table);
+  del(table);
+  setInterval(function () {
+    table.ajax.reload(null, false);
+  }, 30000);
+}
+
+function editKategoriak(table){
+  table.on('click','td.edit',function(e){
+    e.preventDefault();
+    var tr = $(this).closest("tr");
+    var row = table.row(tr);
+    $("#modalSubmit").attr("name","edit");
+    $('#modalSubmit').text("Szerkesztés");
+    $("#modalTitle").text("Kategória szerkesztése");
+    $("#modal").modal("show");
+    $("#form").trigger("reset");
+    $("#inputNev").val(row.data().nev);
+  });
+}
+

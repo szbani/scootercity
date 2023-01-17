@@ -64,10 +64,10 @@ $(document).ready(function(){
         var newRow = '<div class="col-16">'+
                     '<div class="row g-1">'+
                     '<div class="col-4">'+
-                    '<input class="form-control" id="inputTulajdonsag" type="text" name="tulajdonsag">'+
+                    '<input class="form-control" id="inputTulajdonsag" type="text" name="tul-nev[]">'+
                     '</div>'+
                     '<div class="col-4">'+
-                    '<input class="form-control" id="inputTulajdonsag" type="text" name="tulajdonsag">'+
+                    '<input class="form-control" id="inputTulajdonsag" type="text" name="tul-ertek[]">'+
                     '</div>'+
                     '<div class="col-4">'+
                     '<a class="del-row" data-bs-toggle="tooltip" data-bs-placement="right" title="Sor törlése">'+
@@ -84,7 +84,6 @@ $(document).ready(function(){
         $(this).closest(".col-16").remove();
     });
 })
-
 
 
 //multiple image
@@ -150,11 +149,9 @@ function readImage() {
                 var input = document.createElement('input');
                 input.type = "file";
                 input.name = "images[]";
-                input.id = num;
                 input.hidden = true;
                 input.files = temp.files;
-
-                var t =num.toString();
+                
                 output.find("div")[(num-1)*3].append(input);
             })
             picReader.readAsDataURL(file);
@@ -179,4 +176,21 @@ function dataURItoBlob(dataURI) {
     }
 
     return new Blob([ab], {type: mimeString});
+}
+
+function getBase64Image(path) {
+    var img = new Image();
+    img.src = path;
+    var canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+    var dataURL = canvas.toDataURL("image/jpg");
+    return dataURL;
+  }
+
+function resetPics(){
+    $('.preview-images-zone').empty();
+    num = 0;
 }

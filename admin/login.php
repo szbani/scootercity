@@ -1,6 +1,5 @@
 <?php
 session_start();
-require_once('query/conn.php');
 ?>
 <!DOCTYPE html>
 <html lang="hu">
@@ -47,7 +46,7 @@ require_once('query/conn.php');
         </div>
     </section>
     <?php
-    include_once 'query/errorsF.php';
+    include_once 'query/floatingAlert.php';
     ?>
     <script>
         function showToast(id) {

@@ -74,7 +74,7 @@
   color: rgb(26, 25, 25) !important;
 }
 
-.btn-fab {
+/* .btn-fab {
   position: fixed;
   width: 60px;
   height: 60px;
@@ -98,7 +98,7 @@
   box-shadow: 4px 4px 6px #a6acc7;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
     box-shadow 0.15s ease-in-out;
-}
+} */
 
 .card-50 {
   width: fit-content !important;

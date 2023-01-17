@@ -37,10 +37,11 @@ if (empty($_GET['page'])) {
                                 <tr>
                                     <th></th>
                                     <th>Id</th>
-                                    <th>Terméknév</th>
+                                    <th>Termék név</th>
                                     <th>Index Kép</th>
                                     <th>Ár(Ft)</th>
                                     <th>Kategória</th>
+                                    <th>Mennyiség(db)</th>
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -48,12 +49,12 @@ if (empty($_GET['page'])) {
                         </table>
                     </div>
                 </div>
-                <form action="query/U_termekek.php" id="Modal" method="POST" autocomplete="off" enctype="multipart/form-data">
+                <form action="query/U_termekek.php" id="form" method="POST" autocomplete="off" enctype="multipart/form-data">
                     <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg modal-fullscreen-lg-down">
                             <div class="modal-content">
                                 <div class="modal-header align-items-center pb-1">
-                                    <h4>Termék felvétele</h4>
+                                    <h4 id="modalTitle">Termék felvétele</h4>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
@@ -64,26 +65,30 @@ if (empty($_GET['page'])) {
                                         </div>
                                     </div>
                                     <div class="row g-3">
-                                        <div class="col">
+                                        <div class="col-5">
                                             <label for="inputAr" class="form-label">Termék ára:</label>
                                             <input class="form-control" id="inputAr" type="number" name="ar" required>
                                         </div>
-                                        <div class="col">
+                                        <div class="col-4">
                                             <label for="inputKategoria" class="form-label">Termék kategóriája:</label>
                                             <div class="form-check ps-0">
                                                 <select id="inputKategoria" name="kategoria" class="form-select" val="" required>
                                                     <option selected disabled value="">Kategória...</option>
                                                     <?php
-                                                    $sql = "SELECT id, kat_nev FROM kat_nev;";
+                                                    $sql = "SELECT id, nev FROM kategoriak;";
                                                     $result = mysqli_query($conn, $sql);
                                                     if (mysqli_num_rows($result) > 0) {
                                                         while ($row = mysqli_fetch_array($result)) {
-                                                            echo '<option value="'.$row['id'].'">' . $row['kat_nev'] . '</option>';
+                                                            echo '<option value="'.$row['id'].'">' . $row['nev'] . '</option>';
                                                         }
                                                     }
                                                     ?>
                                                 </select>
                                             </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <label for="inputMennyiseg" class="form-label">Mennyiség:</label>
+                                            <input class="form-control" id="inputMennyiseg" type="number" min="0" value="0" name="mennyiseg">           
                                         </div>
                                     </div>
                                     <label for="inputTulajdonsag" class="form-label">Termék tulajdonságai:</label>
@@ -118,10 +123,10 @@ if (empty($_GET['page'])) {
                                                 <div class="col-16">
                                                 <div class="row g-1">
                                                  <div class="col-4">
-                                                <input class="form-control" id="inputTulajdonsag" type="text" name="tul-nev[]">
+                                                <input class="form-control" type="text" name="tul-nev[]">
                                             </div>
                                             <div class="col-4">
-                                                <input class="form-control" id="inputTulajdonsag" type="text" name="tul-ertek[]">
+                                                <input class="form-control" type="text" name="tul-ertek[]">
                                             </div>
                                             <div class="col-4">
                                                 <a class="del-row" data-bs-toggle="tooltip" data-bs-placement="right" title="Sor törlése">
@@ -165,6 +170,7 @@ if (empty($_GET['page'])) {
                                 </div>
                                 <div class="modal-footer">
                                     <div class="d-grid gap-2 col-6 mx-auto">
+                                        <input type="text" id="inputId" name="id" hidden>
                                         <button type="submit" id="modalSubmit" class="btn btn-primary" name="upload">Feltöltés</button>
                                     </div>
                                 </div>
@@ -197,7 +203,7 @@ if (empty($_GET['page'])) {
                 }
                 ?>
                 <script>
-                    createTable();
+                    createTableTermekek();
                     imageZone();
                 </script>
 

@@ -44,11 +44,6 @@ if (empty($_GET['page'])) {
                                         <th>#</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <?php
-                                    loadArray($conn);
-                                    ?>
-                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -155,9 +150,8 @@ if (empty($_GET['page'])) {
                     include_once 'parts/footer.php';
                 }
                 ?>
-                <script src="js/fiokok.js"></script>
                 <script>
-                    loadTables();
+                    createTableFiokok(<?php $_SESSION['main']?>);
                 </script>
 
     </body>

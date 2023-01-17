@@ -1,6 +1,5 @@
 <?php
-include_once "query/errorsF.php";
-include_once "query/success.php";
+include_once "query/floatingAlert.php";
 ?>
 <footer class="py-4 bg-light mt-auto">
     <!-- keszitette -->

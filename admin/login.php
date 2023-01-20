@@ -30,10 +30,10 @@ session_start();
                         <h3 class="mb-4 text-center">Bejelentkezés</h3>
                         <form method="POST" action="query/login.php" class="signin-form">
                             <div class="form-group">
-                                <input type="text" name="email" class="form-control" placeholder="Username" required>
+                                <input type="text" name="email" class="form-control" placeholder="Email cím" required>
                             </div>
                             <div class="form-group">
-                                <input id="password-field" name="pw" type="password" class="form-control" placeholder="Password" required>
+                                <input id="password-field" name="pw" type="password" class="form-control" placeholder="Jelszó" required>
                                 <span toggle="#password-field" id="togglePw" onclick="showPw(this)" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                             </div>
                             <div class="form-group">

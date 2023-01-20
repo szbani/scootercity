@@ -74,6 +74,9 @@ function createTableTermekek() {
       header: true,
       headerOffset: $("#navbar").outerHeight(true),
     },
+    language: {
+      url: "//cdn.datatables.net/plug-ins/1.13.1/i18n/hu.json",
+    },
     responsive: true,
     ajax: {
       url: "query/jsonQuery.php",
@@ -130,7 +133,7 @@ function createTableTermekek() {
             $("#form").trigger("reset");
             console.log("if statement");
             $("#modalSubmit").attr("name", "upload");
-            $('#modalSubmit').text("Feltöltés");
+            $("#modalSubmit").text("Feltöltés");
             $("#modalTitle").text("Termék felvétele");
             resetPics();
           }
@@ -180,16 +183,17 @@ function createTableTermekek() {
   });
 }
 
-
 function del(table) {
   table.on("click", "td.delete", function (e) {
     e.preventDefault();
-    var tr = $(this).closest("tr");
-    var row = table.row(tr);
-    $("#deleteModal").modal("show");
-    $("#delId").text(row.data().id);
-    $("#delNev").text(row.data().nev);
-    $("#delHidden").attr("value", row.data().id);
+    if ($(this).children().length > 0) {
+      var tr = $(this).closest("tr");
+      var row = table.row(tr);
+      $("#deleteModal").modal("show");
+      $("#delId").text(row.data().id);
+      $("#delNev").text(row.data().nev);
+      $("#delHidden").attr("value", row.data().id);
+    }
   });
 }
 function editTermekek(table) {
@@ -198,7 +202,7 @@ function editTermekek(table) {
     var tr = $(this).closest("tr");
     var row = table.row(tr);
     $("#modalSubmit").attr("name", "edit");
-    $('#modalSubmit').text("Szerkesztés");
+    $("#modalSubmit").text("Szerkesztés");
     $("#modalTitle").text("Termék szerkesztése");
     $("#modal").modal("show");
     $("#form").trigger("reset");
@@ -275,6 +279,9 @@ function createTableLogs() {
       headerOffset: $("#navbar").outerHeight(true),
     },
     responsive: true,
+    language: {
+      url: "//cdn.datatables.net/plug-ins/1.13.1/i18n/hu.json",
+    },
     ajax: {
       url: "query/jsonQuery.php",
       dataSrc: "",
@@ -305,10 +312,13 @@ function createTableFiokok() {
       '<"row"' +
       '<"col-sm-12 col-md-6"i>' +
       '<"col-sm-12 col-md-6"p>>',
-    order: [[1, "desc"]],
+    order: [[1, "asc"]],
     fixedHeader: {
       header: true,
       headerOffset: $("#navbar").outerHeight(true),
+    },
+    language: {
+      url: "//cdn.datatables.net/plug-ins/1.13.1/i18n/hu.json",
     },
     responsive: true,
     ajax: {
@@ -320,8 +330,17 @@ function createTableFiokok() {
     columns: [
       { data: "id" },
       { data: "email" },
-      { data: "edit" },
-      { data: "delete" },
+      { data: "action" },
+      {
+        data: "edit",
+        className: "dt-center edit",
+        orderable: false,
+      },
+      {
+        data: "delete",
+        className: "dt-center delete",
+        orderable: false,
+      },
     ],
     buttons: [
       {
@@ -333,14 +352,35 @@ function createTableFiokok() {
             console.log("if statement");
             $("#modalSubmit").attr("name", "upload");
             $("#modalTitle").text("Fiók hozzáadása");
+            $("#inputEmail").attr("readonly", false);
           }
         },
       },
     ],
   });
+  del(table);
+  editFiokok(table);
   setInterval(function () {
     table.ajax.reload(null, false);
   }, 30000);
+}
+
+function editFiokok(table) {
+  table.on("click", "td.edit", function (e) {
+    e.preventDefault();
+    if ($(this).children().length > 0) {
+      var tr = $(this).closest("tr");
+      var row = table.row(tr);
+      $("#modalSubmit").attr("name", "edit");
+      $("#modalSubmit").text("Szerkesztés");
+      $("#modalTitle").text("Fiók szerkesztése");
+      $("#modal").modal("show");
+      $("#form").trigger("reset");
+      $("#inputId").val(row.data().id);
+      $("#inputEmail").val(row.data().email);
+      $("#inputEmail").attr("readonly", true);
+    }
+  });
 }
 
 function createTableKategoriak() {
@@ -359,6 +399,9 @@ function createTableKategoriak() {
       header: true,
       headerOffset: $("#navbar").outerHeight(true),
     },
+    language: {
+      url: "//cdn.datatables.net/plug-ins/1.13.1/i18n/hu.json",
+    },
     responsive: true,
     ajax: {
       url: "query/jsonQuery.php",
@@ -367,9 +410,9 @@ function createTableKategoriak() {
       type: "POST",
     },
     columns: [
-      { data: 'id'},
-      { data: 'nev'},
-      { data: 'hasznalva'},
+      { data: "id" },
+      { data: "nev" },
+      { data: "hasznalva" },
       {
         data: null,
         className: "dt-center edit",
@@ -391,7 +434,7 @@ function createTableKategoriak() {
           if ($("#modalSubmit").attr("name") != "upload") {
             $("#form").trigger("reset");
             $("#modalSubmit").attr("name", "upload");
-            $('#modalSubmit').text("Feltöltés");
+            $("#modalSubmit").text("Feltöltés");
             $("#modalTitle").text("Kategória hozzáadása");
           }
         },
@@ -405,17 +448,17 @@ function createTableKategoriak() {
   }, 30000);
 }
 
-function editKategoriak(table){
-  table.on('click','td.edit',function(e){
+function editKategoriak(table) {
+  table.on("click", "td.edit", function (e) {
     e.preventDefault();
     var tr = $(this).closest("tr");
     var row = table.row(tr);
-    $("#modalSubmit").attr("name","edit");
-    $('#modalSubmit').text("Szerkesztés");
+    $("#modalSubmit").attr("name", "edit");
+    $("#modalSubmit").text("Szerkesztés");
     $("#modalTitle").text("Kategória szerkesztése");
     $("#modal").modal("show");
     $("#form").trigger("reset");
+    $("#inputId").val(row.data().id);
     $("#inputNev").val(row.data().nev);
   });
 }
-

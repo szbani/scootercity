@@ -2,7 +2,7 @@
     <nav class="sb-sidenav accordion sb-sidenav-color" id="sidenavAccordion">
         <div class="sb-sidenav-menu">
             <div class="nav">
-                <div class="sb-sidenav-menu-heading">Main</div>
+                <div class="sb-sidenav-menu-heading">Menük</div>
                 <a class="nav-link link" href="index.php">
                     <div class="sb-nav-link-icon"><i class="fa-solid fa-lines-leaning"></i></div>
                     Áttekintés
@@ -15,7 +15,6 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                     Kategórák
                 </a>
-                <div class="sb-sidenav-menu-heading">Addons</div>
                 <a class="nav-link link" href="fiokok.php">
                     <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                     Fiókok

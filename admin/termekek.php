@@ -79,7 +79,7 @@ if (empty($_GET['page'])) {
                                                     $result = mysqli_query($conn, $sql);
                                                     if (mysqli_num_rows($result) > 0) {
                                                         while ($row = mysqli_fetch_array($result)) {
-                                                            echo '<option value="'.$row['id'].'">' . $row['nev'] . '</option>';
+                                                            echo '<option value="' . $row['id'] . '">' . $row['nev'] . '</option>';
                                                         }
                                                     }
                                                     ?>
@@ -88,7 +88,7 @@ if (empty($_GET['page'])) {
                                         </div>
                                         <div class="col-3">
                                             <label for="inputMennyiseg" class="form-label">Mennyiség:</label>
-                                            <input class="form-control" id="inputMennyiseg" type="number" min="0" value="0" name="mennyiseg">           
+                                            <input class="form-control" id="inputMennyiseg" type="number" min="0" value="0" name="mennyiseg">
                                         </div>
                                     </div>
                                     <label for="inputTulajdonsag" class="form-label">Termék tulajdonságai:</label>
@@ -196,13 +196,22 @@ if (empty($_GET['page'])) {
                         </div>
                     </div>
                 </form>
+                <div class="toast-container position-fixed bottom-0 end-0 p-3 align-items-center" style="z-index: 11">
+
+                </div>
                 </main>
+
                 <?php
                 if (empty($_GET['page'])) {
                     include_once 'parts/footer.php';
                 }
+                
                 ?>
                 <script>
+                    <?php 
+                    if(isset($_SESSION['errors']))echo 'createToast("Sikertelen Művelet",['.$_SESSION['errors'].'],false)';
+                    else if(isset($_SESSION['success']))echo 'createToast("Siker",["'.$_SESSION['success'].'"],true);';
+                    ?>
                     createTableTermekek();
                     imageZone();
                 </script>

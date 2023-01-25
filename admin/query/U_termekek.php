@@ -5,7 +5,7 @@ require_once 'login.php';
 
 $errors = array();
 
-if (!isset($_POST['delete'])) {
+if (!isset($_POST['delete']) && !isset($_POST['mennyId'])) {
     if (empty($_POST['nev'])) {
         array_push($errors, "Hiányzik a termék neve!");
     }
@@ -84,13 +84,13 @@ if (isset($_POST['upload'])) {
     //kepek törlése
     if ($oldTermek['szkepek'] > $kepekSzama) {
         for ($i = 0; $i < $oldTermek['szkepek']; $i++) {
-            unlink('../../media/products/' . $inputId . '-' . $i.'.jpg');
+            unlink('../../media/products/' . $inputId . '-' . $i . '.jpg');
         }
     }
 
     //képek feltöltése
     uploadImages($conn, $inputNev, $file_ary);
-    
+
 
     logAction($conn, "Módosította ezt a számú terméket: " . $id . ".", $_SESSION['user']);
     $_SESSION['success'] = 'Sikeres Módosítás';
@@ -102,15 +102,22 @@ if (isset($_POST['upload'])) {
     $row = mysqli_fetch_assoc($result);
     if ($row['szkepek'] > 0) {
         for ($i = 0; $i < $row['szkepek']; $i++)
-            unlink('../../media/products/' . $id . '-' . $i.'.jpg');
+            unlink('../../media/products/' . $id . '-' . $i . '.jpg');
     }
     $sql = "DELETE FROM termekek WHERE id = '$id'";
     mysqli_query($conn, $sql);
     logAction($conn, "Törölte ezt a terméket: " . $row['nev'] . ".", $_SESSION['user']);
     $_SESSION['success'] = 'Sikeres törlés';
     back();
+} else if (isset($_POST['mennyId'])) {
+    $id = $_POST['mennyId'];
+    $mennyiseg = $_POST['mennyiseg'];
+    $sql = "UPDATE termekek SET mennyiseg = '$mennyiseg' WHERE id = '$id';";
+    mysqli_query($conn,$sql);
+    echo "$mennyiseg";
+}else{
+    back();
 }
-back();
 
 function reArrayFiles(&$file_post)
 {

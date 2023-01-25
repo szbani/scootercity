@@ -20,9 +20,9 @@
 
               if(mysqli_num_rows($result) > 0){
                 while($row = mysqli_fetch_assoc($result)){
-                  $param = $row['kat_nev'];
+                  $param = $row['nev'];
 
-                  $c_sql = "SELECT COUNT(kategoria) AS count FROM `termek` WHERE kategoria = '".$param."';";
+                  $c_sql = "SELECT COUNT(kategoria) AS count FROM `termekek` WHERE kategoria = '".$param."';";
                   $c_result = mysqli_query($conn, $c_sql);
                   if(mysqli_num_rows($c_result) > 0){
                     $count = mysqli_fetch_assoc($c_result);

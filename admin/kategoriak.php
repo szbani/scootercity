@@ -34,7 +34,7 @@ if (empty($_GET['page'])) {
                             Kategóriák Nevek
                         </div>
                         <div class="card-body">
-                            <table id="table" class="table table-striped table-bordered table-hover">
+                            <table id="table" class="table table-striped table-bordered table-hover w-100">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -93,6 +93,7 @@ if (empty($_GET['page'])) {
                 </main>
                 <?php
                 if (empty($_GET['page'])) {
+                    include_once "query/floatingAlert.php";
                     include_once 'parts/footer.php';
                 }
                 ?>

@@ -58,6 +58,7 @@ function format(d) {
 }
 
 var childRows = null;
+var inputFocus = false;
 function createTableTermekek() {
   var table = $("#table").DataTable({
     dom:
@@ -110,7 +111,14 @@ function createTableTermekek() {
       },
       { data: "ar" },
       { data: "knev" },
-      { data: "mennyiseg" },
+      {
+        data: "mennyiseg",
+        render: function (data, type, row) {
+          return (
+            '<input type="number" class="form-control table-input" id="' + row.id + '" value="' + data + '">'
+          );
+        },
+      },
       {
         data: null,
         className: "dt-center edit",
@@ -162,10 +170,38 @@ function createTableTermekek() {
       $("div.slider", row.child()).slideDown();
     }
   });
-
+  $("#table tbody").on("focus", ".table-input", function (){
+      console.log("focus fired");
+      var tr = $(this).closest("tr");
+      var row = table.row(tr);
+      inputFocus = true;
+  });
+  $("#table tbody").on("keypress",".table-input",function (e){
+    if(e.which == 13){
+      var tr = $(this).closest("tr");
+      var row = table.row(tr);
+      //ajax
+      $.ajax({
+        type: "post",
+        url: "query/U_termekek.php",
+        data: {mennyId: row.data().id , mennyiseg: this.value },
+        success: function (data) {
+          createToast("Sikeres Módosítás", ["Új mennyiség: "+data], true);
+        },
+    });
+    }
+  });
+  $("#table tbody").on("focusout", ".table-input", function (){
+    console.log("focusout fired");
+    var tr = $(this).closest("tr");
+    var row = table.row(tr);
+    inputFocus = false;
+  });
   setInterval(function () {
-    childRows = table.rows($(".shown"));
-    table.ajax.reload(null, false);
+    if(inputFocus == false){
+      childRows = table.rows($(".shown"));
+      table.ajax.reload(null, false);
+    }
   }, 30000);
   table.on("draw", function () {
     // If reloading table then show previously shown rows

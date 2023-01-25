@@ -74,35 +74,14 @@
   color: rgb(26, 25, 25) !important;
 }
 
-/* .btn-fab {
-  position: fixed;
-  width: 60px;
-  height: 60px;
-  bottom: 60px;
-  right: 50px;
-  background-color: var(--color-body-main);
-  border: 3px solid var(--color-body-main);
-  color: var(--color-main);
-  border-radius: 50px;
-  text-align: center;
-  box-shadow: 2px 2px 3px #999;
-  transition: 0.3s;
-}
-.btn-fab svg {
-  margin-top: 20px;
-}
-.btn-fab:hover {
-  color: var(--color-main);
-  background-color: var(--color-body-main-darker);
-  border-color: var(--color-body-main-darker);
-  box-shadow: 4px 4px 6px #a6acc7;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-    box-shadow 0.15s ease-in-out;
-} */
-
 .card-50 {
   width: fit-content !important;
   min-width: 50%;
+}
+
+/* table input */
+.table-input{
+  width: min-content!important;
 }
 
 /* image zoom */

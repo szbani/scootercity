@@ -16,16 +16,20 @@
             }
           }
           
-          $sql = "SELECT t.nev, t.index_kep, t.ar, t.kategoria FROM termek t ".$params." ORDER BY t.kategoria;";
+          $sql = "SELECT t.*,k.nev as knev FROM `termekek` t 
+          INNER JOIN `kategoriak` k ON k.id = t.kategoria 
+          GROUP BY t.nev; ";
           $result = mysqli_query($conn, $sql);
     
           if(mysqli_num_rows($result) > 0){
     
             while($row = mysqli_fetch_assoc($result)){
               $price = str_replace(',00','',numfmt_format_currency($fmt, $row['ar'], "HUF"));
+              $kep = $row['id'].'-0.jpg';
+              if($row['szkepek'] == 0) $kep = 'product-placeholder.png';
               echo '<div class="col mt-3">
               <div type="submit" class="card" id="'.$row['nev'].'" onclick="modal_show(this)">
-                  <img src="/scootercity/media/products/'.$row['index_kep'].'" class="card-img-top" alt="Termék">
+                  <img src="/scootercity/media/products/'.$kep.'" class="card-img-top" alt="Termék">
                   <div class="card-body">
                     <h5 class="card-title" id="Param_Nev">'.$row['nev'].'</h5>
                   </div>

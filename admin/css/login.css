@@ -30,6 +30,10 @@ a {
     -webkit-box-shadow: none;
     box-shadow: none; }
 
+strong{
+  color: #000;
+}
+
 h1, h2, h3, h4, h5,
 .h1, .h2, .h3, .h4, .h5 {
   line-height: 1.5;

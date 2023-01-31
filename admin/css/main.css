@@ -87,6 +87,7 @@
 /* image zoom */
 .img-table {
   height: 50px !important;
+  max-width: 100px;
   transition: transform 0.2s;
 }
 .img-table:hover {

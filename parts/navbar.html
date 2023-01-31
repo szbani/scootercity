@@ -1,83 +1,27 @@
-
-<div class="site-mobile-menu site-navbar-target">
-  <div class="site-mobile-menu-header">
-    <div class="site-mobile-menu-close mt-3">
-      <span class="icon-close2 js-menu-toggle"></span>
-    </div>
-  </div>
-  <div class="site-mobile-menu-body"></div>
-</div>
-
-<div class="top-bar">
+<nav class="navbar sticky-top navbar-expand-lg bg-light shadow-sm" id="navbar">
   <div class="container">
-    <div class="row">
-      <div class="col-12">
-
-        <a href="#">
-          <span class="mr-2 bi bi-envelope-open"></span>
-          <span class="d-none d-md-inline-block">info@scootercity.hu</span>
-        </a>
-        <span class="mx-md-2 d-inline-block"></span>
-        <a href="#">
-          <span class="mr-2 bi bi-telephone-fill"></span>
-          <span class="d-none d-md-inline-block">+36-30/273-9402</span>
-        </a>
-        <span class="mx-md-2 d-inline-block"></span>
-        <a href="#">
-          <span class="mr-2 bi bi-geo-alt-fill"></span>
-          <span class="d-none d-md-inline-block">H-7681 Hetvehely, Rékóczi út 13/a</span>
-        </a>
-
-        <div class="float-end ">
-          <a href="https://www.facebook.com/scootercitymotorosbolt/">
-            <span class="mr-2 bi bi-facebook"></span>
-            <span class="d-none d-lg-inline-block">Facebook</span>
-          </a>
-        </div>
-
-      </div>
-    </div>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <a class="navbar-brand" href="index.php">
+      <img src="media/main/logo.jpg" alt="Logo" class="d-inline-block align-text-top logo">
+    </a>
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0 fs-5">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#">Motoros Felszerelés</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="#">Alkatrészek</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Rólunk</a>
+      </li>
+    </ul>
+    <form class="d-flex" role="search">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
   </div>
-</div>
-
-<header class="site-navbar js-sticky-header site-navbar-target" role="banner">
-
-  <div class="container">
-    <div class="row align-items-center position-relative">
-
-      <div class="site-logo">
-        <a href="/scootercity/index.php" class=""><img src="/scootercity/media/main/logo.jpg"></a>
-      </div>
-
-      <div class="col-12" id="navbar">
-        <nav class="site-navigation text-end ml-auto " role="navigation">
-
-          <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
-            <li>
-              <form>
-                <input class="form-control" type="text" placeholder="Search" aria-label="Search">
-              </form>
-            </li>
-            <li><a href="/scootercity/termekek.php" class="nav-link">Termékek</a></li>
-            <li><a href="/scootercity/index.php#rolunk" class="nav-link">Rólunk</a></li>
-
-
-            <li>
-              <a href="/scootercity/index.php#elerhetoseg" class="nav-link">Elérhetőség</a>
-            </li>
-
-            </ul>
-        </nav>
-
-      </div>
-       
-      <div class="toggle-button d-inline-block d-lg-none">
-        <a href="#" class="site-menu-toggle py-5 js-menu-toggle text-black">
-          <span class="h3 bi bi-list"></span>
-        </a>
-      </div>
-    
-    </div>
   </div>
-
-</header>
+</nav>

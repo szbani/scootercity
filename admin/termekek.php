@@ -44,6 +44,7 @@ if (empty($_GET['page'])) {
                                     <th>Mennyiség(db)</th>
                                     <th></th>
                                     <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                         </table>
@@ -141,7 +142,7 @@ if (empty($_GET['page'])) {
                                     </div>
                                     <div class="row g-3">
                                         <div class="col">
-                                            <label for="inputBank" class="form-label">Termék képei:</label>
+                                            <label for="pro-image" class="form-label">Képek feltöltése:</label>
                                             <div class="container form-control">
                                                 <div class="row align-items-center">
                                                     <div class="col-3 text-center">
@@ -149,11 +150,11 @@ if (empty($_GET['page'])) {
                                                             <a href="javascript:void(0)" onclick="$('#pro-image').click()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Képek feltöltése">
                                                                 <i class="fa-solid fa-cloud-arrow-up fa-6x"></i>
                                                             </a>
-                                                            <input type="file" id="pro-image" style="display: none" class="form-control" multiple />
+                                                            <input type="file" hidden name="images[]" id="pro-image" class="form-control" multiple />
                                                         </fieldset>
                                                     </div>
                                                     <div class="col">
-                                                        <div class="preview-images-zone">
+                                                        <div class="preview-images-zone" id="uploadImages">
 
                                                         </div>
                                                     </div>
@@ -178,14 +179,34 @@ if (empty($_GET['page'])) {
                         </div>
                     </div>
                 </form>
-                <form action="query/U_termekek.php" method="POST">
+                <form id="reorder">
+                    <div class="modal fade" id="reorderModal" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg modal-fullscreen-lg-down">
+                            <div class="modal-content">
+                                <div class="modal-header align-items-center pb-1">
+                                    <h5 class="modal-title" id="delModalLabel">Képek szerkesztése:</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="preview-images-zone" id="reorderZone">
+                                        
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="text" id="orderHidden" name="id" value="" hidden>
+                                    <button type="submit" name="iamgeReorder" class="btn btn-primary">Képek mentése</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <form id="delete">
                     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="delModalLabel">Biztos törlöd ezt a terméket?:<br>
                                         (ID:<a class="text-danger" id="delId"></a>) <a id="delNev"><a></h5>
-                                    <input type="text" id="delHidden" name="id" value="" hidden>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-footer">
@@ -205,15 +226,21 @@ if (empty($_GET['page'])) {
                 if (empty($_GET['page'])) {
                     include_once 'parts/footer.php';
                 }
-                
+
                 ?>
                 <script>
-                    <?php 
-                    if(isset($_SESSION['errors']))echo 'createToast("Sikertelen Művelet",['.$_SESSION['errors'].'],false)';
-                    else if(isset($_SESSION['success']))echo 'createToast("Siker",["'.$_SESSION['success'].'"],true);';
+                    <?php
+                    if (isset($_SESSION['errors'])) {
+                        echo "createToast('Sikertelen Művelet'," . $_SESSION['errors'] . ",false);";
+                        $_SESSION['errors'] = null;
+                    }
+                    if (isset($_SESSION['success'])) {
+                        echo 'createToast("Siker","' . $_SESSION['success'] . '",true);';
+                        $_SESSION['success'] = null;
+                    }
                     ?>
                     createTableTermekek();
-                    imageZone();
+                    imageReader();
                 </script>
 
     </body>

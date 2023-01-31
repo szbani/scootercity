@@ -17,8 +17,7 @@ if (!isset($_POST['delete'])) {
         array_push($errors, "A két jelszó nem eggyezik meg!");
     }
     if (count($errors) != 0) {
-        array_push($errors, "Sikertelen Művelet");
-        $_SESSION['errors'] = $errors;
+        $_SESSION['errors'] = json_encode($errors);
         back();
     }
 
@@ -40,12 +39,12 @@ if (isset($_POST['upload'])) {
             logAction($conn,"létrehozott". $inputemail ." email-el fiókot",$_SESSION['user']);
             back();
         } else {
-            array_push($errors, "A fiók már létezik!", 'Sikertelen felvétel!');
+            array_push($errors, "A fiók már létezik!");
         }
     }else{
-        array_push($errors,'Nincs ehez a művelethez jogod!',"Sikertelen felvétel");
+        array_push($errors,'Nincs ehez a művelethez jogod!');
     }
-    $_SESSION['errors'] = $errors;
+    $_SESSION['errors'] = json_encode($errors);
     back();
 } else if (isset($_POST['edit'])) {
     $id = mysqli_real_escape_string($conn, $_POST['id']);
@@ -71,7 +70,7 @@ if (isset($_POST['upload'])) {
             $_SESSION['success'] = 'Sikeres módosítás';
             $_SESSION['pass'] = $inputpass;
         } else {
-            array_push($errors, "Nincs jogod a fiók módosításához!", 'Sikertelen módisítás!');
+            array_push($errors, "Nincs jogod a fiók módosításához!");
             back();
         }
         
@@ -79,8 +78,8 @@ if (isset($_POST['upload'])) {
         $_SESSION['success'] = "Sikeres Módosítás";
         back();
     }
-    array_push($errors,"Valamilyen hiba lépett fel","Sikertelen Művelet");
-    $_SESSION['errors'] = $errors;
+    array_push($errors,"Valamilyen hiba lépett fel");
+    $_SESSION['errors'] = json_encode($errors);
     back();
 } else if (isset($_POST['delete'])) {
     $id = $_POST["id"];
@@ -89,23 +88,23 @@ if (isset($_POST['upload'])) {
     $email = mysqli_fetch_assoc($result);
 
     if($email['email'] == $_SESSION['user']){
-        array_push($errors,"Nem tudod kitörölni a saját fiókodat","Sikertelen Törlés");
-        $_SESSION['errors'] = $errors;
-        back();
+        array_push($errors,"Nem tudod kitörölni a saját fiókodat");
+        echo json_encode(array('success' => true, 'messages' => $errors));
+        die();
     }
     if($_SESSION['main'] == 0){
         $sql = "DELETE FROM admin_users where id = '$id'";
         mysqli_query($conn, $sql);
 
         logAction($conn, "Törölte a " . $email['email'] . " felhasználót.", $_SESSION['user']);
-        $_SESSION['success'] = 'Sikeres törlés';
+        echo json_encode(array('success' => true, 'messages' => array('Törölted ('.$id.')'. $email['email'] . ' felhasználót.')));
     }else{
-        array_push($errors, "Nincs jogod ehez a művelethez","Sikertelen Törlés");
-        $_SESSION['errors'] = $errors;
+        array_push($errors, "Nincs jogod ehez a művelethez");
+        echo json_encode(array('success' => true, 'messages' => $errors));
     }
+}else{
     back();
 }
-back();
 
 function back()
 {

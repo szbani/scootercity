@@ -72,14 +72,13 @@ if (empty($_GET['page'])) {
                         </div>
                     </div>
                 </form>
-                <form action="query/U_kategoriak.php" method="POST">
-                    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
+                <form id="delete">
+                    <div class=" modal fade" id="deleteModal" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="delModalLabel">Biztos törlöd ezt a kategóriát?:<br>
                                         (ID:<a class="text-danger" id="delId"></a>) <a id="delNev"><a></h5>
-                                    <input type="text" id="delHidden" name="id" value="" hidden>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-footer">
@@ -90,14 +89,25 @@ if (empty($_GET['page'])) {
                         </div>
                     </div>
                 </form>
+                <div class="toast-container position-fixed bottom-0 end-0 p-3 align-items-center" style="z-index: 11">
+
+                </div>
                 </main>
                 <?php
                 if (empty($_GET['page'])) {
-                    include_once "query/floatingAlert.php";
                     include_once 'parts/footer.php';
                 }
                 ?>
                 <script>
+                    <?php
+                    if (isset($_SESSION['errors'])) {
+                        echo 'createToast("Sikertelen Művelet",[' . $_SESSION['errors'] . '],false)';
+                        $_SESSION['errors'] = null;
+                    } else if (isset($_SESSION['success'])) {
+                        echo 'createToast("Siker",["' . $_SESSION['success'] . '"],true);';
+                        $_SESSION['success'] = null;
+                    }
+                    ?>
                     createTableKategoriak();
                 </script>
     </body>

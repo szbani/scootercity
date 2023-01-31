@@ -17,47 +17,53 @@ session_start();
 </head>
 
 <body class="img js-fullheight" style="background-image: url(assets/img/bg.jpg);">
-    <section class="ftco-section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-6 text-center mb-5">
-                    <h2 class="heading-section">Scootercity - Admin</h2>
+    <main>
+        <section class="ftco-section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 text-center mb-5">
+                        <h2 class="heading-section">Scootercity - Admin</h2>
+                    </div>
                 </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-md-6 col-lg-4">
-                    <div class="login-wrap p-0">
-                        <h3 class="mb-4 text-center">Bejelentkezés</h3>
-                        <form method="POST" action="query/login.php" class="signin-form">
-                            <div class="form-group">
-                                <input type="text" name="email" class="form-control" placeholder="Email cím" required>
-                            </div>
-                            <div class="form-group">
-                                <input id="password-field" name="pw" type="password" class="form-control" placeholder="Jelszó" required>
-                                <span toggle="#password-field" id="togglePw" onclick="showPw(this)" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" name="loginPage" class="form-control btn btn-primary submit px-3">Sign In</button>
-                            </div>
-                        </form>
+                <div class="row justify-content-center">
+                    <div class="col-md-6 col-lg-4">
+                        <div class="login-wrap p-0">
+                            <h3 class="mb-4 text-center">Bejelentkezés</h3>
+                            <form method="POST" action="query/login.php" class="signin-form">
+                                <div class="form-group">
+                                    <input type="text" name="email" class="form-control" placeholder="Email cím" required>
+                                </div>
+                                <div class="form-group">
+                                    <input id="password-field" name="pw" type="password" class="form-control" placeholder="Jelszó" required>
+                                    <span toggle="#password-field" id="togglePw" onclick="showPw(this)" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" name="loginPage" class="form-control btn btn-primary submit px-3">Sign In</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
+        </section>
+        <div class="toast-container position-fixed bottom-0 end-0 p-3 align-items-center" style="z-index: 11">
+
         </div>
-    </section>
-    <?php
-    include_once 'query/floatingAlert.php';
-    ?>
-    <script>
-        function showToast(id) {
-            var toastLiveExample = document.getElementById(id)
-            var toast = new bootstrap.Toast(toastLiveExample)
-            toast.show()
-        }
-    </script>
-    <script src="../js/jquery.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    </main>
+    <script src="js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="js/jquery.js" crossorigin="anonymous"></script>
     <script src="js/login.js"></script>
+    <script>
+        <?php
+        if (isset($_SESSION['error'])) {
+            echo 'createToast("Sikertelen Bejelentkezés",["' . $_SESSION['error'] . '"],false)';
+            $_SESSION['error'] = null;
+        } else if (isset($_SESSION['success'])) {
+            echo 'createToast("Siker",["' . $_SESSION['success'] . '"],true);';
+            $_SESSION['success'] = null;
+        }
+        ?>
+    </script>
 </body>
 
 </html>

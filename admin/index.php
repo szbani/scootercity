@@ -14,7 +14,9 @@ if (empty($_GET['page'])) {
     </head>
 
     <body class="sb-nav-fixed">
-        <?php include_once 'parts/navbar.html'; ?>
+    <?php
+        include_once 'parts/navbar.html'
+        ?>
         <div id="layoutSidenav">
             <?php include_once 'parts/sidebar.php'; ?>
             <div id="layoutSidenav_content">
@@ -41,14 +43,25 @@ if (empty($_GET['page'])) {
                         </table>
                     </div>
                 </div>
+                <div class="toast-container position-fixed bottom-0 end-0 p-3 align-items-center" style="z-index: 11">
+
+                </div>
                 </main>
                 <?php
                 if (empty($_GET['page'])) {
-                    include_once "query/floatingAlert.php";
                     include_once 'parts/footer.php';
                 }
                 ?>
                 <script>
+                    <?php
+                    if (isset($_SESSION['errors'])) {
+                        echo 'createToast("Sikertelen Művelet",[' . $_SESSION['errors'] . '],false)';
+                        $_SESSION['errors'] = null;
+                    } else if (isset($_SESSION['success'])) {
+                        echo 'createToast("Siker",["' . $_SESSION['success'] . '"],true);';
+                        $_SESSION['success'] = null;
+                    }
+                    ?>
                     createTableLogs();
                 </script>
 

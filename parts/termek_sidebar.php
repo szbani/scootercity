@@ -13,14 +13,13 @@
           <ul class="btn-toggle-nav mx-auto list-unstyled pb-1">
               <?php 
               //termek tipus(kategoria) szinek ar
-              include 'query/conn.php';
 
               $sql = "SELECT * FROM kategoriak";
               $result = mysqli_query($conn, $sql);
 
               if(mysqli_num_rows($result) > 0){
                 while($row = mysqli_fetch_assoc($result)){
-                  $param = $row['nev'];
+                  $param = $row['id'];
 
                   $c_sql = "SELECT COUNT(kategoria) AS count FROM `termekek` WHERE kategoria = '".$param."';";
                   $c_result = mysqli_query($conn, $c_sql);
@@ -31,7 +30,7 @@
                     echo '
                     <li>
                       <a class="link-dark rounded">
-                        <label class="form-check-label" for="'.$param.'">'.$param.'</label>
+                        <label class="form-check-label" for="'.$param.'">'.$row['nev'].'</label>
                         <input class="form-check-input ms-2" type="checkbox" value="'.$param.'" id="'.$param.'">
                         <label class="form-check-label"> ('.$count['count'].')</label>
                       </a>

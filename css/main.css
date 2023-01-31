@@ -1,5 +1,4 @@
 
-
 :root {
   --green1:#76C893;
   --green2:#52B69A;
@@ -131,20 +130,208 @@ footer *{
   color: #6495ED !important;
 }
 
-
-
-/*
- * Termék képek
- */
-
-
-
-
-
 /*
  * container filler
  */
 
 .filler-box{
   background-color: none;
+}
+
+
+
+html *{
+  color: unset
+}
+
+  .btn-toggle {
+    display: inline-flex;
+    align-items: flex-start;
+    padding: .25rem .5rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, .65);
+    background-color: transparent;
+    border: 0;
+  }
+  .btn-toggle:hover,
+  .btn-toggle:focus {
+    color: rgba(0, 0, 0, .85);
+    background-color: #d2f4ea;
+  }
+  
+  .btn-toggle::before {
+    width: 1.25em;
+    line-height: 0;
+    content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,0,0,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
+    transition: transform .35s ease;
+    transform-origin: .5em 50%;
+  }
+  
+  .btn-toggle[aria-expanded="true"] {
+    color: rgba(0, 0, 0, .85);
+  }
+  .btn-toggle[aria-expanded="true"]::before {
+    transform: rotate(90deg);
+  }
+  
+  .btn-toggle-nav a {
+    display: inline-flex;
+    padding: .1875rem .5rem;
+    margin-top: .125rem;
+    margin-left: 1.25rem;
+    text-decoration: none;
+  }
+  .btn-toggle-nav a:hover{
+    background-color: #d2f4ea;
+  }
+  
+  .scrollarea {
+    overflow-y: auto;
+  }
+
+
+
+/*
+ * Sidebar
+ */
+
+  .sidebar {
+    --bs-gutter-x: 1.5rem;
+    height: fit-content;
+    position: sticky;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    
+    z-index: 30; /* Behind the navbar */
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+  }
+  
+  @media (max-width: 767.98px) {
+    .sidebar {
+      top: 5rem;
+    }
+  }
+  
+  .sidebar-sticky {
+    position: relative;
+    top: 0;
+    margin-top: 140px;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  }
+
+  .bg-blue2{
+    background-color: ghostwhite !important;
+  }
+
+  .status{
+    width: 24px;
+    height: 24px;
+  }
+
+main{
+  min-height: 600px;
+}
+
+/*
+  * cards
+  */
+  .row{
+    --bs-gutter-x: 0;
+  }
+
+  .card{
+    width: 90%;
+  }
+
+  .card_click{
+    position: absolute;
+    background-color: unset;
+    border: unset;
+    width: 100%;
+    height: 100%;
+    transition: background-color 0.25s ease;
+  }
+  .card_click:hover{
+    background-color: rgba(202, 202, 202, 0.25);
+    cursor: pointer;
+  }
+  .card-img-top{
+    height: 200px;
+  }
+  .card-body{
+    height: 90px;
+    overflow: hidden;
+  }
+/*
+ * modal
+ */
+  .modal-dialog{
+    max-width: 700px;
+  }
+  .modal-img{
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 250px;
+    overflow: hidden;
+  }
+  .list-group-item{
+    background-color: unset;
+  }
+
+
+/*
+ *colorpicker
+ */
+
+.simplecolorpicker.inline {
+  display: inline-block;
+  padding: 6px 0;
+}
+
+.simplecolorpicker span {
+  margin: 0 5px 5px 0;
+}
+
+.simplecolorpicker.icon,
+.simplecolorpicker span.color {
+  display: inline-block;
+
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.simplecolorpicker.icon:after,
+.simplecolorpicker span.color:after {
+  content: '\00a0\00a0\00a0\00a0'; /* Spaces */
+}
+
+.simplecolorpicker span.color[data-disabled]:hover {
+  cursor: not-allowed;
+  border: 1px solid transparent;
+}
+
+.simplecolorpicker span.color:hover,
+.simplecolorpicker span.color[data-selected],
+.simplecolorpicker span.color[data-selected]:hover {
+  border: 1px solid #222; /* @gray-dark */
+}
+.simplecolorpicker span.color[data-selected]:after {
+  color: #fff;
+}
+
+/* Vertical separator, replaces optgroup. */
+.simplecolorpicker span.vr {
+  border-left: 1px solid #222; /* @gray-dark */
+}
+.simplecolorpicker.fontawesome span.color[data-selected]:after {
+  font-family: 'FontAwesome';
+  -webkit-font-smoothing: antialiased;
+
+  content: '\f00c'; /* Ok/check mark */
+
+  margin-right: 1px;
+  margin-left: 1px;
 }

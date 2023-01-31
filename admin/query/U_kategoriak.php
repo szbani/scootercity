@@ -34,7 +34,8 @@ if (isset($_POST['upload'])) {
     $sqlSelectKategoria = "SELECT * FROM kategoriak WHERE id = '$inputId'";
     $result = mysqli_query($conn, $sqlSelectKategoria);
     $oldKategoria = mysqli_fetch_assoc($result);
-
+    $sqlUpdate = "UPDATE kategoriak SET nev = '$inputNev' WHERE id = '$inputId';";
+    mysqli_query($conn,$sqlUpdate);
     logAction($conn, "Szerkesztette ezt a Kategóriát: (" . $inputId . ")" . $oldKategoria['nev'] . " -> " . $inputNev . ".", $_SESSION['user']);
     $_SESSION['success'] = 'Sikeres Szerkesztés';
     back();
@@ -46,17 +47,16 @@ if (isset($_POST['upload'])) {
     $result = mysqli_query($conn, $sqlDelSelect);
     $row = mysqli_fetch_assoc($result);
     if ($row['hasznalva'] > 0) {
-        array_push($errors, "Ez a kategória használatban van " . $row['hasznalva'] . " terméknél", "Sikertelen Törlés");
-        $_SESSION['errors'] = $errors;
-        back();
+        echo json_encode(array('success' => false, 'messages' => array("Ez a kategória használatban van " . $row['hasznalva'] . " terméknél")));
+    }else{
+        $sqlDelete = "DELETE FROM kategoriak WHERE id = '$id'";
+        mysqli_query($conn, $sqlDelete);
+        logAction($conn, "Törölte ezt a Kategóriát: " . $row['nev'] . ".", $_SESSION['user']);
+        echo json_encode(array('success' => true, 'messages' => array("Törölted ezt a Kategóriát: " . $row['nev'])));
     }
-    $sqlDelete = "DELETE FROM kategoriak WHERE id = '$id'";
-    mysqli_query($conn, $sqlDelete);
-    logAction($conn, "Törölte ezt a Kategóriát: " . $row['nev'] . ".", $_SESSION['user']);
-    $_SESSION['success'] = 'Sikeres törlés';
+}else{
     back();
 }
-back();
 
 function back()
 {

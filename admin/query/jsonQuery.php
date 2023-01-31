@@ -4,15 +4,14 @@ if (isset($_POST['table'])) {
     require 'conn.php';
 
     if ($_POST['table'] == 'termekek') {
-        $sql = "SELECT t.*,k.nev as knev FROM `termekek` t 
-        INNER JOIN `kategoriak` k ON k.id = t.kategoria 
-        GROUP BY t.nev; ";
+        $sql = "SELECT t.*,k.nev as knev, (SELECT GROUP_CONCAT(file_name ORDER BY img_order) FROM kepek k WHERE k.termek_id = t.id) as images FROM `termekek` t 
+        INNER JOIN `kategoriak` k ON k.id = t.kategoria; ";
         $result = mysqli_query($conn, $sql);
     } else if ($_POST['table'] == 'logs') {
         $sql = "SELECT * FROM logs";
         $result = mysqli_query($conn, $sql);
     } else if ($_POST['table'] == 'fiokok') {
-        $sql = "SELECT a.*, 
+        $sql = "SELECT a.*, a.email AS nev,
 	    (SELECT CONCAT(l.action,' ',l.time) FROM logs l 
         WHERE l.action LIKE 'Bejelentkezett' AND l.user = a.email
         ORDER BY l.time DESC LIMIT 1) as action

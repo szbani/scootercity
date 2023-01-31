@@ -3,7 +3,6 @@
       <?php
         
           $fmt = numfmt_create( 'hu-HU', NumberFormatter::CURRENCY );
-          include 'query/conn.php';
           //SELECT t.nev, k.kep, k.type FROM termek t INNER JOIN kepek k ON t.nev = k.term_id
           //SELECT t.nev, t.index_kep, t.ar FROM termek t
           $params = '';
@@ -16,19 +15,21 @@
             }
           }
           
-          $sql = "SELECT t.*,k.nev as knev FROM `termekek` t 
-          INNER JOIN `kategoriak` k ON k.id = t.kategoria 
-          GROUP BY t.nev; ";
+          $sql = "SELECT t.id,t.nev,t.ar, 
+          (SELECT file_name FROM kepek k 
+          WHERE k.termek_id = t.id 
+          ORDER BY img_order LIMIT 1)as image 
+          FROM `termekek` t; ";
           $result = mysqli_query($conn, $sql);
     
           if(mysqli_num_rows($result) > 0){
     
             while($row = mysqli_fetch_assoc($result)){
               $price = str_replace(',00','',numfmt_format_currency($fmt, $row['ar'], "HUF"));
-              $kep = $row['id'].'-0.jpg';
-              if($row['szkepek'] == 0) $kep = 'product-placeholder.png';
+              $kep = $row['image'];
+              if($row['image'] == null) $kep = 'product-placeholder.png';
               echo '<div class="col mt-3">
-              <div type="submit" class="card" id="'.$row['nev'].'" onclick="modal_show(this)">
+              <div class="card" id="'.$row['nev'].'">
                   <img src="/scootercity/media/products/'.$kep.'" class="card-img-top" alt="Termék">
                   <div class="card-body">
                     <h5 class="card-title" id="Param_Nev">'.$row['nev'].'</h5>

@@ -12,7 +12,7 @@
     <!-- Bootstrap icons-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css">
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <!-- CSS -->    
     <link rel="stylesheet" href="css/main.css">
     
@@ -196,7 +196,7 @@
 
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/hu_HU/sdk.js#xfbml=1&version=v11.0" nonce="vGo94UMf"></script>
 <script src="js/jquery.js"></script>
-<script src="js/bootstrap.bundle.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
 
 
 <script src="js/main.js"></script>

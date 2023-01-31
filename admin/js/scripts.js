@@ -53,10 +53,12 @@ function showToast(id) {
 var toastnumber = 0;
 function createToast(title, messages, success) {
   var text = "<strong>";
-  $.each(messages, function (key, value) {
-    if (key != 0) text += "<br>";
-    text += value;
-  });
+  if (Array.isArray(messages)) {
+    $.each(messages, function (key, value) {
+      if (key != 0) text += "<br>";
+      text += value;
+    });
+  }else text += messages;
   text += "</strong>";
 
   var type = "bg-danger";
@@ -121,20 +123,46 @@ $(document).ready(function () {
   });
 });
 
-//multiple image
-function imageZone() {
-  // document
-  //     .getElementById("pro-image")
-  //     .addEventListener("change", readImage, false);
+function imageZone(kepek, file) {
+  var output = $("#reorderZone");
+  $.each(kepek, function (index, value) {
+    var html =
+      '<div class="preview-image preview-show-' +
+      index +
+      '">' +
+      '<div class="image-cancel" data-no="' +
+      index +
+      '">x</div>' +
+      '<div class="image-zone"><img id="pro-img-' +
+      index +
+      '" src="../media/products/' +
+      value +
+      '"></div>' +
+      "</div>";
+    output.append(html);
+  });
+  output.sortable();
+  $(document).on("click", ".image-cancel", function () {
+    //show image delete confirm
+    let no = $(this).data("no");
+    $.ajax({
+      type: "POST",
+      url: "query/" + file,
+      dataType: "JSON",
+      data: { imgDelete: "", image: $("#pro-img-" + no).attr("src") },
+      success: function(data){
+        var title = "Sikertelen törlés";
+        if (data.success) title = "Sikeres törlés";
+        createToast(title, data.messages, data.success);
+      }
+    });
+    $(".preview-image.preview-show-" + no).remove();
+  });
+}
+
+function imageReader() {
   $("#pro-image").on("change", function () {
     readImage();
-  });
-  $(".preview-images-zone").sortable();
-
-  $(document).on("click", ".image-cancel", function () {
-    let no = $(this).data("no");
-    $(".preview-image.preview-show-" + no).remove();
-    $("#input-" + no).remove();
   });
 }
 
@@ -142,7 +170,8 @@ var num = 0;
 function readImage() {
   if (window.File && window.FileList && window.FileReader) {
     var files = event.target.files; //FileList object
-    var output = $(".preview-images-zone");
+    var output = $("#uploadImages");
+    output.html("");
 
     for (i = 0; i < files.length; i++) {
       var file = files[i];
@@ -155,14 +184,7 @@ function readImage() {
 
         var picFile = event.target;
         var html =
-          '<div id="' +
-          num +
-          '"class="preview-image preview-show-' +
-          num +
-          '">' +
-          '<div class="image-cancel" data-no="' +
-          num +
-          '">x</div>' +
+          '<div class="preview-image">' +
           '<div class="image-zone"><img id="pro-img-' +
           num +
           '"src="' +
@@ -172,55 +194,12 @@ function readImage() {
 
         num = num + 1;
       });
-      picReader.addEventListener("loadend", function (event) {
-        var blob = dataURItoBlob(event.target.result);
 
-        var fd = new FormData();
-        fd.append("file", blob, "tempFile-" + num);
-        var temp = new DataTransfer();
-        temp.items.add(fd.get("file"));
-
-        var input = document.createElement("input");
-        input.type = "file";
-        input.name = "images[]";
-        input.hidden = true;
-        input.files = temp.files;
-
-        output.find("div")[(num - 1) * 3].append(input);
-      });
       picReader.readAsDataURL(file);
     }
-
-    $("#pro-image").val("");
   } else {
     console.log("Browser not support");
   }
-}
-
-function dataURItoBlob(dataURI) {
-  var byteString = atob(dataURI.split(",")[1]);
-
-  var mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
-
-  var ab = new ArrayBuffer(byteString.length);
-  var dw = new DataView(ab);
-  for (var i = 0; i < byteString.length; i++) {
-    dw.setUint8(i, byteString.charCodeAt(i));
-  }
-
-  return new Blob([ab], { type: mimeString });
-}
-
-function getBase64Image(path) {
-  var img = new Image();
-  img.src = path;
-  var canvas = document.createElement("canvas");
-  canvas.width = img.width;
-  canvas.height = img.height;
-  var ctx = canvas.getContext("2d");
-  ctx.drawImage(img, 0, 0);
-  var dataURL = canvas.toDataURL("image/jpg");
-  return dataURL;
 }
 
 function resetPics() {

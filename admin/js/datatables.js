@@ -1,18 +1,17 @@
 function format(d) {
   var kepek = "";
   try {
-    if (d.szkepek > 0) {
-      for (i = 0; i < d.szkepek; i++) {
+    if (d.images != null) {
+      images = d.images.split(",");
+      for (i = 0; i < images.length; i++) {
         kepek +=
           '<img src="../media/products/' +
-          d.id +
-          "-" +
-          i +
-          ".jpg" +
+          images[i] +
           '" class="img-fluid img-table" alt="">';
       }
     } else {
-      kepek = "product-placeholder.png";
+      kepek =
+        '<img src="../media/products/product-placeholder.png" class="img-fluid img-table" alt="">';
     }
   } catch {
     $kepek =
@@ -21,7 +20,6 @@ function format(d) {
   var tul = "";
   try {
     var json = JSON.parse(d.tulajdonsagok);
-    console.log(json);
     $.each(json, function (id, value) {
       $.each(value, function (id, value) {
         tul += id + ": " + value + ",&ensp;";
@@ -95,11 +93,11 @@ function createTableTermekek() {
       { data: "id" },
       { data: "nev" },
       {
-        data: "szkepek",
+        data: "images",
         render: function (data, type, row) {
           if (type === "display") {
             var img = "product-placeholder.png";
-            if (data > 0) img = row.id + "-" + 0 + ".jpg";
+            if (data != null) img = data.split(",")[0];
             return (
               '<img src="../media/products/' +
               img +
@@ -115,9 +113,19 @@ function createTableTermekek() {
         data: "mennyiseg",
         render: function (data, type, row) {
           return (
-            '<input type="number" class="form-control table-input" id="' + row.id + '" value="' + data + '">'
+            '<input type="number" class="form-control table-input" id="' +
+            row.id +
+            '" value="' +
+            data +
+            '">'
           );
         },
+      },
+      {
+        data: null,
+        className: "dt-center edit-images",
+        defaultContent: '<i class="fa-solid fa-image"></i>',
+        orderable: false,
       },
       {
         data: null,
@@ -149,10 +157,11 @@ function createTableTermekek() {
       },
     ],
   });
+  imageReorder(table, "U_termekek.php");
   //edit data
   editTermekek(table);
   //delete data
-  del(table);
+  del(table, "U_termekek.php");
   //child row
   $("#table tbody").on("click", "td.dt-control", function () {
     var tr = $(this).closest("tr");
@@ -170,37 +179,36 @@ function createTableTermekek() {
       $("div.slider", row.child()).slideDown();
     }
   });
-  $("#table tbody").on("focus", ".table-input", function (){
-      console.log("focus fired");
-      var tr = $(this).closest("tr");
-      var row = table.row(tr);
-      inputFocus = true;
+  $("#table tbody").on("focus", ".table-input", function () {
+    console.log("focus fired");
+    var tr = $(this).closest("tr");
+    var row = table.row(tr);
+    inputFocus = true;
   });
-  $("#table tbody").on("keypress",".table-input",function (e){
-    if(e.which == 13){
+  $("#table tbody").on("keypress", ".table-input", function (e) {
+    if (e.which == 13) {
       var tr = $(this).closest("tr");
       var row = table.row(tr);
       //ajax
       $.ajax({
         type: "post",
         url: "query/U_termekek.php",
-        data: {mennyId: row.data().id , mennyiseg: this.value },
+        data: { mennyId: row.data().id, mennyiseg: this.value },
         success: function (data) {
-          createToast("Sikeres Módosítás", ["Új mennyiség: "+data], true);
+          createToast("Sikeres Módosítás", ["Új mennyiség: " + data], true);
         },
-    });
+      });
     }
   });
-  $("#table tbody").on("focusout", ".table-input", function (){
+  $("#table tbody").on("focusout", ".table-input", function () {
     console.log("focusout fired");
     var tr = $(this).closest("tr");
     var row = table.row(tr);
     inputFocus = false;
   });
   setInterval(function () {
-    if(inputFocus == false){
-      childRows = table.rows($(".shown"));
-      table.ajax.reload(null, false);
+    if (inputFocus == false) {
+      tableReload(table, false);
     }
   }, 30000);
   table.on("draw", function () {
@@ -219,17 +227,81 @@ function createTableTermekek() {
   });
 }
 
-function del(table) {
+function tableReload(table, pics) {
+  if (childRows != null) childRows = table.rows($(".shown"));
+  table.ajax.reload(null, false);
+  if (pics) resetPics();
+}
+
+function imageReorder(table, file) {
+  var tr;
+  var row;
+  table.on("click", "td.edit-images", function (e) {
+    e.preventDefault();
+    tr = $(this).closest("tr");
+    row = table.row(tr);
+    $("#reorderModal").modal("show");
+    $("#orderHidden").val(row.data().id);
+    if (row.data().images != null)
+      imageZone(row.data().images.split(","), file);
+  });
+  $("#reorder").on("submit", function (e) {
+    e.preventDefault();
+    let array = new Array();
+
+    $('.image-zone').children().each(function (){
+      array.push($(this).attr('src'));
+    });
+
+    if (array.length > 0) {
+      $.ajax({
+        type: "post",
+        url: "query/" + file,
+        data: { reorder: "", images: array },
+        success: function (data) {
+          createToast("Sikeres Módosítás", "Módosítottad ("+ row.data().id+")"+row.data().nev+" Terméket", true);
+        },
+      });
+    }
+    $("#reorderModal").modal("hide");
+  });
+  $("#reorderModal").on("hidden.bs.modal", function () {
+    tableReload(table, true);
+  });
+}
+
+function del(table, file) {
+  var tr;
+  var row;
   table.on("click", "td.delete", function (e) {
     e.preventDefault();
     if ($(this).children().length > 0) {
-      var tr = $(this).closest("tr");
-      var row = table.row(tr);
+      tr = $(this).closest("tr");
+      row = table.row(tr);
       $("#deleteModal").modal("show");
       $("#delId").text(row.data().id);
       $("#delNev").text(row.data().nev);
-      $("#delHidden").attr("value", row.data().id);
     }
+  });
+  $("#delete").on("submit", function (e) {
+    e.preventDefault();
+    $("#deleteModal").modal("hide");
+    $.ajax({
+      type: "POST",
+      url: "query/" + file,
+      dataType: "JSON",
+      data: { delete: "", id: row.data().id, nev: row.data().nev },
+      success: function (data) {
+        var title = "Sikertelen törlés";
+        if (data.success) title = "Sikeres törlés";
+        createToast(title, data.messages, data.success);
+        tableReload(table, false);
+      },
+      error: function (data) {
+        console.log(data);
+        createToast("Sikertelen törlés", [data], false);
+      },
+    });
   });
 }
 function editTermekek(table) {
@@ -249,47 +321,6 @@ function editTermekek(table) {
     $("#inputMennyiseg").val(table.cell(row, 6).data());
     $("#inputLeiras").val(row.data().leiras);
     $("#inputKategoria").val(row.data().kategoria);
-    if (row.data().szkepek > 0) {
-      var output = $(".preview-images-zone");
-      var html = "";
-      for (i = 0; i < row.data().szkepek; i++) {
-        html =
-          '<div id="' +
-          i +
-          '"class="preview-image preview-show-' +
-          i +
-          '">' +
-          '<div class="image-cancel" data-no="' +
-          i +
-          '">x</div>' +
-          '<div class="image-zone"><img id="pro-img-' +
-          i +
-          '"src="../media/products/' +
-          row.data().id +
-          "-" +
-          i +
-          ".jpg" +
-          '"></div>';
-
-        output.append(html);
-
-        var url = getBase64Image(
-          "../media/products/" + row.data().id + "-" + i + ".jpg"
-        );
-        var blob = dataURItoBlob(url);
-        var fd = new FormData();
-        fd.append("file", blob, "tempFile-" + i);
-        var temp = new DataTransfer();
-        temp.items.add(fd.get("file"));
-        num = i;
-        var input = document.createElement("input");
-        input.type = "file";
-        input.name = "images[]";
-        input.hidden = true;
-        input.files = temp.files;
-        $(".preview-show-" + i).append(input);
-      }
-    }
     try {
       var json = JSON.parse(row.data().tulajdonsagok);
       var tulnevek = $('input[name="tul-nev[]"]');
@@ -365,7 +396,7 @@ function createTableFiokok() {
     },
     columns: [
       { data: "id" },
-      { data: "email" },
+      { data: "nev" },
       { data: "action" },
       {
         data: "edit",
@@ -394,7 +425,7 @@ function createTableFiokok() {
       },
     ],
   });
-  del(table);
+  del(table, "U_fiokok.php");
   editFiokok(table);
   setInterval(function () {
     table.ajax.reload(null, false);
@@ -478,7 +509,7 @@ function createTableKategoriak() {
     ],
   });
   editKategoriak(table);
-  del(table);
+  del(table, "U_kategoriak.php");
   setInterval(function () {
     table.ajax.reload(null, false);
   }, 30000);

@@ -60,19 +60,19 @@ if (empty($_GET['page'])) {
                                     <div class="row g-3">
                                         <div class="col">
                                             <label for="inputEmail" class="form-label">Email cím:</label>
-                                            <input class="form-control" id="inputEmail" type="Email" name="email" />
+                                            <input class="form-control" id="inputEmail" type="Email" name="email" required/>
                                         </div>
                                     </div>
                                     <div class="row g-3">
                                         <div class="col">
                                             <label for="inputPass1" class="form-label">Jelszó:</label>
-                                            <input class="form-control" id="inputPass1" type="password" name="pass1">
+                                            <input class="form-control" id="inputPass1" type="password" name="pass1" required>
                                         </div>
                                     </div>
                                     <div class="row g-3">
                                         <div class="col">
                                             <label for="inputPass2" class="form-label">Jelszó megerősítés:</label>
-                                            <input class="form-control" id="inputPass2" type="password" name="pass2">
+                                            <input class="form-control" id="inputPass2" type="password" name="pass2" required>
                                         </div>
                                     </div>
                                 </div>
@@ -84,7 +84,7 @@ if (empty($_GET['page'])) {
                         </div>
                     </div>
                 </form>
-                <form action="query/U_fiokok.php" method="POST">
+                <form id="delete">
                     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
@@ -102,14 +102,25 @@ if (empty($_GET['page'])) {
                         </div>
                     </div>
                 </form>
+                <div class="toast-container position-fixed bottom-0 end-0 p-3 align-items-center" style="z-index: 11">
+
+                </div>
                 </main>
                 <?php
                 if (empty($_GET['page'])) {
-                    include_once "query/floatingAlert.php";
                     include_once 'parts/footer.php';
                 }
                 ?>
                 <script>
+                    <?php
+                    if (isset($_SESSION['errors'])) {
+                        echo 'createToast("Sikertelen Művelet",' . $_SESSION['errors'] . ',false);';
+                        $_SESSION['errors'] = null;
+                    } else if (isset($_SESSION['success'])) {
+                        echo 'createToast("Siker",["' . $_SESSION['success'] . '"],true);';
+                        $_SESSION['success'] = null;
+                    }
+                    ?>
                     createTableFiokok(<?php $_SESSION['main'] ?>);
                 </script>
 

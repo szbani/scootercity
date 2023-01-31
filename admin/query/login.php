@@ -18,9 +18,7 @@ function login_page($conn)
         header('Location: ' . '../index.php');
         die();
     } else {
-        $errors = array();
-        array_push($errors, 'Nincs ilyen fiók', 'Sikertelen Bejelentkezés');
-        $_SESSION['errors'] = $errors;
+        $_SESSION['error'] = 'Nincs ilyen fiók';
         header('Location: ' . '../login.php');
         die();
     }

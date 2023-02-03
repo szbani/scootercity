@@ -8,7 +8,7 @@ require_once 'parts/head.php';
 ?>
 <body>
 <?php
-include_once "parts/navbar.html";
+include_once "parts/navbar.php";
 
 include_once "parts/termek_sidebar.php";
 include_once "parts/termek_main.php";

@@ -30,7 +30,8 @@
               if($row['image'] == null) $kep = 'product-placeholder.png';
               echo '<div class="col mt-3">
               <div class="card" id="'.$row['nev'].'">
-                  <img src="/scootercity/media/products/'.$kep.'" class="card-img-top" alt="Termék">
+                
+                  <img src="/media/products/'.$kep.'" class="card-img-top" alt="Termék">
                   <div class="card-body">
                     <h5 class="card-title" id="Param_Nev">'.$row['nev'].'</h5>
                   </div>
@@ -39,7 +40,7 @@
                           <h5 class="m-0">'.$price.'</h5>
                       </li>
                   </ul>
-                  <div class="card_click"></div>
+                  <a class="card_click" href="/bolt/termek/'.$row['id'].'/'.$row['nev'].'"></a>
               </div>
               </div>';
             }

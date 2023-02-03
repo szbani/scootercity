@@ -1,22 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Weblap_cím</title>
-    <meta name="description" content="ide kell a leírás">
-    <meta name="author" content="Szabó Dániel">
-    <meta name="keywords" content="kulcs szavak">
-    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
-    
-    <!-- Bootstrap icons-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css">
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!-- CSS -->    
-    <link rel="stylesheet" href="css/main.css">
-    
-    </head>
+  <?php require_once 'parts/head.php';?>
 <body>
 
 <nav class="navbar sticky-top navbar-expand-lg bg-light shadow-sm" id="navbar" style="display: none;">
@@ -115,8 +99,8 @@
 
     <div class="col">
       <div class="position-relative">
-        <img src="media/main/placeholder1.jpg" class="card-img image-group" alt="...">
-          <a href="termekek.php">
+        <img src="/media/main/placeholder1.jpg" class="card-img image-group" alt="...">
+          <a href="bolt.php">
           <div class="object_hover ">
               <div class="image-text-c image-text-border p-1 px-2">
                 <h2>Motoros Felszerelés</h2>
@@ -130,7 +114,7 @@
     <div class="col">
       <div class="position-relative">
         <img src="media/main/placeholder2.jpg" class="card-img image-group" alt="...">
-          <a href="termekek.php">
+          <a href="bolt.php">
           <div class="object_hover">
               <div class="image-text-c image-text-border p-1 px-2">
                 <h2>Alkatrészek</h2>

@@ -38,11 +38,11 @@ function login($username, $pw, $conn)
     return false;
 }
 if (!isset($_SESSION['user']) && !isset($_SESSION['pass'])) {
-    header('Location: ' ."http://".$_SERVER['HTTP_HOST']. '/scootercity/admin/login.php');
+    header('Location: ' ."http://".$_SERVER['HTTP_HOST']. '/admin/login.php');
     die();
 }
 if (!login($_SESSION['user'], $_SESSION['pass'], $conn)) {
-    header('Location: ' ."http://".$_SERVER['HTTP_HOST']. '/scootercity/admin/login.php');
+    header('Location: ' ."http://".$_SERVER['HTTP_HOST']. '/admin/login.php');
     die();
 }
 

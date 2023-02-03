@@ -37,11 +37,11 @@
     </div>
 
   </footer>
-<script src="js/bootstrap.bundle.min.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>
 
-<script src="js/jquery.js"></script>
+<script src="/js/jquery.js"></script>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/hu_HU/sdk.js#xfbml=1&version=v11.0" nonce="vGo94UMf"></script>
 
 <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-<script  src="js/colorpicker.js"></script>
-<script src="js/main.js"></script>
+<script  src="/js/colorpicker.js"></script>
+<script src="/js/main.js"></script>

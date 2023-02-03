@@ -21,7 +21,27 @@ function nav_check(){
 
 }
 
-
+$(document).ready(function(){
+  $('#search').keyup(function(e){
+    var search_query = $(this).val();
+    if(search_query != null){
+      $.ajax({
+        url: "/query/search.php",
+        type: "POST",
+        async: false,
+        data: {
+            search: search_query,
+        },
+        success: function(data){
+          console.log(data);
+          $("#list").fadeIn('fast').html(data);
+        }
+      });
+    }else{
+      $("#list").fadeOut();
+    }
+  });
+});
 
 // termekek
 

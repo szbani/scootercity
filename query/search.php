@@ -13,7 +13,13 @@ if(!empty($_POST['search'])){
     $html ='';
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
-            $html .= "<li class='list-group-item'><a>" . $row['nev'] . "</a></li>";
+            $image = 'product-placeholder.png';
+            if($row['image'] != null){
+             $image = $row['image'];  
+            }
+            $html .= "<li class='list-group-item'><a class='row' href='/bolt/termek/".$row['id']."/".$row['nev']."'>
+            <div class='col-3'><img class='image-search' src='/media/products/".$image."'></div><div class='col-7'>" . $row['nev'] . 
+            "</div><div class='col-2'>".$row['ar']."</div></a></li>";
             
         }
         
@@ -21,8 +27,6 @@ if(!empty($_POST['search'])){
           $html .= '<li class="list-group-item">Nincs találat!</li>';
     }
     echo $html;
-}else{
-    echo '<li class="list-group-item">Nincs találat!</li>';
 }
 
 ?>

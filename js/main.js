@@ -24,7 +24,7 @@ function nav_check(){
 $(document).ready(function(){
   $('#search').keyup(function(e){
     var search_query = $(this).val();
-    if(search_query != null){
+    if(search_query != ""){
       $.ajax({
         url: "/query/search.php",
         type: "POST",

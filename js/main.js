@@ -41,7 +41,14 @@ $(document).ready(function(){
       $("#list").fadeOut();
     }
   });
+  
 });
+
+
+
+
+
+
 
 // termekek
 

@@ -1,5 +1,6 @@
 <?php
 require_once 'query/conn.php';
+$url = explode("/",$_SERVER['REQUEST_URI']);
 ?>
 <!DOCTYPE html>
 <html>

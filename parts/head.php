@@ -7,9 +7,7 @@
     <meta name="keywords" content="kulcs szavak">
     <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
 
-    <!-- Bootstrap icons-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css">
-
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/swiper-bundle.min.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
 </head>

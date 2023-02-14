@@ -8,7 +8,7 @@ if(!empty($_POST['search'])){
     (SELECT file_name FROM kepek k 
     WHERE k.termek_id = t.id 
     ORDER BY img_order LIMIT 1)as image 
-    FROM `termekek` t WHERE t.nev LIKE '%{$search}%'; ";
+    FROM `termekek` t WHERE t.nev LIKE '%{$search}%' LIMIT 5; ";
     $result = mysqli_query($conn,$sql);
     $html ='';
     if (mysqli_num_rows($result) > 0) {

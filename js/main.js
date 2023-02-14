@@ -1,121 +1,117 @@
-var nav = new Boolean(false);
-
-function navhide(){
-  nav_check();
-  $(document).scroll(function () {
-    nav_check();
+var nav = true;
+$(document).ready(function () {
+  var navbar = $('#navbar');
+  navcheck(navbar);
+  $(document).scroll(function (e) {
+    navcheck(navbar);
   });
-}
-
-
-function nav_check(){
-  var $nav = $(document.getElementById("navbar"));
-  var height = screen.height * 0.15;
+});
+function navcheck(navbar){
+  var height = screen.height * 0.1;
   if($(this).scrollTop() < height && !nav){
-    $nav.toggle('scrolled',$(this).scrollTop() > height);
+    $(navbar).toggleClass("bg-transparent", true);
+    $(navbar).toggleClass("shadow-lg", false);
     nav = true;
-  }else if($(this).scrollTop() > height && nav){
-    $nav.toggle('scrolled',$(this).scrollTop() < height);
+  }else if($(this).scrollTop() > height && nav) {
+    $(navbar).toggleClass("bg-transparent", false);
+    $(navbar).toggleClass("shadow-lg", true);
     nav = false;
   }
-
 }
 
-$(document).ready(function(){
-  $('#search').keyup(function(e){
+$(document).ready(function () {
+  $("#search").keyup(function (e) {
     var search_query = $(this).val();
-    if(search_query != ""){
+    if (search_query != "") {
       $.ajax({
         url: "/query/search.php",
         type: "POST",
         async: false,
         data: {
-            search: search_query,
+          search: search_query,
         },
-        success: function(data){
+        success: function (data) {
           console.log(data);
-          $("#list").fadeIn('fast').html(data);
-        }
+          $("#list").fadeIn("fast").html(data);
+        },
       });
-    }else{
+    } else {
       $("#list").fadeOut();
     }
   });
-  
+  $("#submit").on("click", function (e) {
+    e.preventDefault();
+    window.location.href = "/bolt/kereses?keyword=" + $("#search").val();
+  });
+  $("#search").keypress(function (e) {
+    if (e.wich == 13) {
+      e.preventDefault();
+      window.location.href = "/bolt/kereses?keyword=" + $(this).val();
+    }
+  });
+  $("#search").focusin(function (e) {
+    if ($(this).val() != "") {
+      $("#list").fadeIn();
+    }
+  });
+  $("#search").focusout(function (e) {
+    $("#list").fadeOut();
+  });
 });
 
-
-
-
-
-
-
-// termekek
-
-
-// function modal_c_change(szin){
-//     $.ajax({
-//         url:"/scootercity/parts/modal_change.php",
-//         type: 'post',
-//         data: {
-//             prod_szin: szin
-//         },
-//     success: function (result) {
-//         result = JSON.parse(result);
-//         var mennyiseg = result.mennyiseg;
-//         var kepek = result.kepek;
-//         var raktar = "/scootercity/media/products/termek_";
-        
-//         if(mennyiseg > 2){raktar=raktar + 'ok.png';}
-//         else if(mennyiseg > 0){raktar=raktar + 'some.png';}
-//         else{raktar=raktar + 'cancel.png';}
-//         //raktar_status
-//         $('#raktar_status').attr('src', raktar);
-//         $('#kepek').html(kepek);
-//         $('#kepek1').html(kepek);
-//         $('#kepek2').html(kepek);
-//         swiper();
-//         }
-//     })
-// }
-
+const swiper2 = new Swiper(".swiper-thumb", {
+  loop: true,
+  spaceBetween: 10,
+  slidesPerView: 4,
+  freeMode: true,
+  watchSlidesProgress: true,
+});
+const swiper = new Swiper(".swiper-main", {
+  loop: true,
+  spaceBetween: 10,
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
+  thumbs: {
+    swiper: swiper2,
+  },
+});
 
 //sidebar
 
-$(document).ready(function (){
-  $(":checkbox:not(:checked)").map(function () { 
-      var search = sessionStorage.getItem(this.value);
-      if(search == "checked"){
-          this.checked = true;
-      }
+$(document).ready(function () {
+  $(":checkbox:not(:checked)").map(function () {
+    var search = sessionStorage.getItem(this.value);
+    if (search == "checked") {
+      this.checked = true;
+    }
   });
   $(":checkbox").on("change", function () {
-      var search = $('checkbox').map(function () {
-          return this;
-        });
-      if(search.checked == true){
-          sessionStorage.setItem(this.value, 'checked');
-      }
-      else{
-          sessionStorage.setItem(this.value,null);
-      }
+    var search = $("checkbox").map(function () {
+      return this;
+    });
+    if (search.checked == true) {
+      sessionStorage.setItem(this.value, "checked");
+    } else {
+      sessionStorage.setItem(this.value, null);
+    }
   });
 });
 
-$(function() {
-
-  $(".form-check-input").on("change", function() {
-      var search = $(".form-check-input:checked").map(function() {
-          
-          sessionStorage.setItem(this.value,'checked');
-          return this.value;
-      }).toArray();
-      search = search.join("|");
-      if(search != ''){
-          location.search = "termek="+search;
-      }else{
-          location.search = ''; 
-      }
+$(function () {
+  $(".form-check-input").on("change", function () {
+    var search = $(".form-check-input:checked")
+      .map(function () {
+        sessionStorage.setItem(this.value, "checked");
+        return this.value;
+      })
+      .toArray();
+    search = search.join("|");
+    if (search != "") {
+      location.search = "termek=" + search;
+    } else {
+      location.search = "";
+    }
   });
 });
-

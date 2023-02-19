@@ -190,3 +190,7 @@ table.dataTable tbody td.no-padding {
   cursor: pointer;
   color: var(--color-body-main-darker);
 }
+
+ul.ui-autocomplete {
+  z-index: 1100;
+}

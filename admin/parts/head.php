@@ -6,5 +6,5 @@
 <title>ScooterCity - Admin</title>
 <link rel="stylesheet" type="text/css" href="css/styles.css" />
 <link rel="stylesheet" type="text/css" href="css/datatables.min.css" />
-<!-- <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css" /> -->
+<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css" />
 <link rel="stylesheet" type="text/css" href="css/main.css" />

@@ -2,11 +2,13 @@
 require_once 'query/conn.php';
 $url = explode("/", $_SERVER['REQUEST_URI']);
 $db = new dataBase();
-$termek = $db->Select("SELECT t.*,k.nev as knev, (SELECT GROUP_CONCAT(file_name ORDER BY img_order) FROM kepek k WHERE k.termek_id = t.id) as images FROM `termekek` t 
-INNER JOIN `kategoriak` k ON k.id = t.kategoria WHERE t.id = '$url[3]';");
+$termek = $db->Select("SELECT t.*,k.nev as knev,
+(SELECT GROUP_CONCAT(file_name ORDER BY img_order) FROM kepek k WHERE k.termek_id = t.id) as images, 
+(SELECT JSON_ARRAYAGG(JSON_OBJECT(tu.tul_nev,tu.tul_ertek)) FROM termek_tul tu WHERE tu.termek_id = t.id) AS tulajdonsagok FROM `termekek` t 
+    INNER JOIN `kategoriak` k ON k.id = t.kategoria WHERE t.id = '$url[3]';");
 $termek = $termek[0];
 $kepek = explode(",", $termek['images']);
-if($kepek[0] == null){
+if ($kepek[0] == null) {
     $kepek[0] = 'product-placeholder.png';
 }
 $tul = json_decode($termek['tulajdonsagok']);
@@ -51,29 +53,30 @@ require_once "parts/head.php";
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card p-3">
-                         <?php
+                    <div class="card card-termek p-3">
+                        <?php
                         //  var_dump($termek);
-                         echo '<h5>'.$termek['nev'].'</h5>'.
-                         '<h5 class="fw-bold">'.$price.'</h5>';
-                         ?>
-                         <hr>
-                         <?php
-                         if($termek['mennyiseg'] > 3){
+                        echo '<h5>' . $termek['nev'] . '</h5>' .
+                            '<h5 class="fw-bold">' . $price . '</h5>';
+                        ?>
+                        <hr>
+                        <?php
+                        if ($termek['mennyiseg'] > 3) {
                             echo '<p>Raktáron<img src="/media/products/termek_ok.png"></p>';
-                         }
-                         else if($termek['mennyiseg'] > 0){
+                        } else if ($termek['mennyiseg'] > 0) {
                             echo '<p>Pár darab raktáron<img src="/media/products/termek_some.png"></p>';
-                         }else{
+                        } else {
                             echo '<p>Nincs raktáron<img src="/media/products/termek_cancel.png"></p>';
-                         }
-                         echo '<h6>Leírás:</h6><p>'.$termek['leiras'].'</p>';
-                         foreach($tul as $id => $arr){
-                            foreach($arr as $key => $value){
-                                echo '<span>'.$key .': '.$value.'</span>';
+                        }
+                        echo '<h6>Leírás:</h6><p>' . $termek['leiras'] . '</p>';
+                        if ($tul != null) {
+                            foreach ($tul as $id => $arr) {
+                                foreach ($arr as $key => $value) {
+                                    echo '<span>' . $key . ': ' . $value . '</span>';
+                                }
                             }
-                         }
-                         ?>
+                        }
+                        ?>
                     </div>
                 </div>
             </div>

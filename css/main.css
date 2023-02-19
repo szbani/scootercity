@@ -15,15 +15,15 @@
   --white: #f8f8ff;
 }
 
-.bg-white{
-  background-color: var(--white)!important;
+.bg-white {
+  background-color: var(--white) !important;
 }
 .bg-nav {
-  background-color: var(--dark)!important;
+  background-color: var(--dark) !important;
 }
 
 .bg-mint2 {
-  background-color: var(--mint2)!important;
+  background-color: var(--mint2) !important;
 }
 
 html * {
@@ -38,27 +38,26 @@ body {
   width: 22.5vh;
 }
 
-
-.bg-transparent{
-  color: var(--dark)!important;
+.bg-transparent {
+  color: var(--dark) !important;
 }
 #navbar {
   background-color: var(--dark);
   transition: background-color 0.2s linear !important;
 }
-#navbar .nav-link2{
+#navbar .nav-link2 {
   text-decoration: none;
   color: var(--mint2);
-  transition: color 0.1s ease;;
+  transition: color 0.1s ease;
 }
-#navbar .nav-link2:hover{
-  color:var(--blue2);
+#navbar .nav-link2:hover {
+  color: var(--blue2);
 }
-.bg-transparent .nav-link2{
-  color: var(--dark)!important;
+.bg-transparent .nav-link2 {
+  color: var(--dark) !important;
 }
-.bg-transparent .nav-link2:hover{
-  color: var(--blue1)!important;
+.bg-transparent .nav-link2:hover {
+  color: var(--blue1) !important;
 }
 #search {
   background-color: var(--white);
@@ -173,14 +172,14 @@ main kategoriak
 main display
 */
 
-.main-text{
+.main-text {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
 }
 
-.main-display img{
+.main-display img {
   width: 100%;
   height: 600px;
   opacity: 0.9;
@@ -199,29 +198,10 @@ main display
 
 .sidebar {
   --bs-gutter-x: 1.5rem;
-  height: fit-content;
-  position: sticky;
-  top: 0;
-  bottom: 0;
-  left: 0;
-
+  position: relative;
+  display: block;
   z-index: 30; /* Behind the navbar */
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
-}
-
-@media (max-width: 767.98px) {
-  .sidebar {
-    top: 5rem;
-  }
-}
-
-.sidebar-sticky {
-  position: relative;
-  top: 0;
-  margin-top: 140px;
-  height: 100vh;
-  overflow-x: hidden;
-  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
 }
 
 .status {
@@ -235,6 +215,9 @@ main {
 
 .card {
   background-color: var(--mint) !important;
+}
+.card-termek {
+  min-height: auto;
 }
 
 .card_click {
@@ -272,16 +255,9 @@ main {
   align-items: center;
 }
 
-.swiper-slide img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 .swiper {
   width: 100%;
-  height: 300px;
+  height: 62vh;
   margin-left: auto;
   margin-right: auto;
 }
@@ -315,12 +291,9 @@ main {
 .swiper-slide img {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.swiper-main {
-  height: 500px;
+  height: inherit;
+  object-fit: contain;
+  
 }
 .swiper-thumb {
   height: 100px;
@@ -332,7 +305,7 @@ main {
 /*
  *colorpicker
  */
-
+/* 
 .simplecolorpicker.inline {
   display: inline-block;
   padding: 6px 0;
@@ -352,8 +325,9 @@ main {
 
 .simplecolorpicker.icon:after,
 .simplecolorpicker span.color:after {
-  content: "\00a0\00a0\00a0\00a0"; /* Spaces */
-}
+  content: "\00a0\00a0\00a0\00a0";  */
+/* Spaces */
+/* }
 
 .simplecolorpicker span.color[data-disabled]:hover {
   cursor: not-allowed;
@@ -363,22 +337,25 @@ main {
 .simplecolorpicker span.color:hover,
 .simplecolorpicker span.color[data-selected],
 .simplecolorpicker span.color[data-selected]:hover {
-  border: 1px solid #222; /* @gray-dark */
-}
+  border: 1px solid #222; */
+/* @gray-dark */
+/* }
 .simplecolorpicker span.color[data-selected]:after {
   color: #fff;
-}
+} */
 
 /* Vertical separator, replaces optgroup. */
-.simplecolorpicker span.vr {
-  border-left: 1px solid #222; /* @gray-dark */
-}
+/* .simplecolorpicker span.vr {
+  border-left: 1px solid #222;  */
+/* @gray-dark */
+/* }
 .simplecolorpicker.fontawesome span.color[data-selected]:after {
   font-family: "FontAwesome";
   -webkit-font-smoothing: antialiased;
 
-  content: "\f00c"; /* Ok/check mark */
-
+  content: "\f00c"; */
+/* Ok/check mark */
+/* 
   margin-right: 1px;
   margin-left: 1px;
-}
+} */

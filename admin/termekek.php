@@ -92,24 +92,24 @@ if (empty($_GET['page'])) {
                                             <input class="form-control" id="inputMennyiseg" type="number" min="0" value="0" name="mennyiseg">
                                         </div>
                                     </div>
-                                    <label for="inputTulajdonsag" class="form-label">Termék tulajdonságai:</label>
+                                    <label for="inputTulajdonsag" class="form-label">Termék specifikációi:</label>
                                     <div class="container form-control">
                                         <div class="row g-3">
                                             <div class="col-4">
-                                                <label for="inputTulajdonsag" class="form-label">Tulajdonság neve:</label>
+                                                <label for="inputTulajdonsag" class="form-label">specifikáció neve:</label>
                                             </div>
                                             <div class="col-4">
-                                                <label for="inputTulajdonsag" class="form-label">Értéke:</label>
+                                                <label for="inputTulajdonsagErtek" class="form-label">Értéke:</label>
                                             </div>
                                         </div>
                                         <div class="row modal-scroll-zone g-1 align-items-center overflow-auto">
                                             <div class="col-16">
                                                 <div class="row g-1">
                                                     <div class="col-4">
-                                                        <input class="form-control" id="inputTulajdonsag" type="text" name="tul-nev[]">
+                                                        <input class="form-control tul" id="inputTulajdonsag" type="text" name="tul-nev[]">
                                                     </div>
                                                     <div class="col-4">
-                                                        <input class="form-control" id="inputTulajdonsag" type="text" name="tul-ertek[]">
+                                                        <input class="form-control" id="inputTulajdonsagErtek" type="text" name="tul-ertek[]">
                                                     </div>
                                                     <div class="col-4">
                                                         <a class="add-row" data-bs-toggle="tooltip" data-bs-placement="right" title="Sor hozzáadása">
@@ -124,7 +124,7 @@ if (empty($_GET['page'])) {
                                                 <div class="col-16">
                                                 <div class="row g-1">
                                                  <div class="col-4">
-                                                <input class="form-control" type="text" name="tul-nev[]">
+                                                <input class="form-control tul" type="text" name="tul-nev[]">
                                             </div>
                                             <div class="col-4">
                                                 <input class="form-control" type="text" name="tul-ertek[]">
@@ -189,7 +189,7 @@ if (empty($_GET['page'])) {
                                 </div>
                                 <div class="modal-body">
                                     <div class="preview-images-zone" id="reorderZone">
-                                        
+
                                     </div>
                                 </div>
                                 <div class="modal-footer">

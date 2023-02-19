@@ -34,12 +34,16 @@ if (isset($_POST['upload'])) {
     $inputLeiras = '';
     if (isset($_POST['leiras'])) $inputLeiras = mysqli_real_escape_string($conn, $_POST['leiras']);
 
-    $inputTulajdonsagok = json_encode(arrayTulajdonsagok($conn), JSON_UNESCAPED_UNICODE, 512);
-
     //termek feltoltese
     $sqlTermek = "INSERT INTO termekek(nev,ar,leiras,kategoria,tulajdonsagok,mennyiseg)
-                    Values('$inputNev','$inputAr','$inputLeiras','$inputKategoria','$inputTulajdonsagok','$inputMennyiseg')";
+                    VALUES('$inputNev','$inputAr','$inputLeiras','$inputKategoria','[]','$inputMennyiseg');";
+    $sqlGetId = "SELECT id FROM termekek WHERE nev = '$inputNev';";
     mysqli_query($conn, $sqlTermek);
+    $result = mysqli_query($conn, $sqlGetId);
+    $row = mysqli_fetch_assoc($result);
+    $id = $row['id'];
+    uploadTulajdonsagok($conn,$id);
+    // var_dump($sqlTulajdonsagok);
 
     //file feltoltes 
     $errors = uploadImages($conn, $inputNev);
@@ -57,20 +61,19 @@ if (isset($_POST['upload'])) {
     $inputLeiras = '';
     if (isset($_POST['leiras'])) $inputLeiras = mysqli_real_escape_string($conn, $_POST['leiras']);
 
-    $inputTulajdonsagok = json_encode(arrayTulajdonsagok($conn), JSON_UNESCAPED_UNICODE, 512);
-
     //termek update
     $sqlTermek = "UPDATE termekek
-                    SET nev = '$inputNev',ar = '$inputAr',leiras='$inputLeiras',kategoria='$inputKategoria',
-                    tulajdonsagok='$inputTulajdonsagok',mennyiseg ='$inputMennyiseg'
+                    SET nev = '$inputNev',ar = '$inputAr',leiras='$inputLeiras',kategoria='$inputKategoria'
+                    ,mennyiseg ='$inputMennyiseg'
                     WHERE id = '$inputId'";
     mysqli_query($conn, $sqlTermek);
 
+    uploadTulajdonsagok($conn,$inputId);
     //képek feltöltése
     $errors = uploadImages($conn, $inputNev);
 
     logAction($conn, "Módosította ezt a számú terméket: " . $inputId . ".", $_SESSION['user']);
-    if($errors != null){
+    if ($errors != null) {
         $_SESSION['errors'] = json_encode($errors);
     }
     $_SESSION['success'] = 'Sikeres Módosítás';
@@ -80,14 +83,14 @@ if (isset($_POST['upload'])) {
     $nev = $_POST['nev'];
 
     $sqlDelteImages = "SELECT file_name FROM kepek WHERE termek_id = '$id';";
-    $result = mysqli_query($conn,$sqlDelteImages);
-    if(mysqli_num_rows($result)){
-        while($row = mysqli_fetch_assoc($result)){
-            unlink("../../media/products/".$row['file_name']); 
+    $result = mysqli_query($conn, $sqlDelteImages);
+    if (mysqli_num_rows($result)) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            unlink("../../media/products/" . $row['file_name']);
         }
     }
 
-    $sql = "DELETE FROM termekek WHERE id = '$id'";
+    $sql = "DELETE FROM termekek WHERE id = '$id';";
     mysqli_query($conn, $sql);
     logAction($conn, "Törölte ezt a terméket: " . $nev . ".", $_SESSION['user']);
     echo json_encode(array('success' => true, 'messages' => array('Törölted (' . $id . ')' . $nev . ' nevű terméket.')));
@@ -118,7 +121,7 @@ if (isset($_POST['upload'])) {
 } else if (isset($_POST['imgDelete'])) {
     $url = explode("/", $_POST['image']);
     $name = $url[count($url) - 1];
-    $sql = "DELETE FROM kepek WHERE file_name = '$name'";
+    $sql = "DELETE FROM kepek WHERE file_name = '$name';";
     mysqli_query($conn, $sql);
     unlink("../" . $_POST['image']);
     echo json_encode(array('success' => true, 'messages' => array('Törölted a képet')));
@@ -126,11 +129,13 @@ if (isset($_POST['upload'])) {
     back();
 }
 
-function arrayTulajdonsagok($conn){
-    $tempTulajdonsagok = array();
+function uploadTulajdonsagok($conn,$id)
+{
+    $values = '';
     for ($i = 0; $i < count($_POST['tul-nev']); $i++) {
         $tulNev = $_POST['tul-nev'][$i];
         if (!empty($tulNev)) {
+            if($values != null)$values .= ',';
             $tulNev = mysqli_real_escape_string($conn, $tulNev);
             $tulErtek = $_POST['tul-ertek'][$i];
             if (!empty($tulErtek)) {
@@ -138,13 +143,18 @@ function arrayTulajdonsagok($conn){
             } else {
                 $tulErtek = 'Nincs adat';
             }
-            array_push($tempTulajdonsagok, [$tulNev => $tulErtek]);
+            $values .= "('$id','$tulNev','$tulErtek')";
         }
     }
-    return $tempTulajdonsagok;
+    $sqlDeleteTuls = "DELETE FROM termek_tul WHERE termek_id = '$id'";
+    mysqli_query($conn,$sqlDeleteTuls);
+    $sqlTulajdonsagok = "INSERT INTO termek_tul(termek_id,tul_nev,tul_ertek)
+                        VALUES $values;";
+    mysqli_query($conn,$sqlTulajdonsagok);
 }
 
-function uploadImages($conn, $inputNev){
+function uploadImages($conn, $inputNev)
+{
     $errors = array();
     $allowTypes = array('jpg', 'png', 'jpeg');
     if ($_FILES['images']) {

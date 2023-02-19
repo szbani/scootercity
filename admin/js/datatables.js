@@ -18,17 +18,22 @@ function format(d) {
       '<img src="../media/products/product-placeholder.png" class="img-fluid img-table" alt="">';
   }
   var tul = "";
-  try {
-    var json = JSON.parse(d.tulajdonsagok);
-    $.each(json, function (id, value) {
-      $.each(value, function (id, value) {
-        tul += id + ": " + value + ",&ensp;";
+  if(d.tulajdonsagok != null){
+    try {
+      var json = JSON.parse(d.tulajdonsagok);
+      $.each(json, function (id, value) {
+        $.each(value, function (id, value) {
+          tul += id + ": " + value + ",&ensp;";
+        });
       });
-    });
-    tul = tul.slice(0, -7);
-  } catch {
+      tul = tul.slice(0, -7);
+    } catch {
+      tul = "nincs megadva tulajdonság.";
+    }
+  }else{
     tul = "nincs megadva tulajdonság.";
   }
+  
   return (
     '<div class="slider">' +
     '<table class="table" cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
@@ -45,7 +50,7 @@ function format(d) {
     "</td>" +
     "</tr>" +
     "<tr>" +
-    "<td>Tulajdonságok:</td>" +
+    "<td>Specifikációk:</td>" +
     "<td>" +
     tul +
     "</td>" +
@@ -228,7 +233,7 @@ function createTableTermekek() {
 }
 
 function tableReload(table, pics) {
-  if (childRows != null) childRows = table.rows($(".shown"));
+  if (childRows == null) childRows = table.rows($(".shown"));
   table.ajax.reload(null, false);
   if (pics) resetPics();
 }
@@ -324,10 +329,11 @@ function editTermekek(table) {
     try {
       var json = JSON.parse(row.data().tulajdonsagok);
       var tulnevek = $('input[name="tul-nev[]"]');
-      var tulertekek = $('input[name="tul-ertek[]"]');
       for (i = tulnevek.length; i < json.length; i++) {
         $(".add-row").trigger("click");
       }
+      tulnevek = $('input[name="tul-nev[]"]');
+      var tulertekek = $('input[name="tul-ertek[]"]');
       $.each(json, function (jsonid, value) {
         $.each(value, function (id, value) {
           $(tulnevek[jsonid]).val(id);

@@ -38,10 +38,10 @@ $(document).on("click", "a.link", function (e) {
 
 //modify
 
-function del_btn(id) {
-  document.getElementById("del_id").innerHTML = id;
-  document.getElementById("del_hidden").value = id;
-}
+// function del_btn(id) {
+//   document.getElementById("del_id").innerHTML = id;
+//   document.getElementById("del_hidden").value = id;
+// }
 
 //toast
 function showToast(id) {
@@ -102,10 +102,10 @@ $(document).ready(function () {
       '<div class="col-16">' +
       '<div class="row g-1">' +
       '<div class="col-4">' +
-      '<input class="form-control" id="inputTulajdonsag" type="text" name="tul-nev[]">' +
+      '<input class="form-control tul" type="text" name="tul-nev[]">' +
       "</div>" +
       '<div class="col-4">' +
-      '<input class="form-control" id="inputTulajdonsag" type="text" name="tul-ertek[]">' +
+      '<input class="form-control" type="text" name="tul-ertek[]">' +
       "</div>" +
       '<div class="col-4">' +
       '<a class="del-row" data-bs-toggle="tooltip" data-bs-placement="right" title="Sor törlése">' +
@@ -206,3 +206,11 @@ function resetPics() {
   $(".preview-images-zone").empty();
   num = 0;
 }
+
+$(document).ready(function() {
+  $(document).keypress('.tul',function (e){
+    $('.tul').autocomplete({
+      source:"query/autocomplete.php",
+    });
+  });
+});

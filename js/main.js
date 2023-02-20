@@ -1,18 +1,18 @@
 var nav = true;
 $(document).ready(function () {
-  var navbar = $('#navbar');
+  var navbar = $("#navbar");
   navcheck(navbar);
   $(document).scroll(function (e) {
     navcheck(navbar);
   });
 });
-function navcheck(navbar){
+function navcheck(navbar) {
   var height = screen.height * 0.1;
-  if($(this).scrollTop() < height && !nav){
+  if ($(this).scrollTop() < height && !nav) {
     $(navbar).toggleClass("bg-transparent", true);
     $(navbar).toggleClass("shadow-lg", false);
     nav = true;
-  }else if($(this).scrollTop() > height && nav) {
+  } else if ($(this).scrollTop() > height && nav) {
     $(navbar).toggleClass("bg-transparent", false);
     $(navbar).toggleClass("shadow-lg", true);
     nav = false;
@@ -107,11 +107,19 @@ $(function () {
         return this.value;
       })
       .toArray();
-    search = search.join("|");
-    if (search != "") {
-      location.search = "termek=" + search;
-    } else {
-      location.search = "";
-    }
+    url = "";
+    $(search).each(function () {
+      attr = this.split("=");
+      if (url.includes(attr[0] + "=")) {
+        url += "|" + attr[1];
+      } else {
+        if (url != "") {
+          url += "&" + this;
+        } else {
+          url += this;
+        }
+      }
+    });
+    location.search = url;
   });
 });

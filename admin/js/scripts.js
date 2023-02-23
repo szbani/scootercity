@@ -104,10 +104,10 @@ $(document).ready(function () {
       '<div class="col-4">' +
       '<input class="form-control tul" type="text" name="tul-nev[]">' +
       "</div>" +
-      '<div class="col-4">' +
-      '<input class="form-control" type="text" name="tul-ertek[]">' +
+      '<div class="col-7">' +
+      '<input class="form-control tul2" type="text" name="tul-ertek[]">' +
       "</div>" +
-      '<div class="col-4">' +
+      '<div class="col-1">' +
       '<a class="del-row" data-bs-toggle="tooltip" data-bs-placement="right" title="Sor törlése">' +
       '<i class="fa-solid fa-minus fa-2x" ></i>' +
       "</a>" +
@@ -210,7 +210,19 @@ function resetPics() {
 $(document).ready(function() {
   $(document).keypress('.tul',function (e){
     $('.tul').autocomplete({
-      source:"query/autocomplete.php",
+      source: function(request,response){
+        $.getJSON("query/autocomplete.php", {term: request.term,auto: 'nev'},
+        response);
+      }
     });
   });
+  // $(document).keypress('.tul2',function (e){
+  //   console.log($(this).closest('.tul'));
+  //   $('.tul2').autocomplete({
+  //     source: function(request,response){
+  //       $.getJSON("query/autocomplete.php", {term: request.term,auto: 'ertek'},
+  //       response);
+  //     }
+  //   });
+  // });
 });

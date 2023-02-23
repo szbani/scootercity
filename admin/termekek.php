@@ -108,10 +108,10 @@ if (empty($_GET['page'])) {
                                                     <div class="col-4">
                                                         <input class="form-control tul" id="inputTulajdonsag" type="text" name="tul-nev[]">
                                                     </div>
-                                                    <div class="col-4">
-                                                        <input class="form-control" id="inputTulajdonsagErtek" type="text" name="tul-ertek[]">
+                                                    <div class="col-7">
+                                                        <input class="form-control tul2" id="inputTulajdonsagErtek" type="text" name="tul-ertek[]">
                                                     </div>
-                                                    <div class="col-4">
+                                                    <div class="col-1">
                                                         <a class="add-row" data-bs-toggle="tooltip" data-bs-placement="right" title="Sor hozzáadása">
                                                             <i class="fa-solid fa-plus fa-2x"></i>
                                                         </a>
@@ -126,10 +126,10 @@ if (empty($_GET['page'])) {
                                                  <div class="col-4">
                                                 <input class="form-control tul" type="text" name="tul-nev[]">
                                             </div>
-                                            <div class="col-4">
-                                                <input class="form-control" type="text" name="tul-ertek[]">
+                                            <div class="col-7">
+                                                <input class="form-control tul2" type="text" name="tul-ertek[]">
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-1">
                                                 <a class="del-row" data-bs-toggle="tooltip" data-bs-placement="right" title="Sor törlése">
                                                     <i class="fa-solid fa-minus fa-2x" ></i>
                                                 </a>

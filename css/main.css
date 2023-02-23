@@ -10,7 +10,8 @@
   --lightblue1: #47b5ff;
   --darkblue1: #06283d;
   --dark: #181823;
-  --mint: #c0eef2;
+  --lightblue2: #bfe1fe;
+  /* --mint: #c0eef2; */
   --mint2: #e9f8f9;
   --orange: #ff7f50;
   --white: #f8f8ff;
@@ -63,7 +64,7 @@ body {
 }
 #search {
   background-color: var(--white);
-  border-color: var(--mint);
+  border-color: var(--lightblue2);
   transition: background-color 0.5s ease;
   border-bottom-left-radius: 0;
 }
@@ -74,7 +75,7 @@ body {
   width: 75px;
 }
 #submit {
-  background-color: var(--mint) !important;
+  background-color: var(--lightblue2) !important;
   border-bottom-right-radius: 0;
 }
 .lista {
@@ -201,7 +202,7 @@ main {
 }
 
 .card {
-  background-color: var(--mint) !important;
+  background-color: var(--lightblue2) !important;
 }
 .card-termek {
   min-height: auto;

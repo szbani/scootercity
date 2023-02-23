@@ -3,6 +3,9 @@
 <?php require_once 'parts/head.php'; ?>
 
 <body>
+  <?php
+  // include 'parts/navbar2.php'
+  ?>
   <nav class="jumbotron-fluid fixed-top fs-5 bg-transparent" id="navbar">
     <div class="container">
       <div class="row pt-2">

@@ -14,49 +14,53 @@ $fmt = numfmt_create('hu-HU', NumberFormatter::CURRENCY);
 //           WHERE (tul.tul_nev = 'tul3' AND tul.tul_ertek = 'tul3') OR (tul.tul_nev = 'tul2' AND tul.tul_ertek = 'tul2') OR (tul.tul_nev = 'gdf' AND tul.tul_ertek = 'fdg')
 //           GROUP BY t.nev;
 $params = '';
-if(isset($_GET['attr'])){
-  $attr = $_GET['attr'];
-  $params .= "INNER JOIN termek_tul tul ON tul.termek_id = t.id WHERE ".
-  '';
-  $params .= '';
-}
+$katSzuro = '';
+if ($_SERVER['QUERY_STRING'] != '') {
+  $rawQuery = urldecode($_SERVER['QUERY_STRING']);
+  $rawQuery = str_replace('%20', ' ', $rawQuery);
+  $query = explode('&', $rawQuery);
+  $params2 = '';
+  foreach ($query as $key => $value) {
+    $tul = explode('=', $value);
+    $nev = $tul[0];
+    if ($params2 != '') $params2 .= ' AND ';
+    if ($katSzuro != '' && $nev == 'kategoria') $katSzuro .= ' OR ';
+    
 
-$rawQuery = $_SERVER['QUERY_STRING'];
-$query = explode('&',$rawQuery);
-foreach($query as $key => $value){
-  $tul = explode('=',$value);
-  foreach($tul as $key => $value){
-    $ertekek = explode('|',$value);
-    foreach($ertekek as $key => $value){
-      
+    if (!str_contains($params, 'INNER JOIN') && $nev != 'kategoria' && $nev != 'keyword') {
+      $params .= "INNER JOIN termek_tul tul ON tul.termek_id = t.id ";
+    }
+    if ($nev == 'keyword') {
+      if (!str_contains($params2, 'WHERE')) {
+        $params2 .= ' WHERE ';
+      } else {
+        $params2 .= ' AND ';
+      }
+      $params2 .= "t.nev LIKE '%{$tul[1]}%'";
+    } else if ($nev == 'kategoria') {
+      if ($katSzuro == '') $katSzuro .= ' WHERE ';
+      $katSzuro .= "te.kategoria = '$tul[1]' ";
+      $katSzuro = str_replace("|", "' OR te.kategoria = '", $katSzuro);
+      $params2 .= " t.kategoria = '$tul[1]' ";
+      $params2 = str_replace("|", "' OR t.kategoria = '", $params2);
+    } else {
+      $params2 .= " tul.tul_nev = '$nev' AND (";
+      $ertekek = explode('|', $tul[1]);
+      $tempParam = "";
+      foreach ($ertekek as $key => $value) {
+        if ($tempParam != "") $tempParam .= ' OR ';
+        $tempParam .= "tul.tul_ertek = '$value' ";
+      }
+      $params2 .= $tempParam . ')';
     }
   }
+  if (!str_contains($params2, 'WHERE')) $params .= ' WHERE ';
+  $params .= $params2;
 }
-if (isset($_GET["kategoria"])) {
-  if(!str_contains($params,'WHERE')){
-    $params .= ' WHERE ';
-  }else{
-    $params .= ' AND ';
-  }
-  $kat = " t.kategoria = '";
-  $params .= $kat . $_GET["termek"] . "'";
+var_dump($katSzuro);
+echo '<br>';
+var_dump($params);
 
-  if (str_contains($params, "|")) {
-    $params = str_replace("|", "' OR " . $kat, $params);
-  }
-}
-if(isset($_GET['keyword'])){
-  $keyword = $_GET['keyword'];
-  if(!str_contains($params,'WHERE')){
-    $params .= ' WHERE ';
-  }else{
-    $params .= ' AND ';
-  }
-  $params .= "t.nev LIKE '%{$keyword}%'";
-}
-if(isset($_GET['attr'])){
-  $params .= " ORDER BY t.nev";
-}
 ?>
 <!DOCTYPE html>
 <html>
@@ -73,6 +77,14 @@ require_once 'parts/head.php';
     <nav class="col-md-3 col-lg-2 d-md-block bg-light">
       <div class="flex-shrink-0 p-3">
         <ul class="list-unstyled ps-0">
+          <li class="mb-1">
+            <select class="form-select form-select-sm rounded ">
+              <option>a-z sorrendben</option>
+              <option value="z-a">z-a sorrendben</option>
+              <option value="pup">ár szerint növekvő</option>
+              <option value="pdown">ár szerint csökkenő</option>
+            </select>
+          </li>
           <li class="mb-1">
             <button class="btn btn-toggle w-100 d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#kategoriak" aria-expanded="true">
               Kategóriák
@@ -113,7 +125,7 @@ require_once 'parts/head.php';
             </div>
           </li>
           <?php
-          $sql = "SELECT DISTINCT tul_nev FROM termek_tul;";
+          $sql = "SELECT DISTINCT tul_nev FROM termek_tul tul INNER JOIN termekek te ON tul.termek_id = te.id $katSzuro;";
           $result = mysqli_query($conn, $sql);
           if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
@@ -129,9 +141,9 @@ require_once 'parts/head.php';
                 $ertek = $row2['ertek'];
                 echo '<li class="mt-1">
                     <a class="link-dark rounded text-decoration-none ">
-                    <label class="form-check-label" for="' . $nev.'-'.$ertek . '">' . $ertek . '</label>
-                    <input class="form-check-input ms-2" id="' . $nev.'-'.$ertek . '" type="checkbox" value="' .$nev.'='. $ertek . '">
-                    <label class="form-check-label "for="' . $nev.'-'.$ertek . '"> (' . $row2['szam'] . ')</label>
+                    <label class="form-check-label" for="' . $nev . '-' . $ertek . '">' . $ertek . '</label>
+                    <input class="form-check-input ms-2" id="' . $nev . '-' . $ertek . '" type="checkbox" value="' . $nev . '=' . $ertek . '">
+                    <label class="form-check-label "for="' . $nev . '-' . $ertek . '"> (' . $row2['szam'] . ')</label>
                     </a>
                     </li>';
               }
@@ -143,7 +155,7 @@ require_once 'parts/head.php';
           }
 
           ?>
-          
+
         </ul>
       </div>
     </nav>
@@ -158,7 +170,8 @@ require_once 'parts/head.php';
           (SELECT file_name FROM kepek k 
           WHERE k.termek_id = t.id 
           ORDER BY img_order LIMIT 1)as image 
-          FROM `termekek` t $params; ";
+          FROM `termekek` t 
+          $params ORDER BY t.nev ASC; ";
         $result = mysqli_query($conn, $sql);
 
         if (mysqli_num_rows($result) > 0) {

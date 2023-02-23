@@ -3,7 +3,7 @@
     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gy-3">
 
       <div class="col">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/">
           <img src="/media/main/logo.jpg" alt="Logo" class="d-inline-block align-text-top logo">
         </a>
       </div>

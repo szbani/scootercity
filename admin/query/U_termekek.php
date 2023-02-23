@@ -35,8 +35,8 @@ if (isset($_POST['upload'])) {
     if (isset($_POST['leiras'])) $inputLeiras = mysqli_real_escape_string($conn, $_POST['leiras']);
 
     //termek feltoltese
-    $sqlTermek = "INSERT INTO termekek(nev,ar,leiras,kategoria,tulajdonsagok,mennyiseg)
-                    VALUES('$inputNev','$inputAr','$inputLeiras','$inputKategoria','[]','$inputMennyiseg');";
+    $sqlTermek = "INSERT INTO termekek(nev,ar,leiras,kategoria,mennyiseg)
+                    VALUES('$inputNev','$inputAr','$inputLeiras','$inputKategoria','$inputMennyiseg');";
     $sqlGetId = "SELECT id FROM termekek WHERE nev = '$inputNev';";
     mysqli_query($conn, $sqlTermek);
     $result = mysqli_query($conn, $sqlGetId);

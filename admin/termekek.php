@@ -65,31 +65,77 @@ if (empty($_GET['page'])) {
                                             <input class="form-control" id="inputNev" type="text" name="nev" required />
                                         </div>
                                     </div>
-                                    <div class="row g-3">
-                                        <div class="col-5">
-                                            <label for="inputAr" class="form-label">Termék ára:</label>
-                                            <input class="form-control" id="inputAr" type="number" name="ar" required>
-                                        </div>
-                                        <div class="col-4">
-                                            <label for="inputKategoria" class="form-label">Termék kategóriája:</label>
-                                            <div class="form-check ps-0">
-                                                <select id="inputKategoria" name="kategoria" class="form-select" val="" required>
-                                                    <option selected disabled value="">Kategória...</option>
-                                                    <?php
-                                                    $sql = "SELECT id, nev FROM kategoriak;";
-                                                    $result = mysqli_query($conn, $sql);
-                                                    if (mysqli_num_rows($result) > 0) {
-                                                        while ($row = mysqli_fetch_array($result)) {
-                                                            echo '<option value="' . $row['id'] . '">' . $row['nev'] . '</option>';
-                                                        }
-                                                    }
-                                                    ?>
-                                                </select>
+                                    <div class="row mt-1">
+                                        <div class="col-6">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <label for="inputAr" class="form-label">Termék ára:</label>
+                                                    <input class="form-control" id="inputAr" type="number" name="ar" required>
+                                                </div>
+                                                <div class="col-12">
+                                                    <label for="inputKategoria" class="form-label">Termék kategóriája:</label>
+                                                    <div class="form-check ps-0">
+                                                        <select id="inputKategoria" name="kategoria" class="form-select" val="" required>
+                                                            <option selected disabled value="">Kategória...</option>
+                                                            <?php
+                                                            $sql = "SELECT id, nev FROM kategoriak;";
+                                                            $result = mysqli_query($conn, $sql);
+                                                            if (mysqli_num_rows($result) > 0) {
+                                                                while ($row = mysqli_fetch_array($result)) {
+                                                                    echo '<option value="' . $row['id'] . '">' . $row['nev'] . '</option>';
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="col-3">
+                                                    <label for="inputMennyiseg" class="form-label">Mennyiség:</label>
+                                                    <input class="form-control" id="inputMennyiseg" type="number" min="0" value="0" name="mennyiseg">
+                                                </div> -->
                                             </div>
                                         </div>
-                                        <div class="col-3">
-                                            <label for="inputMennyiseg" class="form-label">Mennyiség:</label>
-                                            <input class="form-control" id="inputMennyiseg" type="number" min="0" value="0" name="mennyiseg">
+                                        <div class="col-6">
+                                            <div class="row g-3">
+                                                <div class="col-4">
+                                                    <label for="inputMeret" class="form-label">Méret:</label>
+                                                </div>
+                                                <div class="col-4">
+                                                    <label for="inputMeretMenny" class="form-label">Mennyiség:</label>
+                                                </div>
+                                                <div class="col-1 ps-0">
+                                                    <a class="add-menny" data-bs-toggle="tooltip" data-bs-placement="right" title="Sor hozzáadása">
+                                                        <i class="fa-solid fa-plus fa-2x"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="row modal-scroll g-1 align-items-center overflow-auto">
+                                                <div class="col-16">
+                                                    <div class="row rows-mennyiseg row-cols-3 g-1">
+                                                        <?php
+                                                        for ($i = 0; $i < 2; $i++) {
+                                                            echo '
+                                                        <div class="col-12">
+                                                        <div class="row gx-1">
+                                                        <div class="col-4">
+                                                            <input class="form-control" id="inputMeret" type="text" name="menny-nev[]">
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <input class="form-control" id="inputMeretMenny" type="number" name="menny-ertek[]" min="0" value="0">
+                                                        </div>
+                                                        <div class="col-4">
+                                                        <a class="del-row" data-bs-toggle="tooltip" data-bs-placement="right" title="Sor törlése">
+                                                        <i class="fa-solid fa-minus fa-2x" ></i>
+                                                        </a>
+                                                        </div>
+                                                        </div>
+                                                        </div>
+                                                        ';
+                                                        }
+                                                        ?>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <label for="inputTulajdonsag" class="form-label">Termék specifikációi:</label>
@@ -98,30 +144,20 @@ if (empty($_GET['page'])) {
                                             <div class="col-4">
                                                 <label for="inputTulajdonsag" class="form-label">specifikáció neve:</label>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-7">
                                                 <label for="inputTulajdonsagErtek" class="form-label">Értéke:</label>
+                                            </div>
+                                            <div class="col-1 ps-0">
+                                                <a class="add-row" data-bs-toggle="tooltip" data-bs-placement="right" title="Sor hozzáadása">
+                                                    <i class="fa-solid fa-plus fa-2x"></i>
+                                                </a>
                                             </div>
                                         </div>
                                         <div class="row modal-scroll-zone g-1 align-items-center overflow-auto">
-                                            <div class="col-16">
-                                                <div class="row g-1">
-                                                    <div class="col-4">
-                                                        <input class="form-control tul" id="inputTulajdonsag" type="text" name="tul-nev[]">
-                                                    </div>
-                                                    <div class="col-7">
-                                                        <input class="form-control tul2" id="inputTulajdonsagErtek" type="text" name="tul-ertek[]">
-                                                    </div>
-                                                    <div class="col-1">
-                                                        <a class="add-row" data-bs-toggle="tooltip" data-bs-placement="right" title="Sor hozzáadása">
-                                                            <i class="fa-solid fa-plus fa-2x"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <?php
                                             for ($i = 0; $i < 3; $i++) {
                                                 echo '
-                                                <div class="col-16">
+                                                <div class="col-12">
                                                 <div class="row g-1">
                                                  <div class="col-4">
                                                 <input class="form-control tul" type="text" name="tul-nev[]">
@@ -239,6 +275,7 @@ if (empty($_GET['page'])) {
                         $_SESSION['success'] = null;
                     }
                     ?>
+                    destroyTable();
                     createTableTermekek();
                     imageReader();
                 </script>

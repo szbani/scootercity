@@ -14,7 +14,7 @@ if (empty($_GET['page'])) {
     </head>
 
     <body class="sb-nav-fixed">
-    <?php
+        <?php
         include_once 'parts/navbar.html'
         ?>
         <div id="layoutSidenav">
@@ -55,13 +55,14 @@ if (empty($_GET['page'])) {
                 <script>
                     <?php
                     if (isset($_SESSION['errors'])) {
-                        echo 'createToast("Sikertelen Művelet",[' . $_SESSION['errors'] . '],false)';
+                        echo 'createToast("Sikertelen Művelet",' . $_SESSION['errors'] . ',false);';
                         $_SESSION['errors'] = null;
                     } else if (isset($_SESSION['success'])) {
-                        echo 'createToast("Siker",["' . $_SESSION['success'] . '"],true);';
+                        echo 'createToast("Siker","' . $_SESSION['success'] . '",true);';
                         $_SESSION['success'] = null;
                     }
                     ?>
+                    destroyTable();
                     createTableLogs();
                 </script>
 

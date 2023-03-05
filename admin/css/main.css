@@ -179,17 +179,19 @@ table.dataTable tbody td.no-padding {
 }
 
 /* modal */
-.modal-scroll-zone{
+.modal-scroll-zone, .modal-scroll{
   max-height: 175px;
+  min-height: 100px;
 }
 .del-row{
   cursor: pointer;
   color: var(--color-body-main-darker);
 }
-.add-row{
+.add-row ,.add-menny{
   cursor: pointer;
   color: var(--color-body-main-darker);
 }
+
 
 ul.ui-autocomplete {
   z-index: 1100;

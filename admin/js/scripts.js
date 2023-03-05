@@ -99,7 +99,7 @@ $(document).ready(function () {
   //add row
   $(document).on("click", ".add-row", function () {
     var newRow =
-      '<div class="col-16">' +
+      '<div class="col-12">' +
       '<div class="row g-1">' +
       '<div class="col-4">' +
       '<input class="form-control tul" type="text" name="tul-nev[]">' +
@@ -119,7 +119,27 @@ $(document).ready(function () {
   //delete row
   $(document).on("click", ".del-row", function () {
     $(this).tooltip("hide");
-    $(this).closest(".col-16").remove();
+    $(this).closest(".col-12").remove();
+  });
+  
+  $(document).on("click", ".add-menny", function () {
+    var newRow =
+      '<div class="col-12">'+
+      '<div class="row gx-1">'+
+      '<div class="col-4">' +
+      '<input class="form-control" type="text" name="menny-nev[]">' +
+      "</div>" +
+      '<div class="col-4">' +
+      '<input class="form-control" type="number" name="menny-ertek[]" min="0" value="0">' +
+      "</div>" +
+      '<div class="col-4">' +
+      '<a class="del-row" data-bs-toggle="tooltip" data-bs-placement="right" title="Sor törlése">' +
+      '<i class="fa-solid fa-minus fa-2x" ></i>' +
+      "</a>" +
+      "</div>"+
+      "</div>"+
+      "</div>";
+    $(".rows-mennyiseg").append(newRow);
   });
 });
 

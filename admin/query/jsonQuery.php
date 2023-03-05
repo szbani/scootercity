@@ -5,9 +5,11 @@ if (isset($_POST['table'])) {
 
     if ($_POST['table'] == 'termekek') {
         $sql = "SELECT t.*,k.nev as knev,
+		(SELECT SUM(tm.mennyiseg) FROM termek_menny tm WHERE tm.termek_id = t.id) as mennyiseg,
+		(SELECT GROUP_CONCAT(tm.meret, ':', tm.mennyiseg) FROM termek_menny tm WHERE tm.termek_id = t.id) as meretek,
         (SELECT GROUP_CONCAT(file_name ORDER BY img_order) FROM kepek k WHERE k.termek_id = t.id) as images, 
         (SELECT JSON_ARRAYAGG(JSON_OBJECT(tu.tul_nev,tu.tul_ertek)) FROM termek_tul tu WHERE tu.termek_id = t.id) AS tulajdonsagok FROM `termekek` t 
-            INNER JOIN `kategoriak` k ON k.id = t.kategoria";
+            INNER JOIN `kategoriak` k ON k.id = t.kategoria;";
         $result = mysqli_query($conn, $sql);
     } else if ($_POST['table'] == 'logs') {
         $sql = "SELECT * FROM logs";
@@ -20,7 +22,7 @@ if (isset($_POST['table'])) {
         FROM `admin_users` a;";
         $result = mysqli_query($conn, $sql);
     } else if ($_POST['table'] == 'kategoriak') {
-        $sql = "SELECT k.*, (SELECT COUNT(t.nev) FROM termekek t WHERE k.id = t.kategoria) as hasznalva  
+        $sql = "SELECT k.*,(SELECT ke.nev FROM kategoriak ke WHERE ke.id = k.subkat) AS subnev, (SELECT COUNT(t.nev) FROM termekek t WHERE k.id = t.kategoria) as hasznalva  
         FROM `kategoriak` k
         GROUP BY k.nev;";
         $result = mysqli_query($conn, $sql);
@@ -63,3 +65,14 @@ if (isset($_POST['table'])) {
     header('Location: ' . "http://" . $_SERVER['HTTP_HOST'] . '/admin/login.php');
     die();
 }
+
+
+
+
+// CREATE VIEW menny_pivot AS(SELECT tm.*,
+//                            CASE WHEN tm.meret = "M" THEN tm.mennyiseg END AS M,
+//                            CASE WHEN tm.meret = "XL" THEN tm.mennyiseg END AS XL
+//                            FROM `termek_menny` tm); 
+
+
+// CREATE VIEW menny_pivot_2 AS(SELECT termek_id, SUM(M) as M, SUM(XL) AS XL FROM menny_pivot GROUP BY termek_id);

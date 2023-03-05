@@ -26,26 +26,23 @@ if (empty($_GET['page'])) {
                 <?php
             }
                 ?>
-                <div class="container-fluid px-4">
-                    <h1 class="mt-4" id="pageName">Fiókok</h1>
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <i class="fas fa-table me-1"></i>
-                            Felhasználók
-                        </div>
-                        <div class="card-body">
-                            <table id="table" class="table table-striped table-bordered table-hover w-100">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Felhasználó</th>
-                                        <th>Utolsó Bejelentkezés</th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        Felhasználók
+                    </div>
+                    <div class="card-body">
+                        <table id="table" class="table table-striped table-bordered table-hover w-100">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Felhasználó</th>
+                                    <th>Utolsó Bejelentkezés</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
                     </div>
                 </div>
                 <form action="query/U_fiokok.php" id="form" method="POST" autocomplete="off">
@@ -60,7 +57,7 @@ if (empty($_GET['page'])) {
                                     <div class="row g-3">
                                         <div class="col">
                                             <label for="inputEmail" class="form-label">Email cím:</label>
-                                            <input class="form-control" id="inputEmail" type="Email" name="email" required/>
+                                            <input class="form-control" id="inputEmail" type="Email" name="email" required />
                                         </div>
                                     </div>
                                     <div class="row g-3">
@@ -117,11 +114,12 @@ if (empty($_GET['page'])) {
                         echo 'createToast("Sikertelen Művelet",' . $_SESSION['errors'] . ',false);';
                         $_SESSION['errors'] = null;
                     } else if (isset($_SESSION['success'])) {
-                        echo 'createToast("Siker",["' . $_SESSION['success'] . '"],true);';
+                        echo 'createToast("Siker","' . $_SESSION['success'] . '",true);';
                         $_SESSION['success'] = null;
                     }
                     ?>
-                    createTableFiokok(<?php $_SESSION['main'] ?>);
+                    destroyTable();
+                    createTableFiokok();
                 </script>
 
     </body>

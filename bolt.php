@@ -128,14 +128,15 @@ require_once 'parts/head.php';
           $sql = "SELECT DISTINCT tul_nev FROM termek_tul tul INNER JOIN termekek te ON tul.termek_id = te.id $katSzuro;";
           $result = mysqli_query($conn, $sql);
           if (mysqli_num_rows($result) > 0) {
+            $i = 0;
             while ($row = mysqli_fetch_assoc($result)) {
               $nev = $row['tul_nev'];
               $sql = "SELECT tul_ertek AS ertek, COUNT(tul_ertek) AS szam FROM termek_tul where tul_nev = '$nev' GROUP BY tul_ertek;";
               $result2 = mysqli_query($conn, $sql);
               echo '<li class="mb-1 ">
-                  <button class="btn btn-toggle w-100 d-inline-flex align-items-center rounded border-0" data-bs-toggle="collapse" data-bs-target="#' . $nev . '" aria-expanded="true">
+                  <button class="btn btn-toggle w-100 d-inline-flex align-items-center rounded border-0" data-bs-toggle="collapse" data-bs-target="#' . $i . '" aria-expanded="true">
                     ' . $nev . '
-                  </button><div class="collapse show" id="' . $nev . '">
+                  </button><div class="collapse show" id="' . $i . '">
                   <ul class="btn-toggle-nav mx-auto list-unstyled pb-1">';
               while ($row2 = mysqli_fetch_assoc($result2)) {
                 $ertek = $row2['ertek'];
@@ -151,6 +152,7 @@ require_once 'parts/head.php';
                   </li>
                   <p class="border-top"></p>
                   ';
+              $i++;
             }
           }
 

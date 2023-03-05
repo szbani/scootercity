@@ -20,7 +20,7 @@
 
 <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 <script src="js/scripts.js"></script>
-<script src="js/datatables.js"></script>
 <script type="text/javascript" src="js/datatables.min.js"></script>
+<script src="js/datatables.js"></script>
 
 

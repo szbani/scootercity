@@ -26,29 +26,28 @@ if (empty($_GET['page'])) {
                 <?php
             }
                 ?>
-                <div class="container-fluid px-4">
-                    <h1 class="mt-4" id="pageName">Kategória Nevek</h1>
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <i class="fas fa-table me-1"></i>
-                            Kategóriák Nevek
-                        </div>
-                        <div class="card-body">
-                            <table id="table" class="table table-striped table-bordered table-hover w-100">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Név</th>
-                                        <th>Termékek száma(db)</th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        Kategóriák Nevek
+                    </div>
+                    <div class="card-body">
+                        <table id="table" class="table table-striped table-bordered table-hover w-100">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Név</th>
+                                    <th>Termékek száma(db)</th>
+                                    <th>Kép</th>
+                                    <th>Felsőbb kategória</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
                     </div>
                 </div>
-                <form action="query/U_kategoriak.php" id="form" method="POST" autocomplete="off">
+                <form action="query/U_kategoriak.php" id="form" method="POST" autocomplete="off" enctype="multipart/form-data">
                     <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
@@ -57,12 +56,39 @@ if (empty($_GET['page'])) {
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="row g-3">
+                                    <div class="row row-cols-1 g-3">
                                         <div class="col">
                                             <label for="inputNev" class="form-label">Kategória neve:</label>
-                                            <input class="form-control" id="inputNev" type="text" name="nev" />
+                                            <input class="form-control" id="inputNev" type="text" name="nev" required/>
                                         </div>
+                                        <div class="col">
+                                            <label for="inputKategoria" class="form-label">Főbb kategória:</label>
+                                            <div class="form-check ps-0">
+                                                <select id="inputKategoria" name="inputSubKat" class="form-select">
+                                                    <option selected >Nincs</option>
+                                                    <?php
+                                                    $sql = "SELECT id, nev FROM kategoriak;";
+                                                    $result = mysqli_query($conn, $sql);
+                                                    if (mysqli_num_rows($result) > 0) {
+                                                        while ($row = mysqli_fetch_array($result)) {
+                                                            echo '<option value="' . $row['id'] . '">' . $row['nev'] . '</option>';
+                                                        }
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <label class="form-label" for="fileUpload">Kategória Képe</label>
+                                            <input type="file" name="img" class="form-control" id="fileUpload">
+                                        </div>
+                                        <!-- <div class="col" id="newImg">
+                                            <label for='newImgCheck' class="form-label">Új kép feltöltése</label>
+                                            <input type="checkbox" name="img" class="form-check-input" id="newImgCheck">
+                                        </div> -->
                                     </div>
+
+                                    <!-- kep feltoltes helye -->
                                 </div>
                                 <div class="modal-footer">
                                     <input type="text" id="inputId" name="id" hidden>
@@ -101,13 +127,14 @@ if (empty($_GET['page'])) {
                 <script>
                     <?php
                     if (isset($_SESSION['errors'])) {
-                        echo 'createToast("Sikertelen Művelet",[' . $_SESSION['errors'] . '],false)';
+                        echo 'createToast("Sikertelen Művelet",' . $_SESSION['errors'] . ',false);';
                         $_SESSION['errors'] = null;
                     } else if (isset($_SESSION['success'])) {
-                        echo 'createToast("Siker",["' . $_SESSION['success'] . '"],true);';
+                        echo 'createToast("Siker","' . $_SESSION['success'] . '",true);';
                         $_SESSION['success'] = null;
                     }
                     ?>
+                    destroyTable();
                     createTableKategoriak();
                 </script>
     </body>

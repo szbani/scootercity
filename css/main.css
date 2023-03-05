@@ -7,6 +7,7 @@
   --blue2: #1363df;
   --blue3: #537fe7;
   --blue1-1: #6494ed82;
+  --blue-main: #0c3471;
   --lightblue1: #47b5ff;
   --darkblue1: #06283d;
   --dark: #181823;
@@ -21,7 +22,7 @@
   background-color: var(--white) !important;
 }
 .bg-nav {
-  background-color: var(--dark) !important;
+  background-color: var(--blue-main) !important;
 }
 
 .bg-mint2 {
@@ -45,7 +46,7 @@ body {
   color: var(--dark) !important;
 }
 #navbar {
-  background-color: var(--dark);
+  background-color: var(--blue-main);
   transition: background-color 0.2s linear !important;
 }
 #navbar .nav-link2 {
@@ -104,7 +105,7 @@ footer
 */
 footer {
   box-shadow: 0 -3px 15px 2px #333;
-  background-color: var(--dark);
+  background-color: var(--blue-main);
   position: relative;
   z-index: 150;
 }
@@ -335,62 +336,3 @@ main {
 .scrollarea {
   overflow-y: auto;
 }
-
-
-/*
- *colorpicker
- */
-/* 
-.simplecolorpicker.inline {
-  display: inline-block;
-  padding: 6px 0;
-}
-
-.simplecolorpicker span {
-  margin: 0 5px 5px 0;
-}
-
-.simplecolorpicker.icon,
-.simplecolorpicker span.color {
-  display: inline-block;
-
-  cursor: pointer;
-  border: 1px solid transparent;
-}
-
-.simplecolorpicker.icon:after,
-.simplecolorpicker span.color:after {
-  content: "\00a0\00a0\00a0\00a0";  */
-/* Spaces */
-/* }
-
-.simplecolorpicker span.color[data-disabled]:hover {
-  cursor: not-allowed;
-  border: 1px solid transparent;
-}
-
-.simplecolorpicker span.color:hover,
-.simplecolorpicker span.color[data-selected],
-.simplecolorpicker span.color[data-selected]:hover {
-  border: 1px solid #222; */
-/* @gray-dark */
-/* }
-.simplecolorpicker span.color[data-selected]:after {
-  color: #fff;
-} */
-
-/* Vertical separator, replaces optgroup. */
-/* .simplecolorpicker span.vr {
-  border-left: 1px solid #222;  */
-/* @gray-dark */
-/* }
-.simplecolorpicker.fontawesome span.color[data-selected]:after {
-  font-family: "FontAwesome";
-  -webkit-font-smoothing: antialiased;
-
-  content: "\f00c"; */
-/* Ok/check mark */
-/* 
-  margin-right: 1px;
-  margin-left: 1px;
-} */

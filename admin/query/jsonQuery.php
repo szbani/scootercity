@@ -76,3 +76,11 @@ if (isset($_POST['table'])) {
 
 
 // CREATE VIEW menny_pivot_2 AS(SELECT termek_id, SUM(M) as M, SUM(XL) AS XL FROM menny_pivot GROUP BY termek_id);
+
+
+
+// ALTER VIEW Bolt AS(SELECT t.id, t.nev,t.ar,t.leiras,k.nev AS knev,
+//                     (SELECT file_name FROM kepek k WHERE k.termek_id = t.id ORDER BY img_order LIMIT 1)AS indeximg,
+//                     (SELECT GROUP_CONCAT(file_name ORDER BY img_order) FROM kepek k WHERE k.termek_id = t.id) as images,
+//                     (SELECT JSON_ARRAYAGG(JSON_OBJECT(tu.tul_nev,tu.tul_ertek)) FROM termek_tul tu WHERE tu.termek_id = t.id) AS tulajdonsagok
+//                     FROM termekek t INNER JOIN kategoriak k ON k.id = t.kategoria);

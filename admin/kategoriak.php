@@ -65,7 +65,7 @@ if (empty($_GET['page'])) {
                                             <label for="inputKategoria" class="form-label">Főbb kategória:</label>
                                             <div class="form-check ps-0">
                                                 <select id="inputKategoria" name="inputSubKat" class="form-select">
-                                                    <option selected >Nincs</option>
+                                                    <option selected value="NULL">Nincs</option>
                                                     <?php
                                                     $sql = "SELECT id, nev FROM kategoriak;";
                                                     $result = mysqli_query($conn, $sql);

@@ -17,13 +17,12 @@ function format(d) {
     kepek =
       '<img src="../media/products/product-placeholder.png" class="img-fluid img-table" alt="">';
   }
-  var menny="";
+  var menny = "";
   if (d.meretek != null) {
     meretek = d.meretek.split(",");
     for (i = 0; i < meretek.length; i++) {
-      if(menny != '')menny += ', '
-      menny +=
-        meretek[i];
+      if (menny != "") menny += ", ";
+      menny += meretek[i];
     }
   } else {
     menny = "0";
@@ -113,10 +112,14 @@ function createTableTermekek() {
         data: null,
         defaultContent: "",
       },
-      { data: "id" },
+      {
+        data: "id",
+        width: "5%",
+      },
       { data: "nev" },
       {
         data: "images",
+        width: "8%",
         render: function (data, type, row) {
           if (type === "display") {
             var img = "product-placeholder.png";
@@ -134,8 +137,9 @@ function createTableTermekek() {
       { data: "knev" },
       {
         data: "mennyiseg",
+        width: "10%",
         render: function (data, type, row) {
-          if(data == null)return 0;
+          if (data == null) return 0;
           return data;
           // return (
           //   '<input type="number" class="form-control table-input" id="' +
@@ -148,18 +152,21 @@ function createTableTermekek() {
       },
       {
         data: null,
+        "width": "3%",
         className: "dt-center edit-images",
         defaultContent: '<i class="fa-solid fa-image"></i>',
         orderable: false,
       },
       {
         data: null,
+        "width": "3%",
         className: "dt-center edit",
         defaultContent: '<i class="fa fa-pencil"/>',
         orderable: false,
       },
       {
         data: null,
+        "width": "3%",
         className: "dt-center delete",
         defaultContent: '<i class="fa fa-trash"/>',
         orderable: false,
@@ -372,7 +379,7 @@ function editTermekek() {
     } catch {}
     // atirni
     try {
-      var json = (row.data().meretek).split(',');
+      var json = row.data().meretek.split(",");
       var tulnevek = $('input[name="menny-nev[]"]');
       for (i = tulnevek.length; i < json.length; i++) {
         $(".add-menny").trigger("click");
@@ -380,9 +387,9 @@ function editTermekek() {
       tulnevek = $('input[name="menny-nev[]"]');
       var tulertekek = $('input[name="menny-ertek[]"]');
       $.each(json, function (jsonid, value) {
-        value = value.split(':');
-          $(tulnevek[jsonid]).val(value[0]);
-          $(tulertekek[jsonid]).val(value[1]);
+        value = value.split(":");
+        $(tulnevek[jsonid]).val(value[0]);
+        $(tulertekek[jsonid]).val(value[1]);
       });
     } catch {}
   });
@@ -534,12 +541,13 @@ function createTableKategoriak() {
         data: "img",
         render: function (data, type, row) {
           if (type === "display") {
-            if (data != null) return (
-              '<img src="../media/main/' +
-              data +
-              '" class="img-fluid img-table" alt=""> '
-            );
-            else return ("Nincs");
+            if (data != null)
+              return (
+                '<img src="../media/main/' +
+                data +
+                '" class="img-fluid img-table" alt=""> '
+              );
+            else return "Nincs";
           }
           return data;
         },

@@ -336,3 +336,7 @@ main {
 .scrollarea {
   overflow-y: auto;
 }
+
+.cursor{
+  cursor: pointer;
+}

@@ -41,7 +41,7 @@ if (empty($_GET['page'])) {
                                     <th>Index Kép</th>
                                     <th>Ár(Ft)</th>
                                     <th>Kategória</th>
-                                    <th>Mennyiség(db)</th>
+                                    <th>Összmennyiség</th>
                                     <th></th>
                                     <th></th>
                                     <th></th>

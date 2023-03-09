@@ -18,12 +18,13 @@ if (!isset($_POST['delete'])) {
                 array_push($errors, "A kategória már létezik!");
             }
         }
-        if (isset($_POST['inputSubKat'])) {
+        if ($_POST['inputSubKat'] != 'NULL') {
+            if (isset($_POST['id']) && $_POST['id'] == $_POST['inputSubKat']) array_push($errors, 'Nem lehet önmagának az alkategóriája');
             $inputSubKat = "'" . mysqli_real_escape_string($conn, $_POST['inputSubKat']) . "'";
         } else $inputSubKat = 'NULL';
         if ($_FILES['img']['name'] != '') {
             $errors = uploadImages($inputNev);
-            $inputFileImg = "'".$inputNev. '-'.$_FILES['img']['name']."'";
+            $inputFileImg = "'" . $inputNev . '-' . $_FILES['img']['name'] . "'";
         } else $inputFileImg = 'NULL';
         if (count($errors) != 0) {
             array_push($errors, "Sikertelen Művelet");
@@ -36,10 +37,11 @@ if (!isset($_POST['delete'])) {
 if (isset($_POST['upload'])) {
     $sqlUpload = "INSERT INTO kategoriak(nev,img,subkat)
                     VALUES('$inputNev',$inputFileImg,$inputSubKat)";
+    var_dump($sqlUpload);
     mysqli_query($conn, $sqlUpload);
 
     logAction($conn, "Létrehozta ezt a Kategóriát: " . $inputNev . ".", $_SESSION['user']);
-    $_SESSION['success'] = 'Sikeres Kategória Felvétel';
+    // $_SESSION['success'] = 'Sikeres Kategória Felvétel';
     back();
 } else if (isset($_POST['edit'])) {
     $inputId = mysqli_real_escape_string($conn, $_POST['id']);
@@ -48,31 +50,34 @@ if (isset($_POST['upload'])) {
     $result = mysqli_query($conn, $sqlSelectKategoria);
     $oldKategoria = mysqli_fetch_assoc($result);
     $file = '';
-    if($inputFileImg != 'NULL'){
+    if ($inputFileImg != 'NULL') {
         unlink("../../media/main/" . $oldKategoria['img']);
         $file = ", img = $inputFileImg ";
     }
     $sqlUpdate = "UPDATE kategoriak 
                 SET nev = '$inputNev'$file, subkat = $inputSubKat WHERE id = '$inputId';";
     mysqli_query($conn, $sqlUpdate);
-
+    var_dump($sqlUpdate);
     logAction($conn, "Szerkesztette ezt a Kategóriát: (" . $inputId . ")" . $oldKategoria['nev'] . " -> " . $inputNev . ".", $_SESSION['user']);
     $_SESSION['success'] = 'Sikeres Szerkesztés';
     back();
 } else if (isset($_POST['delete'])) {
     $id  = $_POST['id'];
-    $sqlDelSelect = "SELECT k.*, (SELECT COUNT(t.nev) FROM termekek t WHERE k.id = t.kategoria) as hasznalva  
-    FROM `kategoriak` k WHERE k.id = '$id'
-    GROUP BY k.nev;";
+    $sqlDelSelect = "SELECT k.*, 
+	(SELECT COUNT(t.nev) FROM termekek t WHERE k.id = t.kategoria) as hasznalva,
+	(SELECT GROUP_CONCAT(id) FROM kategoriak k2 WHERE k2.subkat = k.id) AS alkategoriak
+    FROM `kategoriak` k WHERE k.id = '$id' GROUP BY nev;";
     $result = mysqli_query($conn, $sqlDelSelect);
     $row = mysqli_fetch_assoc($result);
     if ($row['hasznalva'] > 0) {
         echo json_encode(array('success' => false, 'messages' => array("Ez a kategória használatban van " . $row['hasznalva'] . " terméknél")));
+    } else if ($row['alkategoriak'] != NULL) {
+        echo json_encode(array('success' => false, 'messages' => array("Ez a kategória tartalmaz alkategóriákat, ezért nem lehet törölni")));
     } else {
-        unlink("../../media/main/" . $row['img']);
+        if ($row['img'] != NULL) unlink("../../media/main/" . $row['img']);
         $sqlDelete = "DELETE FROM kategoriak WHERE id = '$id'";
         mysqli_query($conn, $sqlDelete);
-        logAction($conn, "Törölte ezt a Kategóriát: " . $row['nev'] . ".", $_SESSION['user']);
+        // logAction($conn, "Törölte ezt a Kategóriát: " . $row['nev'] . ".", $_SESSION['user']);
         echo json_encode(array('success' => true, 'messages' => array("Törölted ezt a Kategóriát: " . $row['nev'])));
     }
 } else {
@@ -85,7 +90,7 @@ function uploadImages($inputNev)
     $allowTypes = array('jpg', 'png', 'jpeg');
 
     //termek id lekeres eleje
-    $filename = $inputNev. '-'.$_FILES['img']['name'];
+    $filename = $inputNev . '-' . $_FILES['img']['name'];
     $target_dir = '../../media/main/' . $filename;
 
     $fileType = pathinfo($target_dir, PATHINFO_EXTENSION);
@@ -113,3 +118,14 @@ function back()
     header('location: ../kategoriak.php');
     die();
 }
+
+
+// SELECT k.*, 
+// 	(SELECT COUNT(t.nev) FROM termekek t WHERE k.id = t.kategoria) as hasznalva,
+// 	(SELECT GROUP_CONCAT(id) FROM kategoriak k2 WHERE k2.subkat = k.id) AS alkategoriak
+//     FROM `kategoriak` k GROUP BY nev;
+
+
+// todo 
+// ha van mar termek a kategoriahoz akkor ne egedjen subkatot hozza rendelni
+// ha subkat a akategoria akkor ne egedjen termeket felvenni hozza

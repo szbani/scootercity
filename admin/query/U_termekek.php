@@ -65,16 +65,16 @@ if (isset($_POST['upload'])) {
                     SET nev = '$inputNev',ar = '$inputAr',leiras='$inputLeiras',kategoria='$inputKategoria'
                     ,mennyiseg ='$inputMennyiseg'
                     WHERE id = '$inputId'";
-    mysqli_query($conn, $sqlTermek);
+    // mysqli_query($conn, $sqlTermek);
 
-    uploadTulajdonsagok($conn, $inputId);
+    // uploadTulajdonsagok($conn, $inputId);
     if (isset($_POST['menny-nev'])) {
         uploadMennyiseg($conn, $inputId);
     }
     //képek feltöltése
     $errors = uploadImages($conn, $inputNev);
 
-    logAction($conn, "Módosította ezt a számú terméket: " . $inputId . ".", $_SESSION['user']);
+    // logAction($conn, "Módosította ezt a számú terméket: " . $inputId . ".", $_SESSION['user']);
     if ($errors != null) {
         $_SESSION['errors'] = json_encode($errors);
     }
@@ -96,12 +96,12 @@ if (isset($_POST['upload'])) {
     mysqli_query($conn, $sql);
     logAction($conn, "Törölte ezt a terméket: " . $nev . ".", $_SESSION['user']);
     echo json_encode(array('success' => true, 'messages' => array('Törölted (' . $id . ')' . $nev . ' nevű terméket.')));
-// } else if (isset($_POST['mennyId'])) {
-//     $id = $_POST['mennyId'];
-//     $mennyiseg = $_POST['mennyiseg'];
-//     $sql = "UPDATE termekek SET mennyiseg = '$mennyiseg' WHERE id = '$id';";
-//     mysqli_query($conn, $sql);
-//     echo "$mennyiseg";
+    // } else if (isset($_POST['mennyId'])) {
+    //     $id = $_POST['mennyId'];
+    //     $mennyiseg = $_POST['mennyiseg'];
+    //     $sql = "UPDATE termekek SET mennyiseg = '$mennyiseg' WHERE id = '$id';";
+    //     mysqli_query($conn, $sql);
+    //     echo "$mennyiseg";
 } else if (isset($_POST['reorder'])) {
     $images = "";
     $names = "";
@@ -158,11 +158,12 @@ function uploadTulajdonsagok($conn, $id)
 }
 function uploadMennyiseg($conn, $id)
 {
-    // Ha uj meret akkor hozza kell adni a view hoz
     $values = '';
+    $meretek = array();
     for ($i = 0; $i < count($_POST['menny-nev']); $i++) {
         $mennyNev = $_POST['menny-nev'][$i];
         if (!empty($mennyNev)) {
+            array_push($meretek, $mennyNev);
             if ($values != null) $values .= ',';
             $mennyNev = mysqli_real_escape_string($conn, $mennyNev);
             $mennyErtek = $_POST['menny-ertek'][$i];
@@ -174,6 +175,49 @@ function uploadMennyiseg($conn, $id)
             $values .= "('$id','$mennyNev','$mennyErtek')";
         }
     }
+
+    if (count($meretek) > 0) {
+        $meretek2 = array();
+        $sqlSelectMenny = "SELECT meret FROM termek_menny GROUP BY meret";
+        $result = mysqli_query($conn, $sqlSelectMenny);
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                array_push($meretek2, $row['meret']);
+            }
+        }
+        $alter = false;
+        foreach ($meretek as $meret) {
+            if (!in_array($meret, $meretek2)) {
+                $alter = true;
+                break;
+            }
+        }
+        if ($alter) {
+            $alterView = 'ALTER VIEW menny_pivot AS(SELECT tm.*,';
+        $temp = '';
+        $temp2 ='';
+            foreach ($meretek2 as $meret) {
+                if($temp != '')$temp .= ',';
+                $temp .= ' CASE WHEN tm.meret = "'.$meret.'" THEN tm.mennyiseg END AS '. $meret;
+                if($temp2 != '')$temp2 .= ',';
+                $temp2 .= "SUM($meret) AS $meret ";
+            }
+            $alterView .= $temp;
+            foreach ($meretek as $meret) {
+                if (!in_array($meret, $meretek2)) {
+                    $alterView  .= ', CASE WHEN tm.meret = "'.$meret.'" THEN tm.mennyiseg END AS '. $meret;
+                    $temp2 .= ", SUM($meret) AS $meret ";
+                }
+            }
+            $alterView .= ' FROM `termek_menny` tm);';
+            mysqli_query($conn, $alterView);
+            $alterView2 ="ALTER VIEW menny_pivot_2 AS(SELECT termek_id, $temp2 FROM menny_pivot GROUP BY termek_id)";
+            mysqli_query($conn,$alterView2);
+        }
+
+        die;
+    }
+
     if ($values != '') {
         $sqlDeleteMenny = "DELETE FROM termek_menny WHERE termek_id = '$id'";
         mysqli_query($conn, $sqlDeleteMenny);

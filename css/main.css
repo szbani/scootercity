@@ -5,17 +5,18 @@
   --cyan2: #168aad;
   --blue1: #6495ed;
   --blue2: #1363df;
-  --blue3: #537fe7;
+  --blue3: #4c71d0;
   --blue1-1: #6494ed82;
-  --blue-main: #0c3471;
-  --lightblue1: #47b5ff;
-  --darkblue1: #06283d;
-  --dark: #181823;
-  --lightblue2: #bfe1fe;
+  --blue-main: #154a9a;
+  --lightblue1: #a2d2ff;
+  --lightblue2: #92B4F4;
   /* --mint: #c0eef2; */
+  --dark: #181823;
   --mint2: #e9f8f9;
   --orange: #ff7f50;
   --white: #f8f8ff;
+  --sidebar1:#CFDEE7;
+  --sidebar2:#5E7CE2;
 }
 
 .bg-white {
@@ -23,12 +24,12 @@
 }
 .bg-nav {
   background-color: var(--blue-main) !important;
+  box-shadow: 0 7px 15px -3px #333;
 }
 
-.bg-mint2 {
-  background-color: var(--mint2) !important;
+.bg-price {
+  background-color: white !important;
 }
-
 html * {
   scroll-behavior: smooth;
 }
@@ -76,7 +77,7 @@ body {
   width: 75px;
 }
 #submit {
-  background-color: var(--lightblue2) !important;
+  background-color: var(--sidebar1) !important;
   border-bottom-right-radius: 0;
 }
 .lista {
@@ -203,7 +204,7 @@ main {
 }
 
 .card {
-  background-color: var(--lightblue2) !important;
+  background-color: var(--sidebar1) !important;
 }
 .card-termek {
   min-height: auto;
@@ -292,7 +293,29 @@ main {
 }
 
 /* sidebar */
-
+.bg-sidebar{
+  background-color: var(--blue3)!important;
+}
+.bg-sidebar2{
+  background-color: var(--white);
+  border: 2px solid  var(--sidebar1);
+  border-left: 0px;
+  border-right: 0px;
+  border-radius: 5px;
+}
+.bg-sidebar .collapse{
+  border: 2px solid  var(--sidebar1);
+  border-left: 0px;
+  border-right: 0px;
+  border-radius: 5px;
+  background-color: var(--white)
+}
+.bg-sidebar .collapsing{
+  border: 2px solid  var(--sidebar1);
+  border-left: 0px;
+  border-right: 0px;
+  border-radius: 5px;
+}
 
 .dropdown-toggle { outline: 0; }
 
@@ -305,7 +328,7 @@ main {
 .btn-toggle:hover,
 .btn-toggle:focus {
   color: rgba(0, 0, 0, .85);
-  background-color: var(--blue1-1);
+  background-color: var(--sidebar1);
 }
 
 .btn-toggle::before {
@@ -322,15 +345,17 @@ main {
 .btn-toggle[aria-expanded="true"]::before {
   transform: rotate(90deg);
 }
-
+.btn-toggle-nav{
+  margin-left: 1.25rem!important;
+}
 .btn-toggle-nav a {
   padding: .1875rem .5rem;
-  margin-top: .125rem;
-  margin-left: 1.25rem;
+  width: inherit;
+  display: block;
 }
 .btn-toggle-nav a:hover,
 .btn-toggle-nav a:focus {
-  background-color: var(--blue1-1);
+  background-color: var(--sidebar1);
 }
 
 .scrollarea {

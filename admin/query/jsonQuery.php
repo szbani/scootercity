@@ -1,6 +1,5 @@
 <?php
 if (isset($_POST['table'])) {
-    session_start();
     require 'conn.php';
 
     if ($_POST['table'] == 'termekek') {
@@ -76,6 +75,9 @@ if (isset($_POST['table'])) {
 
 
 // CREATE VIEW menny_pivot_2 AS(SELECT termek_id, SUM(M) as M, SUM(XL) AS XL FROM menny_pivot GROUP BY termek_id);
+
+// ALTER VIEW kat_view AS(SELECT k.*, (SELECT GROUP_CONCAT(id) FROM kategoriak k2 WHERE k2.subkat = k.id) AS alkategoriak, 
+// (SELECT COUNT(t.nev) FROM termekek t WHERE k.id = t.kategoria) as hasznalva FROM `kategoriak` k GROUP BY nev); 
 
 
 

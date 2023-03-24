@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once 'query/conn.php';
 require_once 'query/login.php';
 

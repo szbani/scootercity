@@ -78,48 +78,67 @@ const swiper = new Swiper(".swiper-main", {
   },
 });
 
+$(document).on("click", "a.link", function (e) {
+  e.preventDefault();
+  var pageURL = $(this).attr("href");
+  history.pushState(null, "", pageURL);
+  pageURL = pageURL.split('/');
+
+
+
+  $.ajax({
+    type: "GET",
+    url: "itemload.php",
+    data: { page: pageURL },
+    dataType: "html",
+    success: function (data) {
+      $("#pageContent").html(data);
+    },
+  });
+});
+
 //sidebar
 
-$(document).ready(function () {
-  $(":checkbox:not(:checked)").map(function () {
-    var search = sessionStorage.getItem(this.value);
-    if (search == "checked") {
-      this.checked = true;
-    }
-  });
-  $(":checkbox").on("change", function () {
-    var search = $("checkbox").map(function () {
-      return this;
-    });
-    if (search.checked == true) {
-      sessionStorage.setItem(this.value, "checked");
-    } else {
-      sessionStorage.setItem(this.value, null);
-    }
-  });
-});
+// $(document).ready(function () {
+//   $(":checkbox:not(:checked)").map(function () {
+//     var search = sessionStorage.getItem(this.value);
+//     if (search == "checked") {
+//       this.checked = true;
+//     }
+//   });
+//   $(":checkbox").on("change", function () {
+//     var search = $("checkbox").map(function () {
+//       return this;
+//     });
+//     if (search.checked == true) {
+//       sessionStorage.setItem(this.value, "checked");
+//     } else {
+//       sessionStorage.setItem(this.value, null);
+//     }
+//   });
+// });
 
-$(function () {
-  $(".form-check-input").on("change", function () {
-    var search = $(".form-check-input:checked")
-      .map(function () {
-        sessionStorage.setItem(this.value, "checked");
-        return this.value;
-      })
-      .toArray();
-    url = "";
-    $(search).each(function () {
-      attr = this.split("=");
-      if (url.includes(attr[0] + "=")) {
-        url += "|" + attr[1];
-      } else {
-        if (url != "") {
-          url += "&" + this;
-        } else {
-          url += this;
-        }
-      }
-    });
-    location.search = url;
-  });
-});
+// $(function () {
+//   $(".form-check-input").on("change", function () {
+//     var search = $(".form-check-input:checked")
+//       .map(function () {
+//         sessionStorage.setItem(this.value, "checked");
+//         return this.value;
+//       })
+//       .toArray();
+//     url = "";
+//     $(search).each(function () {
+//       attr = this.split("=");
+//       if (url.includes(attr[0] + "=")) {
+//         url += "|" + attr[1];
+//       } else {
+//         if (url != "") {
+//           url += "&" + this;
+//         } else {
+//           url += this;
+//         }
+//       }
+//     });
+//     location.search = url;
+//   });
+// });

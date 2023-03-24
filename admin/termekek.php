@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once 'query/conn.php';
 require_once 'query/login.php';
 
@@ -78,7 +77,7 @@ if (empty($_GET['page'])) {
                                                         <select id="inputKategoria" name="kategoria" class="form-select" val="" required>
                                                             <option selected disabled value="">Kategória...</option>
                                                             <?php
-                                                            $sql = "SELECT id, nev FROM kategoriak;";
+                                                            $sql = "SELECT id, nev FROM kat_view WHERE alkategoriak IS NULL;";
                                                             $result = mysqli_query($conn, $sql);
                                                             if (mysqli_num_rows($result) > 0) {
                                                                 while ($row = mysqli_fetch_array($result)) {

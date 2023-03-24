@@ -606,6 +606,8 @@ function editKategoriak() {
     $("#form").trigger("reset");
     $("#inputId").val(row.data().id);
     $("#inputNev").val(row.data().nev);
+    if (row.data().subkat== null)$("#inputKategoria").val('NULL');
+    else
     $("#inputKategoria").val(row.data().subkat);
   });
 }

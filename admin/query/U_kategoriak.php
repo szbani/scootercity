@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once "conn.php";
 require_once 'login.php';
 
@@ -21,6 +20,13 @@ if (!isset($_POST['delete'])) {
         if ($_POST['inputSubKat'] != 'NULL') {
             if (isset($_POST['id']) && $_POST['id'] == $_POST['inputSubKat']) array_push($errors, 'Nem lehet önmagának az alkategóriája');
             $inputSubKat = "'" . mysqli_real_escape_string($conn, $_POST['inputSubKat']) . "'";
+            $result = mysqli_query($conn, "SELECT hasznalva FROM kat_view WHERE id = $inputSubKat");
+            $row = mysqli_fetch_assoc($result);
+            if ($row['hasznalva']) {
+                array_push($errors, "Ennél a subkategóriánál szerpelnek termékek ezért nem lehet főkategória!");
+                $_SESSION['errors'] = json_encode($errors);
+                back();
+            }
         } else $inputSubKat = 'NULL';
         if ($_FILES['img']['name'] != '') {
             $errors = uploadImages($inputNev);
@@ -41,12 +47,13 @@ if (isset($_POST['upload'])) {
     mysqli_query($conn, $sqlUpload);
 
     logAction($conn, "Létrehozta ezt a Kategóriát: " . $inputNev . ".", $_SESSION['user']);
-    // $_SESSION['success'] = 'Sikeres Kategória Felvétel';
+    $_SESSION['success'] = 'Sikeres Kategória Felvétel';
     back();
 } else if (isset($_POST['edit'])) {
     $inputId = mysqli_real_escape_string($conn, $_POST['id']);
 
-    $sqlSelectKategoria = "SELECT * FROM kategoriak WHERE id = '$inputId'";
+    $sqlSelectKategoria = "SELECT * , (SELECT COUNT(t.nev) FROM termekek t WHERE k.id = t.kategoria) as hasznalva 
+    FROM kategoriak k WHERE id = '$inputId'";
     $result = mysqli_query($conn, $sqlSelectKategoria);
     $oldKategoria = mysqli_fetch_assoc($result);
     $file = '';
@@ -77,7 +84,7 @@ if (isset($_POST['upload'])) {
         if ($row['img'] != NULL) unlink("../../media/main/" . $row['img']);
         $sqlDelete = "DELETE FROM kategoriak WHERE id = '$id'";
         mysqli_query($conn, $sqlDelete);
-        // logAction($conn, "Törölte ezt a Kategóriát: " . $row['nev'] . ".", $_SESSION['user']);
+        logAction($conn, "Törölte ezt a Kategóriát: " . $row['nev'] . ".", $_SESSION['user']);
         echo json_encode(array('success' => true, 'messages' => array("Törölted ezt a Kategóriát: " . $row['nev'])));
     }
 } else {
@@ -125,7 +132,3 @@ function back()
 // 	(SELECT GROUP_CONCAT(id) FROM kategoriak k2 WHERE k2.subkat = k.id) AS alkategoriak
 //     FROM `kategoriak` k GROUP BY nev;
 
-
-// todo 
-// ha van mar termek a kategoriahoz akkor ne egedjen subkatot hozza rendelni
-// ha subkat a akategoria akkor ne egedjen termeket felvenni hozza

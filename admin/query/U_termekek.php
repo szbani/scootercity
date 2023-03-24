@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once "conn.php";
 require_once 'login.php';
 
@@ -65,16 +64,16 @@ if (isset($_POST['upload'])) {
                     SET nev = '$inputNev',ar = '$inputAr',leiras='$inputLeiras',kategoria='$inputKategoria'
                     ,mennyiseg ='$inputMennyiseg'
                     WHERE id = '$inputId'";
-    // mysqli_query($conn, $sqlTermek);
+    mysqli_query($conn, $sqlTermek);
 
-    // uploadTulajdonsagok($conn, $inputId);
+    uploadTulajdonsagok($conn, $inputId);
     if (isset($_POST['menny-nev'])) {
         uploadMennyiseg($conn, $inputId);
     }
     //képek feltöltése
     $errors = uploadImages($conn, $inputNev);
 
-    // logAction($conn, "Módosította ezt a számú terméket: " . $inputId . ".", $_SESSION['user']);
+    logAction($conn, "Módosította ezt a számú terméket: " . $inputId . ".", $_SESSION['user']);
     if ($errors != null) {
         $_SESSION['errors'] = json_encode($errors);
     }

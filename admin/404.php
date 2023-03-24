@@ -1,16 +1,15 @@
 <?php
-session_start();
-require_once 'query/conn.php';
-require_once 'query/login.php';
-
-if (!isset($_SESSION['user']) && !isset($_SESSION['pass'])) {
-    header('Location: ' . 'login.php');
-    die();
-}
-if (!login($_SESSION['user'], $_SESSION['pass'], $conn)) {
-    header('Location: ' . 'login.php');
-    die();
-}
+//require_once 'query/conn.php';
+//require_once 'query/login.php';
+//
+//if (!isset($_SESSION['user']) && !isset($_SESSION['pass'])) {
+//    header('Location: ' . 'login.php');
+//    die();
+//}
+//if (!login($_SESSION['user'], $_SESSION['pass'], $conn)) {
+//    header('Location: ' . 'login.php');
+//    die();
+//}
 if (empty($_GET['page'])) {
 ?>
     <!DOCTYPE html>
@@ -23,7 +22,7 @@ if (empty($_GET['page'])) {
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>404 Error - SB Admin</title>
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="/admin/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     </head>
 
@@ -38,7 +37,7 @@ if (empty($_GET['page'])) {
                     <div class="row justify-content-center">
                         <div class="col-lg-6">
                             <div class="text-center mt-4">
-                                <img class="mb-4 img-error" src="assets/img/error-404-monochrome.svg" />
+                                <img class="mb-4 img-error" src="/admin/assets/img/error-404-monochrome.svg" />
                                 <p class="lead">This requested URL was not found on this server.</p>
                                 <a href="index.php">
                                     <i class="fas fa-arrow-left me-1"></i>

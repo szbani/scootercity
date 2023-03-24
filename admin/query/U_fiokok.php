@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once "conn.php";
 require_once 'login.php';
 
@@ -22,7 +21,7 @@ if (!isset($_POST['delete'])) {
     }
 
     $inputemail = mysqli_real_escape_string($conn, $_POST['email']);
-    $inputpass = mysqli_real_escape_string($conn, $_POST['pass1']);
+    $inputpass = password_hash(mysqli_real_escape_string($conn, $_POST['pass1']),PASSWORD_DEFAULT);
 }
 
 if (isset($_POST['upload'])) {
@@ -36,7 +35,7 @@ if (isset($_POST['upload'])) {
             mysqli_query($conn, $sql);
     
             $_SESSION['success'] = 'Sikeres Felvétel';
-            logAction($conn,"létrehozott". $inputemail ." email-el fiókot",$_SESSION['user']);
+            logAction($conn,"létrehozott ". $inputemail ." email-el egy fiókot",$_SESSION['user']);
             back();
         } else {
             array_push($errors, "A fiók már létezik!");

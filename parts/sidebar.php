@@ -2,8 +2,8 @@
     <div class="flex-shrink-0 m-0 p-3">
         <ul class="list-unstyled ps-0">
             <li class="mb-1">
-                <select class="form-select form-select-sm rounded ">
-                    <option>a-z sorrendben</option>
+                <select id="sort" class="form-select form-select-sm rounded ">
+                    <option value="">a-z sorrendben</option>
                     <option value="z-a">z-a sorrendben</option>
                     <option value="pup">ár szerint növekvő</option>
                     <option value="pdown">ár szerint csökkenő</option>

@@ -41,7 +41,7 @@ public function subkats($kat, $db): string
     } else {
         foreach (explode(',', $temp[0]['kats']) as $k) {
             if ($vissza != '') $vissza .= ',';
-            $vissza .= subkats($k, $db);
+            $vissza .= $this->subkats($k, $db);
         }
 
     }

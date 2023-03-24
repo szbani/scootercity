@@ -1,5 +1,4 @@
 <?php
-
 //if (!empty($_GET['page'])) {
 //    $page = trim($_GET['page']);
 //    if (file_exists($page)) {
@@ -14,7 +13,16 @@ if (isset($_GET['page'])) $url = $_GET['page'];
 $fmt = numfmt_create('hu-HU', NumberFormatter::CURRENCY);
 if (!isset($url[2])) $keresett = '%%';
 else $keresett = $url[2];
-
+if (isset($_GET['sort'])){
+    $sort = $_GET['sort'];
+    if ($sort=='pup')$sort= "ORDER BY ar ASC, nev ASC";
+    else if ($sort=='pdown')$sort= "ORDER BY ar DESC, nev ASC";
+    else if ($sort=='z-a')$sort = "ORDER BY nev DESC";
+    else $sort = 'ORDER BY nev ASC';
+}else{
+    $sort = 'ORDER BY nev ASC';
+}
+//var_dump($keresett);
 ?>
 
 <div class="row row-cols-2 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5 mb-3">
@@ -23,7 +31,7 @@ else $keresett = $url[2];
     if ($katcheck == null)
         $keresett = '%%';
     if ($katcheck == null || $katcheck[0]['kats'] == null || $keresett == '%%') {
-        $termekek = $db->Select("SELECT id,nev,ar,leiras,indeximg FROM bolt WHERE knev like '$keresett' ORDER BY nev ASC;");
+        $termekek = $db->Select("SELECT id,nev,ar,leiras,indeximg FROM bolt WHERE knev like '$keresett' $sort;");
     } else {
         $kats = '';
         foreach (explode(',', $katcheck[0]['kats']) as $k) {
@@ -31,7 +39,7 @@ else $keresett = $url[2];
             $kats .= $kat->subkats($k, $db);
         }
         $kats = str_replace(',', '\',\'', $kats);
-        $termekek = $db->Select("SELECT id,nev,ar,leiras,indeximg FROM bolt WHERE knev in ('$kats') ORDER BY nev ASC;");
+        $termekek = $db->Select("SELECT id,nev,ar,leiras,indeximg FROM bolt WHERE knev in ('$kats') $sort;");
     }
     if (count($termekek) > 0) {
 

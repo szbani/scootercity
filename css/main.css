@@ -46,6 +46,7 @@ body {
 .bg-transparent {
   color: var(--dark) !important;
 }
+
 #navbar {
   background-color: var(--blue-main);
   transition: background-color 0.2s linear !important;
@@ -98,6 +99,7 @@ body {
 .nav-link:hover {
   color: var(--blue1);
 }
+
 
 /*navbar end*/
 
@@ -200,7 +202,8 @@ main display
 
 
 main {
-  min-height: 600px;
+
+  min-height: 69.5vh;
 }
 
 .card {

@@ -62,7 +62,6 @@ if (isset($_POST['upload'])) {
     //termek update
     $sqlTermek = "UPDATE termekek
                     SET nev = '$inputNev',ar = '$inputAr',leiras='$inputLeiras',kategoria='$inputKategoria'
-                    ,mennyiseg ='$inputMennyiseg'
                     WHERE id = '$inputId'";
     mysqli_query($conn, $sqlTermek);
 

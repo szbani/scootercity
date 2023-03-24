@@ -1,101 +1,124 @@
 var nav = true;
 $(document).ready(function () {
-  var navbar = $("#navbar");
-  navcheck(navbar);
-  $(document).scroll(function (e) {
+    var navbar = $("#navbar");
     navcheck(navbar);
-  });
+    $(document).scroll(function (e) {
+        navcheck(navbar);
+    });
 });
+
 function navcheck(navbar) {
-  var height = screen.height * 0.1;
-  if ($(this).scrollTop() < height && !nav) {
-    $(navbar).toggleClass("bg-transparent", true);
-    $(navbar).toggleClass("shadow-lg", false);
-    nav = true;
-  } else if ($(this).scrollTop() > height && nav) {
-    $(navbar).toggleClass("bg-transparent", false);
-    $(navbar).toggleClass("shadow-lg", true);
-    nav = false;
-  }
+    var height = screen.height * 0.1;
+    if ($(this).scrollTop() < height && !nav) {
+        $(navbar).toggleClass("bg-transparent", true);
+        $(navbar).toggleClass("shadow-lg", false);
+        nav = true;
+    } else if ($(this).scrollTop() > height && nav) {
+        $(navbar).toggleClass("bg-transparent", false);
+        $(navbar).toggleClass("shadow-lg", true);
+        nav = false;
+    }
 }
 
 $(document).ready(function () {
-  $("#search").keyup(function (e) {
-    var search_query = $(this).val();
-    if (search_query != "") {
-      $.ajax({
-        url: "/query/search.php",
-        type: "POST",
-        async: false,
-        data: {
-          search: search_query,
-        },
-        success: function (data) {
-          console.log(data);
-          $("#list").fadeIn("fast").html(data);
-        },
-      });
-    } else {
-      $("#list").fadeOut();
-    }
-  });
-  $("#submit").on("click", function (e) {
-    e.preventDefault();
-    window.location.href = "/bolt/kereses?keyword=" + $("#search").val();
-  });
-  $("#search").keypress(function (e) {
-    if (e.wich == 13) {
-      e.preventDefault();
-      window.location.href = "/bolt/kereses?keyword=" + $(this).val();
-    }
-  });
-  $("#search").focusin(function (e) {
-    if ($(this).val() != "") {
-      $("#list").fadeIn();
-    }
-  });
-  $("#search").focusout(function (e) {
-    $("#list").fadeOut();
-  });
+    $("#search").keyup(function (e) {
+        var search_query = $(this).val();
+        if (search_query != "") {
+            $.ajax({
+                url: "/query/search.php",
+                type: "POST",
+                async: false,
+                data: {
+                    search: search_query,
+                },
+                success: function (data) {
+                    console.log(data);
+                    $("#list").fadeIn("fast").html(data);
+                },
+            });
+        } else {
+            $("#list").fadeOut();
+        }
+    });
+    $("#submit").on("click", function (e) {
+        e.preventDefault();
+        window.location.href = "/bolt/kereses?keyword=" + $("#search").val();
+    });
+    $("#search").keypress(function (e) {
+        if (e.wich == 13) {
+            e.preventDefault();
+            window.location.href = "/bolt/kereses?keyword=" + $(this).val();
+        }
+    });
+    $("#search").focusin(function (e) {
+        if ($(this).val() != "") {
+            $("#list").fadeIn();
+        }
+    });
+    $("#search").focusout(function (e) {
+        $("#list").fadeOut();
+    });
 });
 
 const swiper2 = new Swiper(".swiper-thumb", {
-  loop: true,
-  spaceBetween: 10,
-  slidesPerView: 4,
-  freeMode: true,
-  watchSlidesProgress: true,
+    loop: true,
+    spaceBetween: 10,
+    slidesPerView: 4,
+    freeMode: true,
+    watchSlidesProgress: true,
 });
 const swiper = new Swiper(".swiper-main", {
-  loop: true,
-  spaceBetween: 10,
-  navigation: {
-    nextEl: ".swiper-button-next",
-    prevEl: ".swiper-button-prev",
-  },
-  thumbs: {
-    swiper: swiper2,
-  },
+    loop: true,
+    spaceBetween: 10,
+    navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+    },
+    thumbs: {
+        swiper: swiper2,
+    },
 });
 
 $(document).on("click", "a.link", function (e) {
-  e.preventDefault();
-  var pageURL = $(this).attr("href");
-  history.pushState(null, "", pageURL);
-  pageURL = pageURL.split('/');
-
-
-
-  $.ajax({
-    type: "GET",
-    url: "itemload.php",
-    data: { page: pageURL },
-    dataType: "html",
-    success: function (data) {
-      $("#pageContent").html(data);
-    },
-  });
+    e.preventDefault();
+    var pageURL = $(this).attr("href");
+    history.pushState(null, "", pageURL);
+    pageURL = pageURL.split('/');
+    $('#sort').val('');
+    $.ajax({
+        type: "GET",
+        url: "itemload.php",
+        data: {page: pageURL},
+        dataType: "html",
+        success: function (data) {
+            $("#pageContent").html(data);
+        },
+    });
 });
+
+$('#sort').change(function (e) {
+    e.preventDefault();
+    if (!decodeURI(window.location.pathname).includes("/termek/")) {
+        var pageURL = decodeURI(window.location.pathname);
+
+        history.pushState(null, "", pageURL+ "?sort=" + $(this).val());
+        pageURL = pageURL.split('/');
+
+        $.ajax({
+            type: "GET",
+            url: "itemload.php",
+            data: {
+                page: pageURL,
+                sort: $(this).val(),
+                },
+            dataType: "html",
+            success: function (data) {
+                $("#pageContent").html(data);
+            },
+        });
+    }
+})
+
 
 //sidebar
 

@@ -295,6 +295,11 @@ main {
   width: 90px !important;
 }
 
+.storage-img{
+  width: 30px;
+  height: 30px;
+}
+
 /* sidebar */
 .bg-sidebar{
   background-color: var(--blue3)!important;

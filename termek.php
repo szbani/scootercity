@@ -27,7 +27,7 @@ require_once "parts/head.php";
 <?php
 require_once "parts/navbar.php";
 ?>
-<div class="row">
+<div class="row me-0">
     <?php
     require_once 'parts/sidebar.php';
     ?>
@@ -64,36 +64,37 @@ require_once "parts/navbar.php";
                     <div class="card card-termek p-3">
                         <?php
                         //  var_dump($termek);
-                        echo '<h5>' . $termek['nev'] . '</h5>' .
-                            '<h5 class="fw-bold">' . $price . '</h5>';
+                        echo '<h4 class="fw-bold">' . $termek['nev'] . '</h4>' .
+                            '<h4 >' . $price . '</h4>';
                         ?>
                         <hr>
+                        <h4>Méretek:</h4>
                         <?php
                         //                        var_dump(count($mennyisegek));
                         //                        var_dump(array_keys($mennyisegek));
                         $keys = array_keys($mennyisegek);
                         if ($mennyisegek != null) {
+                            echo '<div>';
                             for ($i = 1; $i < count($mennyisegek); $i++) {
                                 $menny = $mennyisegek[$keys[$i]];
                                 if ($menny != null) {
-                                    echo $keys[$i] . ': ';
-                                    echo $menny . ' ';
+                                    echo '<span class="h5">'. $keys[$i] . ': ';
+                                    if ($menny > 2)
+                                    echo '<img class="storage-img" src="/media/products/termek_ok.png"> ';
+                                    else if ($menny > 0)echo '<img class="storage-img" src="/media/products/termek_some.png">';
+                                    else echo '<img class="storage-img" src="/media/products/termek_cancel.png">';
+                                    echo '</span>';
                                 }
                             }
+                            echo '</div>';
                         } else {
-                            echo '<p>Nincs raktáron<img src="/media/products/termek_cancel.png"></p>';
+                            echo '<span class="h5">Nincs raktáron<img class="storage-img" src="/media/products/termek_cancel.png"></span>';
                         }
-
-                        //                        if ($termek['mennyiseg'] > 3) {
-                        //                            echo '<p>Raktáron<img src="/media/products/termek_ok.png"></p>';
-                        //                        } else if ($termek['mennyiseg'] > 0) {
-                        //                            echo '<p>Pár darab raktáron<img src="/media/products/termek_some.png"></p>';
-                        //                        }
-                        echo '<h6>Leírás:</h6><p>' . $termek['leiras'] . '</p>';
+                        echo '<h4>Leírás:</h4><p class="fs-5">' . $termek['leiras'] . '</p>';
                         if ($tul != null) {
                             foreach ($tul as $id => $arr) {
                                 foreach ($arr as $key => $value) {
-                                    echo '<span>' . $key . ': ' . $value . '</span>';
+                                    echo '<span class="fs-5">' . $key . ': ' . $value . '</span>';
                                 }
                             }
                         }

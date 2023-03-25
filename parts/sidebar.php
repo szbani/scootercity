@@ -1,4 +1,4 @@
-<nav class="col-md-3 col-lg-2 d-md-block pe-0 bg-sidebar">
+<nav class="col-md-3 col-lg-2 d-md-block pe-0 bg-sidebar ">
     <div class="flex-shrink-0 m-0 p-3">
         <ul class="list-unstyled ps-0">
             <li class="mb-1">

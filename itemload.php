@@ -23,10 +23,15 @@ if (isset($_GET['sort'])){
     $sort = 'ORDER BY nev ASC';
 }
 //var_dump($keresett);
+//var_dump($sort);
 ?>
 
 <div class="row row-cols-2 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5 mb-3">
     <?php
+    if (!isset($db)){
+        require_once 'query/conn.php';
+        $db = new dataBase();
+    }
     $katcheck = $db->Select("SELECT alkategoriak_nev as kats FROM kat_view WHERE nev like '$keresett'");
     if ($katcheck == null)
         $keresett = '%%';
@@ -54,7 +59,7 @@ if (isset($_GET['sort'])){
                         <p class="card-title fw-bold" id="Param_Nev">' . $row['nev'] . '</p>
                       </div>
                       <div class="p-2">
-                      <div class="d-flex align-items-center justify-content-between rounded-pill bg-price px-3 py-2">
+                      <div class="d-flex align-items-center justify-content-between rounded-pill bg-price py-2">
                         <h5 class="mb-0"><span>' . $price . '</span></h5>
                       </div>
                       </div>

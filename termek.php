@@ -32,7 +32,7 @@ require_once "parts/navbar.php";
     require_once 'parts/sidebar.php';
     ?>
 
-    <main id="pageContent" class="col-md-9 ms-sm-auto col-lg-10 px-md-4 pb-md-4">
+    <main id="pageContent" class="col-xxl-10 col-xl-9 col-lg-9 ms-sm-auto pb-md-4">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-1 row-cols-lg-2 g-2 my-2">
                 <div class="col">

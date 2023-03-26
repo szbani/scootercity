@@ -13,6 +13,9 @@ if (isset($_GET['page'])) $url = $_GET['page'];
 $fmt = numfmt_create('hu-HU', NumberFormatter::CURRENCY);
 if (!isset($url[2])) $keresett = '%%';
 else $keresett = $url[2];
+$keresett = explode('?',$keresett,2)[0];
+$kereses = false;
+if (isset($_GET['keyword']));
 if (isset($_GET['sort'])){
     $sort = $_GET['sort'];
     if ($sort=='pup')$sort= "ORDER BY ar ASC, nev ASC";
@@ -22,29 +25,40 @@ if (isset($_GET['sort'])){
 }else{
     $sort = 'ORDER BY nev ASC';
 }
+if (isset($_GET['keyword'])  && $keresett == "kereses"){
+    $keresett =$_GET['keyword'];
+    $kereses = true;
+
+}
+//var_dump($url);
 //var_dump($keresett);
-//var_dump($sort);
+
 ?>
 
-<div class="row row-cols-2 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5 mb-3">
+<div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-5 mb-3">
     <?php
     if (!isset($db)){
         require_once 'query/conn.php';
         $db = new dataBase();
     }
-    $katcheck = $db->Select("SELECT alkategoriak_nev as kats FROM kat_view WHERE nev like '$keresett'");
-    if ($katcheck == null)
-        $keresett = '%%';
-    if ($katcheck == null || $katcheck[0]['kats'] == null || $keresett == '%%') {
-        $termekek = $db->Select("SELECT id,nev,ar,leiras,indeximg FROM bolt WHERE knev like '$keresett' $sort;");
-    } else {
-        $kats = '';
-        foreach (explode(',', $katcheck[0]['kats']) as $k) {
-            if ($kats != '') $kats .= ',';
-            $kats .= $kat->subkats($k, $db);
+    if ($kereses){
+        $termekek = $db->Select("SELECT id,nev,ar,leiras,indeximg FROM bolt WHERE nev like '%$keresett%' $sort;");
+    }
+    else {
+        $katcheck = $db->Select("SELECT alkategoriak_nev as kats FROM kat_view WHERE nev like '$keresett'");
+        if ($katcheck == null)
+            $keresett = '%%';
+        if ($katcheck == null || $katcheck[0]['kats'] == null || $keresett == '%%') {
+            $termekek = $db->Select("SELECT id,nev,ar,leiras,indeximg FROM bolt WHERE knev like '$keresett' $sort;");
+        } else {
+            $kats = '';
+            foreach (explode(',', $katcheck[0]['kats']) as $k) {
+                if ($kats != '') $kats .= ',';
+                $kats .= $kat->subkats($k, $db);
+            }
+            $kats = str_replace(',', '\',\'', $kats);
+            $termekek = $db->Select("SELECT id,nev,ar,leiras,indeximg FROM bolt WHERE knev in ('$kats') $sort;");
         }
-        $kats = str_replace(',', '\',\'', $kats);
-        $termekek = $db->Select("SELECT id,nev,ar,leiras,indeximg FROM bolt WHERE knev in ('$kats') $sort;");
     }
     if (count($termekek) > 0) {
 
@@ -60,7 +74,7 @@ if (isset($_GET['sort'])){
                       </div>
                       <div class="p-2">
                       <div class="d-flex align-items-center justify-content-between rounded-pill bg-price py-2">
-                        <h5 class="mb-0"><span>' . $price . '</span></h5>
+                        <h5 class="mb-0 ms-3"><span>' . $price . '</span></h5>
                       </div>
                       </div>
                     

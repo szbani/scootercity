@@ -32,7 +32,6 @@ $(document).ready(function () {
                     search: search_query,
                 },
                 success: function (data) {
-                    console.log(data);
                     $("#list").fadeIn("fast").html(data);
                 },
             });
@@ -42,12 +41,43 @@ $(document).ready(function () {
     });
     $("#submit").on("click", function (e) {
         e.preventDefault();
-        window.location.href = "/bolt/kereses?keyword=" + $("#search").val();
+        var keyword = $('#search').val();
+        var pageURL = '/bolt/kereses';
+        history.pushState(null, "", pageURL+'?keyword='+keyword);
+        pageURL = pageURL.split('/');
+        $('#sort').val('');
+        $.ajax({
+            type: "GET",
+            url: "itemload.php",
+            data: {
+                page: pageURL,
+                keyword: keyword,
+                },
+            dataType: "html",
+            success: function (data) {
+                $("#pageContent").html(data);
+            },
+        });
     });
     $("#search").keypress(function (e) {
         if (e.wich == 13) {
-            e.preventDefault();
-            window.location.href = "/bolt/kereses?keyword=" + $(this).val();
+            var keyword = $('#search').val();
+            var pageURL = '/bolt/kereses';
+            history.pushState(null, "", pageURL+'?keyword='+keyword);
+            pageURL = pageURL.split('/');
+            $('#sort').val('');
+            $.ajax({
+                type: "GET",
+                url: "itemload.php",
+                data: {
+                    page: pageURL,
+                    keyword: keyword,
+                },
+                dataType: "html",
+                success: function (data) {
+                    $("#pageContent").html(data);
+                },
+            });
         }
     });
     $("#search").focusin(function (e) {
@@ -85,10 +115,13 @@ $(document).on("click", "a.link", function (e) {
     history.pushState(null, "", pageURL);
     pageURL = pageURL.split('/');
     $('#sort').val('');
+
     $.ajax({
         type: "GET",
         url: "itemload.php",
-        data: {page: pageURL},
+        data: {
+            page: pageURL,
+            },
         dataType: "html",
         success: function (data) {
             $("#pageContent").html(data);
@@ -100,8 +133,12 @@ $('#sort').change(function (e) {
     e.preventDefault();
     if (!decodeURI(window.location.pathname).includes("/termek/")) {
         var pageURL = decodeURI(window.location.pathname);
-
-        history.pushState(null, "", pageURL+ "?sort=" + $(this).val());
+        var keyword = new URL(location.href).searchParams.get('keyword');
+        var search = ''
+        if (keyword != null)search += 'keyword='+keyword;
+        if (search != '')search+= "&";
+        search += 'sort='+$(this).val();
+        history.pushState(null, "", pageURL+"?"+search);
         pageURL = pageURL.split('/');
 
         $.ajax({
@@ -109,6 +146,7 @@ $('#sort').change(function (e) {
             url: "itemload.php",
             data: {
                 page: pageURL,
+                keyword:keyword,
                 sort: $(this).val(),
                 },
             dataType: "html",

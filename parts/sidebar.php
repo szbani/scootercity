@@ -1,6 +1,6 @@
-<nav class="col-md-3 col-lg-2 d-md-block pe-0 bg-sidebar ">
-    <div class="flex-shrink-0 m-0 p-3">
-        <ul class="list-unstyled ps-0">
+<nav id="sidebar" class="col-xxl-2 col-xl-3 col-lg-3 d-md-block pe-0 offcanvas-lg offcanvas-start bg-sidebar " tabindex="-1">
+    <div class="offcanvas-body flex-shrink-0 m-0 p-3">
+        <ul class="list-unstyled ps-0 w-100">
             <li class="mb-1">
                 <select id="sort" class="form-select form-select-sm rounded ">
                     <option value="">a-z sorrendben</option>

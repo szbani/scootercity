@@ -32,24 +32,24 @@ if (isset($_GET['keyword'])  && $keresett == "kereses"){
 }
 //var_dump($url);
 //var_dump($keresett);
-
+$limit = 25;
 ?>
 
-<div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-5 mb-3">
+<div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 mb-3 me-0">
     <?php
     if (!isset($db)){
         require_once 'query/conn.php';
         $db = new dataBase();
     }
     if ($kereses){
-        $termekek = $db->Select("SELECT id,nev,ar,leiras,indeximg FROM bolt WHERE nev like '%$keresett%' $sort;");
+        $termekek = $db->Select("SELECT id,nev,ar,leiras,indeximg FROM bolt WHERE nev like '%$keresett%' $sort LIMIT $limit;");
     }
     else {
         $katcheck = $db->Select("SELECT alkategoriak_nev as kats FROM kat_view WHERE nev like '$keresett'");
         if ($katcheck == null)
             $keresett = '%%';
         if ($katcheck == null || $katcheck[0]['kats'] == null || $keresett == '%%') {
-            $termekek = $db->Select("SELECT id,nev,ar,leiras,indeximg FROM bolt WHERE knev like '$keresett' $sort;");
+            $termekek = $db->Select("SELECT id,nev,ar,leiras,indeximg FROM bolt WHERE knev like '$keresett' $sort LIMIT $limit;");
         } else {
             $kats = '';
             foreach (explode(',', $katcheck[0]['kats']) as $k) {
@@ -57,7 +57,7 @@ if (isset($_GET['keyword'])  && $keresett == "kereses"){
                 $kats .= $kat->subkats($k, $db);
             }
             $kats = str_replace(',', '\',\'', $kats);
-            $termekek = $db->Select("SELECT id,nev,ar,leiras,indeximg FROM bolt WHERE knev in ('$kats') $sort;");
+            $termekek = $db->Select("SELECT id,nev,ar,leiras,indeximg FROM bolt WHERE knev in ('$kats') $sort LIMIT $limit;");
         }
     }
     if (count($termekek) > 0) {
@@ -68,7 +68,7 @@ if (isset($_GET['keyword'])  && $keresett == "kereses"){
             if ($row['indeximg'] == null) $kep = 'product-placeholder.png';
             echo '<div class="col mt-3">
                     <div class="card rounded shadow-sm">
-                      <img src="/media/products/' . $kep . '" class="card-img-top" alt="Termék">
+                      <img src="/media/products/' . $kep . '" class="card-img-top align-self-center" alt="Termék">
                       <div class="card-body">
                         <p class="card-title fw-bold" id="Param_Nev">' . $row['nev'] . '</p>
                       </div>
@@ -82,11 +82,8 @@ if (isset($_GET['keyword'])  && $keresett == "kereses"){
                 </div>
               </div>';
         }
-
     }
-
     ?>
-
 </div>
 
 

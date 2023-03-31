@@ -40,23 +40,38 @@ body {
   background-image: url('/media/main/bg.jpg');
 }
 .logo {
-  width: 22.5vh;
+  width: 150px;
+}
+@media (min-width: 992px) {
+  .logo {
+    width: 16vw;
+  }
+}
+@media (min-width: 1200px) {
+  .logo {
+    width: 15vw;
+  }
+}
+@media (min-width: 1400px) {
+  .logo {
+    width: 11vw;
+  }
 }
 
 .bg-transparent {
   color: var(--dark) !important;
 }
 
-#navbar {
+nav {
   background-color: var(--blue-main);
   transition: background-color 0.2s linear !important;
 }
-#navbar .nav-link2 {
+nav .nav-link2 {
   text-decoration: none;
   color: var(--mint2);
   transition: color 0.1s ease;
 }
-#navbar .nav-link2:hover {
+nav .nav-link2:hover {
   color: var(--blue2);
 }
 .bg-transparent .nav-link2 {
@@ -66,10 +81,12 @@ body {
   color: var(--blue1) !important;
 }
 #search {
-  background-color: var(--white);
-  border-color: var(--lightblue2);
-  transition: background-color 0.5s ease;
-  border-bottom-left-radius: 0;
+  background-color: var(--sidebar2);
+  border-color: var(--sidebar2);
+  transition: background-color 0.4s ease;
+  border-bottom-left-radius:32px;
+  border-top-left-radius: 32px;
+
 }
 #search:focus {
   background-color: var(--white);
@@ -78,8 +95,11 @@ body {
   width: 75px;
 }
 #submit {
-  background-color: var(--sidebar1) !important;
-  border-bottom-right-radius: 0;
+  background-color: var(--sidebar2) !important;
+  border-bottom-right-radius: 32px;
+  border-top-right-radius: 32px;
+  border: 1px;
+  border-color: var(--sidebar2);
 }
 .lista {
   position: relative;
@@ -172,6 +192,7 @@ main kategoriak
   border: 1px solid #ccc;
 }
 .row .col-lg-4 {
+  flex: 0 0 auto;
   margin-bottom: 1rem;
 }
 
@@ -199,15 +220,12 @@ main display
   background-size: cover;
 }
 
-
-
 main {
-
   min-height: 69.5vh;
 }
 
 .card {
-  background-color: var(--sidebar1) !important;
+  background-color: var(--sidebar1);
 }
 .card-termek {
   min-height: auto;
@@ -226,7 +244,8 @@ main {
   cursor: pointer;
 }
 .card-img-top {
-  height: 200px;
+  max-width: 100%;
+  height: 250px;
 }
 .card-body {
   padding-top: 5px;
@@ -250,7 +269,7 @@ main {
 
 .swiper {
   width: 100%;
-  height: 62vh;
+  height: 45vh;
   margin-left: auto;
   margin-right: auto;
 }

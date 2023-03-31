@@ -6,7 +6,7 @@
   <?php
   // include 'parts/navbar2.php'
   ?>
-  <nav class="jumbotron-fluid fixed-top fs-5 bg-transparent" id="navbar">
+  <nav class="jumbotron-fluid fixed-top fs-5 bg-transparent" id="mainNavbar">
     <div class="container">
       <div class="row pt-2">
         <div class="col-12">

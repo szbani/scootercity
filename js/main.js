@@ -1,6 +1,9 @@
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
 var nav = true;
 $(document).ready(function () {
-    var navbar = $("#navbar");
+    var navbar = $("#mainNavbar");
     navcheck(navbar);
     $(document).scroll(function (e) {
         navcheck(navbar);

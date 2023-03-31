@@ -28,7 +28,7 @@ include_once "parts/navbar.php";
     <!-- sidebar end -->
 
     <!-- termekek -->
-    <main id="pageContent" class="col-xxl-10 col-xl-9 col-lg-9 ms-sm-auto pb-md-4">
+    <main id="pageContent" class="col-xxl-10 col-xl-9 col-lg-9 ms-sm-auto pb-md-4 px-3">
         <?php
         }
         include 'itemload.php';

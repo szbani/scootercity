@@ -47,7 +47,6 @@ public function subkats($kat, $db): string
     }
 //    var_dump($vissza);
 //    var_dump($kat);
-    echo '<br>';
     return $vissza;
 }
 }

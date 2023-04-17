@@ -15,6 +15,10 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                     Kategórák
                 </a>
+                <a class="nav-link link" href="markak.php">
+                    <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                    Márkák
+                </a>
                 <a class="nav-link link" href="fiokok.php">
                     <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                     Fiókok

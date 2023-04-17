@@ -4,6 +4,7 @@ if (isset($_POST['table'])) {
 
     if ($_POST['table'] == 'termekek') {
         $sql = "SELECT t.*,k.nev as knev,
+		(SELECT nev FROM marka m WHERE m.id = t.marka) as marka,
 		(SELECT SUM(tm.mennyiseg) FROM termek_menny tm WHERE tm.termek_id = t.id) as mennyiseg,
 		(SELECT GROUP_CONCAT(tm.meret, ':', tm.mennyiseg) FROM termek_menny tm WHERE tm.termek_id = t.id) as meretek,
         (SELECT GROUP_CONCAT(file_name ORDER BY img_order) FROM kepek k WHERE k.termek_id = t.id) as images, 
@@ -24,6 +25,11 @@ if (isset($_POST['table'])) {
         $sql = "SELECT k.*,(SELECT ke.nev FROM kategoriak ke WHERE ke.id = k.subkat) AS subnev, (SELECT COUNT(t.nev) FROM termekek t WHERE k.id = t.kategoria) as hasznalva  
         FROM `kategoriak` k
         GROUP BY k.nev;";
+        $result = mysqli_query($conn, $sql);
+    } else if ($_POST['table'] == 'markak') {
+        $sql = "SELECT m.*, (SELECT COUNT(t.nev) FROM termekek t WHERE m.id = t.marka) as hasznalva  
+        FROM `marka` m
+        GROUP BY m.nev;";
         $result = mysqli_query($conn, $sql);
     }
 
@@ -61,7 +67,7 @@ if (isset($_POST['table'])) {
     //     }
     // }
     // var_dump($array);
-    header('Location: ' . "http://" . $_SERVER['HTTP_HOST'] . '/admin/login.php');
+    header('Location: ' . "http://" . $_SERVER['HTTP_HOST'] . '/adminpage/login.php');
     die();
 }
 

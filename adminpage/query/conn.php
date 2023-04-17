@@ -13,7 +13,7 @@ if (isset($_SESSION['main'])){
     }
 }
 if (!isset($_SESSION['user']) && !isset($_SESSION['pass'])) {
-    header('Location: ' . "http://" . $_SERVER['HTTP_HOST'] . '/admin/login.php');
+    header('Location: ' . "http://" . $_SERVER['HTTP_HOST'] . '/adminpage/login.php');
     die();
 }
 

@@ -27,14 +27,17 @@ if (isset($_POST['upload']) || isset($_POST['edit'])) {
 if (isset($_POST['upload'])) {
     $inputNev = mysqli_real_escape_string($conn, $_POST['nev']);
     $inputAr = mysqli_real_escape_string($conn, $_POST['ar']);
+    $inputMarka = mysqli_real_escape_string($conn,$_POST['marka']);
+    if ($inputMarka == "")$inputMarka='NULL';
     $inputKategoria = mysqli_real_escape_string($conn, $_POST['kategoria']);
     $inputLeiras = '';
     if (isset($_POST['leiras'])) $inputLeiras = mysqli_real_escape_string($conn, $_POST['leiras']);
 
     //termek feltoltese
-    $sqlTermek = "INSERT INTO termekek(nev,ar,leiras,kategoria)
-                    VALUES('$inputNev','$inputAr','$inputLeiras','$inputKategoria');";
+    $sqlTermek = "INSERT INTO termekek(nev,ar,leiras,kategoria,marka)
+                    VALUES('$inputNev','$inputAr','$inputLeiras','$inputKategoria',$inputMarka);";
     $sqlGetId = "SELECT id FROM termekek WHERE nev = '$inputNev';";
+    var_dump($sqlTermek);
     mysqli_query($conn, $sqlTermek);
     $result = mysqli_query($conn, $sqlGetId);
     $row = mysqli_fetch_assoc($result);
@@ -46,9 +49,12 @@ if (isset($_POST['upload'])) {
     // var_dump($sqlTulajdonsagok);
 
     //file feltoltes 
-    $errors = uploadImages($conn, $inputNev);
+    $errors = uploadImages($conn, $id);
 
     logAction($conn, "Létrehozta ezt a terméket: " . $inputNev . ".", $_SESSION['user']);
+    if ($errors != null) {
+        $_SESSION['errors'] = json_encode($errors);
+    }
     $_SESSION['success'] = 'Sikeres Termék Felvétel';
     back();
 } else if (isset($_POST['edit'])) {
@@ -56,12 +62,14 @@ if (isset($_POST['upload'])) {
     $inputNev = mysqli_real_escape_string($conn, $_POST['nev']);
     $inputAr = mysqli_real_escape_string($conn, $_POST['ar']);
     $inputKategoria = mysqli_real_escape_string($conn, $_POST['kategoria']);
+    $inputMarka = mysqli_real_escape_string($conn,$_POST['marka']);
+    if ($inputMarka == "")$inputMarka='NULL';
     $inputLeiras = '';
     if (isset($_POST['leiras'])) $inputLeiras = mysqli_real_escape_string($conn, $_POST['leiras']);
 
     //termek update
     $sqlTermek = "UPDATE termekek
-                    SET nev = '$inputNev',ar = '$inputAr',leiras='$inputLeiras',kategoria='$inputKategoria'
+                    SET nev = '$inputNev',ar = '$inputAr',leiras='$inputLeiras',kategoria='$inputKategoria',marka=$inputMarka
                     WHERE id = '$inputId'";
     mysqli_query($conn, $sqlTermek);
 
@@ -70,7 +78,7 @@ if (isset($_POST['upload'])) {
         uploadMennyiseg($conn, $inputId);
     }
     //képek feltöltése
-    $errors = uploadImages($conn, $inputNev);
+    $errors = uploadImages($conn, $inputId);
 
     logAction($conn, "Módosította ezt a számú terméket: " . $inputId . ".", $_SESSION['user']);
     if ($errors != null) {
@@ -92,7 +100,7 @@ if (isset($_POST['upload'])) {
 
     $sql = "DELETE FROM termekek WHERE id = '$id';";
     mysqli_query($conn, $sql);
-    logAction($conn, "Törölte ezt a terméket: " . $nev . ".", $_SESSION['user']);
+    logAction($conn, "Törölte ezt a terméket: " . $nev . ". (".$id.")", $_SESSION['user']);
     echo json_encode(array('success' => true, 'messages' => array('Törölted (' . $id . ')' . $nev . ' nevű terméket.')));
     // } else if (isset($_POST['mennyId'])) {
     //     $id = $_POST['mennyId'];
@@ -154,8 +162,10 @@ function uploadTulajdonsagok($conn, $id)
         mysqli_query($conn, $sqlTulajdonsagok);
     }
 }
+
 function uploadMennyiseg($conn, $id)
 {
+
     $values = '';
     $meretek = array();
     for ($i = 0; $i < count($_POST['menny-nev']); $i++) {
@@ -192,28 +202,26 @@ function uploadMennyiseg($conn, $id)
         }
         if ($alter) {
             $alterView = 'ALTER VIEW menny_pivot AS(SELECT tm.*,';
-        $temp = '';
-        $temp2 ='';
+            $temp = '';
+            $temp2 = '';
             foreach ($meretek2 as $meret) {
-                if($temp != '')$temp .= ',';
-                $temp .= ' CASE WHEN tm.meret = "'.$meret.'" THEN tm.mennyiseg END AS '. $meret;
-                if($temp2 != '')$temp2 .= ',';
+                if ($temp != '') $temp .= ',';
+                $temp .= ' CASE WHEN tm.meret = "' . $meret . '" THEN tm.mennyiseg END AS ' . $meret;
+                if ($temp2 != '') $temp2 .= ',';
                 $temp2 .= "SUM($meret) AS $meret ";
             }
             $alterView .= $temp;
             foreach ($meretek as $meret) {
                 if (!in_array($meret, $meretek2)) {
-                    $alterView  .= ', CASE WHEN tm.meret = "'.$meret.'" THEN tm.mennyiseg END AS '. $meret;
+                    $alterView .= ', CASE WHEN tm.meret = "' . $meret . '" THEN tm.mennyiseg END AS ' . $meret;
                     $temp2 .= ", SUM($meret) AS $meret ";
                 }
             }
             $alterView .= ' FROM `termek_menny` tm);';
             mysqli_query($conn, $alterView);
-            $alterView2 ="ALTER VIEW menny_pivot_2 AS(SELECT termek_id, $temp2 FROM menny_pivot GROUP BY termek_id)";
-            mysqli_query($conn,$alterView2);
+            $alterView2 = "ALTER VIEW menny_pivot_2 AS(SELECT termek_id, $temp2 FROM menny_pivot GROUP BY termek_id)";
+            mysqli_query($conn, $alterView2);
         }
-
-        die;
     }
 
     if ($values != '') {
@@ -223,32 +231,30 @@ function uploadMennyiseg($conn, $id)
                         VALUES $values;";
         mysqli_query($conn, $sqlMenny);
     }
+
 }
 
-function uploadImages($conn, $inputNev)
+function uploadImages($conn, $inputId)
 {
     $errors = array();
     $allowTypes = array('jpg', 'png', 'jpeg');
     if ($_FILES['images']) {
+
         //termek id lekeres eleje
-        $sqlSelectTermekId = "SELECT id FROM termekek WHERE nev = '$inputNev'";
-        $result = mysqli_query($conn, $sqlSelectTermekId);
-        $row = mysqli_fetch_assoc($result);
-        $termekId = $row['id'];
         //termek id lekeres vege
         $count = 1;
         if (isset($_POST['edit'])) {
-            $sql = "SELECT MAX(img_order) AS max FROM `kepek` WHERE termek_id = '$termekId'";
+            $sql = "SELECT MAX(img_order) AS max FROM `kepek` WHERE termek_id = $inputId";
             $result = mysqli_query($conn, $sql);
-            $max = mysqli_fetch_column($result);
-            if ($max != null) {
+            $result = mysqli_fetch_assoc($result);
+            if (($max = $result['max']) != null) {
                 $count = $max + 1;
             }
         }
 
         $file_ary = array_filter($_FILES['images']['name']);
         foreach ($file_ary as $key => $val) {
-            $filename = $termekId . '_' . basename($file_ary[$key]);
+            $filename = $inputId . '_' . basename($file_ary[$key]);
             $target_dir = '../../media/products/' . $filename;
 
             $fileType = pathinfo($target_dir, PATHINFO_EXTENSION);
@@ -269,7 +275,7 @@ function uploadImages($conn, $inputNev)
                 if (move_uploaded_file($_FILES['images']['tmp_name'][$key], $target_dir)) {
                     //mysql insert
                     $sql = "INSERT INTO kepek (termek_id,file_name,img_order)
-                            VALUES('$termekId','$filename','$count')";
+                            VALUES('$inputId','$filename','$count')";
                     mysqli_query($conn, $sql);
                     $count++;
                 } else {
@@ -277,6 +283,7 @@ function uploadImages($conn, $inputNev)
                 }
             }
         }
+
     }
     return $errors;
 }

@@ -40,6 +40,7 @@ if (empty($_GET['page'])) {
                                     <th>Index Kép</th>
                                     <th>Ár(Ft)</th>
                                     <th>Kategória</th>
+                                    <th>Márka</th>
                                     <th>Összmennyiség</th>
                                     <th></th>
                                     <th></th>
@@ -88,6 +89,23 @@ if (empty($_GET['page'])) {
                                                         </select>
                                                     </div>
                                                 </div>
+                                                <div class="col-12">
+                                                    <label for="inputMarka" class="form-label">Termék Márkája:</label>
+                                                    <div class="form-check ps-0">
+                                                        <select id="inputMarka" name="marka" class="form-select" val="">
+                                                            <option selected value="">Márka...</option>
+                                                            <?php
+                                                            $sql = "SELECT id, nev FROM marka;";
+                                                            $result = mysqli_query($conn, $sql);
+                                                            if (mysqli_num_rows($result) > 0) {
+                                                                while ($row = mysqli_fetch_array($result)) {
+                                                                    echo '<option value="' . $row['id'] . '">' . $row['nev'] . '</option>';
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                                 <!-- <div class="col-3">
                                                     <label for="inputMennyiseg" class="form-label">Mennyiség:</label>
                                                     <input class="form-control" id="inputMennyiseg" type="number" min="0" value="0" name="mennyiseg">
@@ -112,7 +130,7 @@ if (empty($_GET['page'])) {
                                                 <div class="col-16">
                                                     <div class="row rows-mennyiseg row-cols-3 g-1">
                                                         <?php
-                                                        for ($i = 0; $i < 2; $i++) {
+                                                        for ($i = 0; $i < 4; $i++) {
                                                             echo '
                                                         <div class="col-12">
                                                         <div class="row gx-1">

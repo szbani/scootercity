@@ -43,7 +43,6 @@ if (!isset($_POST['delete'])) {
 if (isset($_POST['upload'])) {
     $sqlUpload = "INSERT INTO kategoriak(nev,img,subkat)
                     VALUES('$inputNev',$inputFileImg,$inputSubKat)";
-    var_dump($sqlUpload);
     mysqli_query($conn, $sqlUpload);
 
     logAction($conn, "Létrehozta ezt a Kategóriát: " . $inputNev . ".", $_SESSION['user']);
@@ -64,7 +63,6 @@ if (isset($_POST['upload'])) {
     $sqlUpdate = "UPDATE kategoriak 
                 SET nev = '$inputNev'$file, subkat = $inputSubKat WHERE id = '$inputId';";
     mysqli_query($conn, $sqlUpdate);
-    var_dump($sqlUpdate);
     logAction($conn, "Szerkesztette ezt a Kategóriát: (" . $inputId . ")" . $oldKategoria['nev'] . " -> " . $inputNev . ".", $_SESSION['user']);
     $_SESSION['success'] = 'Sikeres Szerkesztés';
     back();

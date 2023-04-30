@@ -4,7 +4,7 @@ if (isset($_POST['table'])) {
 
     if ($_POST['table'] == 'termekek') {
         $sql = "SELECT t.*,k.nev as knev,
-		(SELECT nev FROM marka m WHERE m.id = t.marka) as marka,
+		(SELECT nev FROM marka m WHERE m.id = t.marka) as markanev,
 		(SELECT SUM(tm.mennyiseg) FROM termek_menny tm WHERE tm.termek_id = t.id) as mennyiseg,
 		(SELECT GROUP_CONCAT(tm.meret, ':', tm.mennyiseg) FROM termek_menny tm WHERE tm.termek_id = t.id) as meretek,
         (SELECT GROUP_CONCAT(file_name ORDER BY img_order) FROM kepek k WHERE k.termek_id = t.id) as images, 

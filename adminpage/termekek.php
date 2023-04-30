@@ -106,10 +106,6 @@ if (empty($_GET['page'])) {
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <!-- <div class="col-3">
-                                                    <label for="inputMennyiseg" class="form-label">Mennyiség:</label>
-                                                    <input class="form-control" id="inputMennyiseg" type="number" min="0" value="0" name="mennyiseg">
-                                                </div> -->
                                             </div>
                                         </div>
                                         <div class="col-6">

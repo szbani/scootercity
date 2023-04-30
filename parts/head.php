@@ -1,11 +1,12 @@
 <head>
-    <meta charset='utf-8'>
+    <meta charset='UTF-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Weblap_cím</title>
-    <meta name="description" content="ide kell a leírás">
-    <meta name="author" content="Szabó Dániel">
-    <meta name="keywords" content="kulcs szavak">
+    <title>ScooterCity</title>
+    <meta name="description" content="">
+    <meta name="author" content="ScooterCity">
+    <meta name="keywords" content="ScooterCity">
     <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+    <meta title="ScooterCity - Motoros bolt">
 
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/swiper-bundle.min.css">

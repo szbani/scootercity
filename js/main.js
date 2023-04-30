@@ -130,8 +130,23 @@ $(document).on("click", "a.link", function (e) {
             $("#pageContent").html(data);
         },
     });
+    $.ajax({
+        type: "GET",
+        url: "/query/marka.php",
+        data: {
+            page: pageURL,
+        },
+        dataType: "html",
+        success: function (data2){
+            console.log(data2);
+            $('#markak').html(data2);
+        }
+    });
 });
 
+$(document).on("change",'',function (e){
+
+});
 $('#sort').change(function (e) {
     e.preventDefault();
     if (!decodeURI(window.location.pathname).includes("/termek/")) {

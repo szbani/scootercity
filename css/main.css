@@ -31,7 +31,7 @@
   background-color: white !important;
 }
 html * {
-  scroll-behavior: smooth;
+  /* scroll-behavior: smooth; */
 }
 body {
   background-color: ghostwhite;
@@ -323,6 +323,9 @@ main {
 .bg-sidebar{
   background-color: var(--blue3)!important;
 }
+.bg-sidebar3{
+  background-color: var(--blue1)!important;
+}
 .bg-sidebar2{
   background-color: var(--white);
   border: 2px solid  var(--sidebar1);
@@ -338,7 +341,7 @@ main {
   background-color: var(--white)
 }
 .bg-sidebar .collapsing{
-  border: 2px solid  var(--sidebar1);
+  border-bottom: 2px solid  var(--sidebar1);
   border-left: 0px;
   border-right: 0px;
   border-radius: 5px;
@@ -352,8 +355,7 @@ main {
   color: rgba(0, 0, 0, .65);
   background-color: transparent;
 }
-.btn-toggle:hover,
-.btn-toggle:focus {
+.btn-toggle:hover{
   color: rgba(0, 0, 0, .85);
   background-color: var(--sidebar1);
 }
@@ -373,20 +375,27 @@ main {
   transform: rotate(90deg);
 }
 .btn-toggle-nav{
-  margin-left: 1.25rem!important;
+  padding-left: 1.25rem!important;
 }
 .btn-toggle-nav a {
   padding: .1875rem .5rem;
   width: inherit;
   display: block;
 }
-.btn-toggle-nav a:hover,
-.btn-toggle-nav a:focus {
+.btn-toggle-nav a:hover {
   background-color: var(--sidebar1);
 }
-
+.sidebar-hover:hover{
+  background-color: var(--sidebar1);
+}
 .scrollarea {
   overflow-y: auto;
+}
+
+.sidebar-item{
+  padding-left: 50px;
+  /*font-weight: bold;*/
+  font-size: 18px;
 }
 
 .cursor{

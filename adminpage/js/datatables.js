@@ -137,7 +137,7 @@ function createTableTermekek() {
             {data: "ar"},
             {data: "knev"},
             {
-                data: "marka",
+                data: "markanev",
                 render: function (data, type, row) {
                     if (data == null) return "Nincs megadva";
                     return data;

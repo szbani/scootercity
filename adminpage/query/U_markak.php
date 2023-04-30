@@ -82,7 +82,7 @@ function uploadImages($inputNev)
     $allowTypes = array('jpg', 'png', 'jpeg');
 
     //termek id lekeres eleje
-    $filename = $inputNev . '-' . $_FILES['img']['name'];
+    $filename = $inputNev . '-M' . $_FILES['img']['name'];
     $target_dir = '../../media/main/' . $filename;
 
     $fileType = pathinfo($target_dir, PATHINFO_EXTENSION);

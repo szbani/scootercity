@@ -29,7 +29,7 @@
                 </form>
             </div>
             <div class="col col-lg-7 col-xl-6 col-xxl-5 ">
-                <ul class="navbar-nav mb-lg-0 fs-5 justify-content-end ">
+                <ul class="navbar-nav m-0 mb-lg-0 fs-5 justify-content-end ">
                     <li class="nav-item">
                         <a class="nav-link " aria-current="page" href="/bolt">Termékek</a>
                     </li>

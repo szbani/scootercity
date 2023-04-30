@@ -25,6 +25,11 @@ if (isset($_GET['sort'])){
 }else{
     $sort = 'ORDER BY nev ASC';
 }
+if (isset($_GET['marka'])){
+
+}else{
+
+}
 if (isset($_GET['keyword'])  && $keresett == "kereses"){
     $keresett =$_GET['keyword'];
     $kereses = true;
@@ -42,15 +47,20 @@ $limit = 25;
         $db = new dataBase();
     }
     if ($kereses){
+        // Ha a keresés mezőből keresnek itemket.
         $termekek = $db->Select("SELECT id,nev,ar,leiras,indeximg FROM bolt WHERE nev like '%$keresett%' $sort LIMIT $limit;");
     }
     else {
+        // Megnézi hogy az adott kategóriában milyen alkategóriák vannak
         $katcheck = $db->Select("SELECT alkategoriak_nev as kats FROM kat_view WHERE nev like '$keresett'");
         if ($katcheck == null)
+            // Ha nincs a keresett kategória akkor az összesere állitja
             $keresett = '%%';
         if ($katcheck == null || $katcheck[0]['kats'] == null || $keresett == '%%') {
+            // Ha nincs kategoria akkor lekeri az osszes itemet
             $termekek = $db->Select("SELECT id,nev,ar,leiras,indeximg FROM bolt WHERE knev like '$keresett' $sort LIMIT $limit;");
         } else {
+            //megkeresi a kategoriakban levo kategoriakat es azokat keri le
             $kats = '';
             foreach (explode(',', $katcheck[0]['kats']) as $k) {
                 if ($kats != '') $kats .= ',';

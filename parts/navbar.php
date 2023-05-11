@@ -34,12 +34,6 @@
                         <a class="nav-link " aria-current="page" href="/bolt">Termékek</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " aria-current="page" href="/bolt">Termékek</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " aria-current="page" href="/bolt">Termékek</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="/bolt/alkatreszek">Alkatrészek</a>
                     </li>
 

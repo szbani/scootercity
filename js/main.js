@@ -46,7 +46,7 @@ $(document).ready(function () {
         e.preventDefault();
         var keyword = $('#search').val();
         var pageURL = '/bolt/kereses';
-        history.pushState(null, "", pageURL+'?keyword='+keyword);
+        history.pushState(null, "", pageURL + '?keyword=' + keyword);
         pageURL = pageURL.split('/');
         $('#sort').val('');
         $.ajax({
@@ -55,18 +55,19 @@ $(document).ready(function () {
             data: {
                 page: pageURL,
                 keyword: keyword,
-                },
+            },
             dataType: "html",
             success: function (data) {
                 $("#pageContent").html(data);
             },
         });
+        reloadMarkak();
     });
     $("#search").keypress(function (e) {
         if (e.wich == 13) {
             var keyword = $('#search').val();
             var pageURL = '/bolt/kereses';
-            history.pushState(null, "", pageURL+'?keyword='+keyword);
+            const state = {url: pageURL,content:''};
             pageURL = pageURL.split('/');
             $('#sort').val('');
             $.ajax({
@@ -79,8 +80,13 @@ $(document).ready(function () {
                 dataType: "html",
                 success: function (data) {
                     $("#pageContent").html(data);
+                    state.content = data;
+                    console.log('asd');
                 },
             });
+            reloadMarkak();
+
+            history.pushState(state, "", pageURL + '?keyword=' + keyword);
         }
     });
     $("#search").focusin(function (e) {
@@ -91,6 +97,12 @@ $(document).ready(function () {
     $("#search").focusout(function (e) {
         $("#list").fadeOut();
     });
+});
+
+window.addEventListener('popstate', (event) => {
+    console.log("popstate");
+    const state = event.state;
+    const content = state.content;
 });
 
 const swiper2 = new Swiper(".swiper-thumb", {
@@ -124,57 +136,119 @@ $(document).on("click", "a.link", function (e) {
         url: "itemload.php",
         data: {
             page: pageURL,
-            },
+        },
         dataType: "html",
         success: function (data) {
             $("#pageContent").html(data);
         },
     });
+    reloadMarkak();
+});
+
+$(document).on("change", '.marka', function (e) {
+    e.preventDefault();
+    let brand = '';
+    $('.marka').each(function (index) {
+        if ($(this).is(':checked')) {
+            if (brand != '') brand += '|';
+            brand += $(this).val();
+        }
+    });
+    if (brand != '') brand = 'brand=' + brand;
+    let url = makeURL(getKeyword(), getSort(), brand);
+    history.pushState(null, "", url);
+    reloadItems();
+});
+// Rendezés mező
+$('#sort').change(function (e) {
+    e.preventDefault();
+    if (!decodeURI(window.location.pathname).includes("/termek/")) {
+        let sort = '';
+        if ($(this).val() != '')
+            sort = 'sort=' + $(this).val();
+        console.log(getBrand());
+        let url = makeURL(getKeyword(), sort, getBrand());
+        history.pushState(null, "", url);
+        reloadItems();
+    }
+})
+
+function reloadItems() {
+
+    let page = decodeURI(window.location.pathname).split('/');
+    let keyword = getKeyword().replace('keyword=', '');
+    let sort = getSort().replace('sort=', '');
+    let brand = getBrand().replace('brand=', '');
+
+    $.ajax({
+        type: "GET",
+        url: "itemload.php",
+        data: {
+            page: page,
+            keyword: keyword,
+            sort: sort,
+            brand: brand,
+        },
+        dataType: "html",
+        success: function (data) {
+            $("#pageContent").html(data);
+        },
+    });
+}
+
+function reloadMarkak(){
+    let page = decodeURI(window.location.pathname).split('/');
+    let keyword = getKeyword().replace('keyword=', '');
     $.ajax({
         type: "GET",
         url: "/query/marka.php",
         data: {
-            page: pageURL,
+            page: page,
+            keyword: keyword,
         },
         dataType: "html",
-        success: function (data2){
-            console.log(data2);
+        success: function (data2) {
             $('#markak').html(data2);
         }
     });
-});
+}
 
-$(document).on("change",'',function (e){
 
-});
-$('#sort').change(function (e) {
-    e.preventDefault();
-    if (!decodeURI(window.location.pathname).includes("/termek/")) {
-        var pageURL = decodeURI(window.location.pathname);
-        var keyword = new URL(location.href).searchParams.get('keyword');
-        var search = ''
-        if (keyword != null)search += 'keyword='+keyword;
-        if (search != '')search+= "&";
-        search += 'sort='+$(this).val();
-        history.pushState(null, "", pageURL+"?"+search);
-        pageURL = pageURL.split('/');
+function getKeyword() {
+    let keyword = new URL(location.href).searchParams.get('keyword');
+    let search = ''
+    if (keyword != null) search += 'keyword=' + keyword;
+    return search
+}
 
-        $.ajax({
-            type: "GET",
-            url: "itemload.php",
-            data: {
-                page: pageURL,
-                keyword:keyword,
-                sort: $(this).val(),
-                },
-            dataType: "html",
-            success: function (data) {
-                $("#pageContent").html(data);
-            },
-        });
-    }
-})
+function getSort() {
+    let sort = new URL(location.href).searchParams.get('sort');
+    let search = '';
+    if (sort != null) search += 'sort=' + sort;
+    return search;
+}
 
+function getBrand() {
+    let brand = new URL(location.href).searchParams.get('brand');
+    let search = '';
+    if (brand != null) search += 'brand=' + brand;
+    return search;
+}
+
+function makeURL(keyword, sort, brand) {
+    let url = '';
+    url = addToURL(url, keyword);
+    url = addToURL(url, sort);
+    url = addToURL(url, brand);
+    if (url != '') url = '?' + url;
+    url = decodeURI(window.location.pathname) + url;
+    return url;
+}
+
+function addToURL(url, param) {
+    if (url != '' && param != '') url += '&';
+    return url + param;
+}
 
 //sidebar
 

@@ -14,6 +14,7 @@
             </li>
             <div id="markak">
                 <?php
+                if (!str_contains($_SERVER['REQUEST_URI'],'/termek'))
                 require_once 'query/marka.php';
                 ?>
             </div>
@@ -42,7 +43,7 @@
                         echo '<div class="bg-sidebar2 mb-1"><ul class="btn-toggle-nav sidebar-hover list-unstyled border-bottom">
                       <li>
                       <a class="link-dark link rounded text-decoration-none fw-bold cursor" href="/bolt/' . $ertek . '">
-                      ' . $ertek . ' (' . $row['hasznalva'] . ')
+                      ' . $ertek . '
                       </a>
                       </li></ul></div>';
                     }

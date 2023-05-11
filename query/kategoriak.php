@@ -26,7 +26,7 @@ class kategoriak
                 $ertek = $row['nev'];
                 echo '<li>
             <a class="link-dark link rounded text-decoration-none fw-bold cursor" href="/bolt/' . $ertek . '">
-            ' . $ertek . ' (' . $row['hasznalva'] . ')
+            ' . $ertek . '
             </a>
             </li>';
             }

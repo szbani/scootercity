@@ -37,7 +37,7 @@ if (isset($_POST['upload'])) {
     $sqlTermek = "INSERT INTO termekek(nev,ar,leiras,kategoria,marka)
                     VALUES('$inputNev','$inputAr','$inputLeiras','$inputKategoria',$inputMarka);";
     $sqlGetId = "SELECT id FROM termekek WHERE nev = '$inputNev';";
-    var_dump($sqlTermek);
+//    var_dump($sqlTermek);
     mysqli_query($conn, $sqlTermek);
     $result = mysqli_query($conn, $sqlGetId);
     $row = mysqli_fetch_assoc($result);

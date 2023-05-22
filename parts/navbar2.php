@@ -1,3 +1,6 @@
+<?php
+if (!defined('ACCESS_ALLOWED'))exit();
+?>
 <nav class="py-2 bg-light border-bottom">
     <div class="container d-flex flex-wrap">
       <ul class="nav me-auto">

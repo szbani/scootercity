@@ -1,3 +1,6 @@
+<?php
+if (!defined('ACCESS_ALLOWED'))exit();
+?>
 <footer class="pb-3 pt-4">
   <div class="container text-light">
     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gy-3">
@@ -21,7 +24,7 @@
         </div>
       </div>
       <div class="col">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d859.5909225318234!2d18.04283583416093!3d46.12898778151173!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4742a85591a899a7%3A0x684daaae2d9a566c!2zSGV0dmVoZWx5LCBSw6Frw7NjemkgdS4gMTMsIDc2ODE!5e1!3m2!1sen!2shu!4v1628021277627!5m2!1sen!2shu" width="auto" height="130" style="border: 1px solid white;" allowfullscreen="" loading="lazy"></iframe>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1744.3950874178445!2d18.042526211797075!3d46.12865381218173!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4742a9d8ada5f8af%3A0x26256f4c4b60cdab!2sScooter%20City!5e1!3m2!1sen!2shu!4v1684020253594!5m2!1sen!2shu" width="auto" height="130" style="border: 1px solid white;" allowfullscreen="" loading="lazy"></iframe>
 
       </div>
     </div>
@@ -35,3 +38,4 @@
 <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 <script src="/js/swiper-bundle.min.js"></script>
 <script src="/js/main.js"></script>
+

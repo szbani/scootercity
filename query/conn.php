@@ -1,4 +1,5 @@
 <?php
+if (!defined('ACCESS_ALLOWED'))exit();
 
 $host = "localhost";
 $username = "root";

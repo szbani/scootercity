@@ -1,14 +1,16 @@
 <?php
-include_once 'conn.php';
-$searchTerm = $_GET['term'];
-if ($_GET['auto'] == 'nev') {
-    $query = $conn->query("SELECT DISTINCT tul_nev FROM termek_tul WHERE tul_nev LIKE '%" . $searchTerm . "%' ORDER BY tul_nev ASC;");
-}
-if($_GET['auto'] == 'ertek'){
-    $nev = $_GET['nev'];
-    $query = $conn->query("SELECT DISTINCT tul_nev FROM termek_tul WHERE tul_nev = '$nev' 
+if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest'){
+    define('ACCESS_ALLOWED', true);
+    include_once 'conn.php';
+    $searchTerm = $_GET['term'];
+    if ($_GET['auto'] == 'nev') {
+        $query = $conn->query("SELECT DISTINCT tul_nev FROM termek_tul WHERE tul_nev LIKE '%" . $searchTerm . "%' ORDER BY tul_nev ASC;");
+    }
+    if($_GET['auto'] == 'ertek'){
+        $nev = $_GET['nev'];
+        $query = $conn->query("SELECT DISTINCT tul_nev FROM termek_tul WHERE tul_nev = '$nev' 
     AND tul_ertek LIKE '%" . $searchTerm . "%' ORDER BY tul_nev ASC;");
-}
+    }
     $skillData = array();
     if ($query->num_rows > 0) {
         $i = 0;
@@ -20,5 +22,9 @@ if($_GET['auto'] == 'ertek'){
         }
     }
 
-echo json_encode($skillData);
-die();
+    echo json_encode($skillData);
+    die();
+}else{
+    exit();
+}
+

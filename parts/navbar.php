@@ -1,3 +1,6 @@
+<?php
+if (!defined('ACCESS_ALLOWED'))exit();
+?>
 <nav class="navbar navbar-dark sticky-top navbar-expand-lg bg-nav">
 
     <button class="navbar-toggler ms-5" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar"

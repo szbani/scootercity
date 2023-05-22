@@ -1,4 +1,5 @@
 <?php
+define('ACCESS_ALLOWED', true);
 require_once 'query/conn.php';
 require_once 'query/login.php';
 

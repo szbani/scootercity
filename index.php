@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
-<?php require_once 'parts/head.php'; ?>
+<?php
+define('ACCESS_ALLOWED', true);
+require_once 'parts/head.php'; ?>
 
 <body>
   <?php

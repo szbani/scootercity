@@ -1,4 +1,5 @@
 <?php
+define('ACCESS_ALLOWED', true);
 require_once 'query/conn.php';
 require_once 'query/login.php';
 
@@ -31,7 +32,7 @@ if (empty($_GET['page'])) {
                         Termékek
                     </div>
                     <div class="card-body">
-                        <table id="table" class="table table-striped table-bordered table-hover w-100">
+                        <table id="table" class="table table-striped table-bordered table-hover w-100" style="width: 100%">
                             <thead>
                                 <tr>
                                     <th></th>
@@ -39,9 +40,10 @@ if (empty($_GET['page'])) {
                                     <th>Termék név</th>
                                     <th>Index Kép</th>
                                     <th>Ár(Ft)</th>
+                                    <th>leárazott ár</th>
                                     <th>Kategória</th>
                                     <th>Márka</th>
-                                    <th>Összmennyiség</th>
+                                    <th>Készlet</th>
                                     <th></th>
                                     <th></th>
                                     <th></th>

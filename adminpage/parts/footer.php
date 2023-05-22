@@ -1,4 +1,6 @@
-
+<?php
+if (!defined('ACCESS_ALLOWED'))exit();
+?>
 <footer class="py-4 bg-light mt-auto">
     <!-- keszitette -->
     <div class="container-fluid px-4">

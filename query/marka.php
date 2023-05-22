@@ -1,4 +1,5 @@
 <?php
+define('ACCESS_ALLOWED', true);
 if (!isset($db)) {
     require_once 'conn.php';
     $db = new dataBase();

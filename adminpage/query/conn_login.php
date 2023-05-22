@@ -1,5 +1,5 @@
 <?php
-
+if (!defined('ACCESS_ALLOWED'))exit();
 $host = "localhost";
 $user = "root";
 $pass = "";

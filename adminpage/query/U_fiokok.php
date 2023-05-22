@@ -1,4 +1,9 @@
 <?php
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    exit;
+}
+
+define('ACCESS_ALLOWED', true);
 require_once "conn.php";
 require_once 'login.php';
 

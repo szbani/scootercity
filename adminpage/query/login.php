@@ -1,9 +1,23 @@
 <?php
-
-if (isset($_POST['loginPage'])) {
-    session_start();
-    include_once 'conn_login.php';
-    login_page($conn);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['loginPage'])) {
+        session_start();
+        define('ACCESS_ALLOWED', true);
+        include_once 'conn_login.php';
+        login_page($conn);
+    }
+}
+if (defined('ACCESS_ALLOWED') || $_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (!isset($_SESSION['user']) && !isset($_SESSION['pass'])) {
+        header('Location: ' . "http://" . $_SERVER['HTTP_HOST'] . '/adminpage/login.php');
+        die();
+    }
+    if (!login($_SESSION['user'], $_SESSION['pass'], $conn)) {
+        header('Location: ' . "http://" . $_SERVER['HTTP_HOST'] . '/adminpage/login.php');
+        die();
+    }
+} else {
+    exit();
 }
 
 function login_page($conn)
@@ -32,20 +46,12 @@ function login($username, $pw, $conn)
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
-        if (password_verify($pw,$row['password'])) {
+        if (password_verify($pw, $row['password'])) {
             $_SESSION['main'] = $row['main'];
             return true;
         }
     }
     return false;
-}
-if (!isset($_SESSION['user']) && !isset($_SESSION['pass'])) {
-    header('Location: ' . "http://" . $_SERVER['HTTP_HOST'] . '/adminpage/login.php');
-    die();
-}
-if (!login($_SESSION['user'], $_SESSION['pass'], $conn)) {
-    header('Location: ' . "http://" . $_SERVER['HTTP_HOST'] . '/adminpage/login.php');
-    die();
 }
 
 function logAction($db, $action, $user)

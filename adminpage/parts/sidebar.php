@@ -1,3 +1,6 @@
+<?php
+if (!defined('ACCESS_ALLOWED'))exit();
+?>
 <div id="layoutSidenav_nav">
     <nav class="sb-sidenav accordion sb-sidenav-color" id="sidenavAccordion">
         <div class="sb-sidenav-menu">

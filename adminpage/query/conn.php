@@ -1,4 +1,5 @@
 <?php
+if (!defined('ACCESS_ALLOWED'))exit();
 session_start();
 if (isset($_SESSION['main'])){
     $host = "localhost";

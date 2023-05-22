@@ -82,6 +82,7 @@ var table = $("#table").DataTable({});
 
 function createTableTermekek() {
     table = $("#table").DataTable({
+        scrollX: true,
         dom:
             '<"row"' +
             '<"col-sm-12 col-md-2"B>' +
@@ -99,7 +100,7 @@ function createTableTermekek() {
         language: {
             url: "//cdn.datatables.net/plug-ins/1.13.1/i18n/hu.json",
         },
-        responsive: true,
+
         ajax: {
             url: "query/jsonQuery.php",
             dataSrc: "",
@@ -108,6 +109,7 @@ function createTableTermekek() {
         },
         columns: [
             {
+                width: '2%',
                 className: "dt-control",
                 orderable: false,
                 data: null,
@@ -115,12 +117,15 @@ function createTableTermekek() {
             },
             {
                 data: "id",
-                width: "5%",
+                width: "4%",
             },
-            {data: "nev"},
+            {
+                data: "nev",
+                width: "39%",
+            },
             {
                 data: "images",
-                width: "8%",
+                width: "5%",
                 render: function (data, type, row) {
                     if (type === "display") {
                         var img = "product-placeholder.png";
@@ -134,10 +139,25 @@ function createTableTermekek() {
                     return data;
                 },
             },
-            {data: "ar"},
-            {data: "knev"},
+            {
+                data: "ar",
+                width: '8%',
+            },
+            {
+                data: "learazas",
+                width: '8%',
+                render: function (data) {
+                    if (data == null) return 'Nincs leárazva';
+                    return data;
+                }
+            },
+            {
+                data: "knev",
+                width: '10%',
+            },
             {
                 data: "markanev",
+                width: '10%',
                 render: function (data, type, row) {
                     if (data == null) return "Nincs megadva";
                     return data;
@@ -145,7 +165,7 @@ function createTableTermekek() {
             },
             {
                 data: "mennyiseg",
-                width: "10%",
+                width: "5%",
                 render: function (data, type, row) {
                     if (data == null) return 0;
                     return data;
@@ -249,7 +269,7 @@ function createTableTermekek() {
         if (inputFocus == false) {
             tableReload(false);
         }
-    }, 30000);
+    }, 100000);
     table.on("draw", function () {
         // If reloading table then show previously shown rows
         if (childRows) {
@@ -723,3 +743,6 @@ function editMarkak() {
 function destroyTable() {
     table.destroy();
 }
+
+
+

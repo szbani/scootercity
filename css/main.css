@@ -225,7 +225,7 @@ main {
 }
 
 .card {
-  background-color: var(--sidebar1);
+  background-color: var(--lightblue2);
 }
 .card-termek {
   min-height: auto;

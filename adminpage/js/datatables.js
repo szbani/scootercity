@@ -269,7 +269,7 @@ function createTableTermekek() {
         if (inputFocus == false) {
             tableReload(false);
         }
-    }, 100000);
+    }, 1000000);
     table.on("draw", function () {
         // If reloading table then show previously shown rows
         if (childRows) {
@@ -388,6 +388,7 @@ function editTermekek() {
         $("#inputId").val(table.cell(row, 1).data());
         $("#inputNev").val(table.cell(row, 2).data());
         $("#inputAr").val(table.cell(row, 4).data());
+        $("#inputLearaz").val(table.cell(row, 5).data());
         $("#inputMennyiseg").val(table.cell(row, 6).data());
         $("#inputLeiras").val(row.data().leiras);
         $("#inputKategoria").val(row.data().kategoria);

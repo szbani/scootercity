@@ -6,7 +6,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     else $keresett = $url[2];
     $keresett = explode('?', $keresett, 2)[0];
     $kereses = false;
-    if (!empty($_GET['keyword'])) ;
+
     if (!empty($_GET['sort'])) {
         $sort = $_GET['sort'];
         if ($sort == 'pup') $sort = "ORDER BY ar ASC, nev ASC";
@@ -44,7 +44,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     }
     if ($kereses) {
         // Ha a keresés mezőből keresnek itemket.
-        $termekek = $db->Select("SELECT id,nev,ar,indeximg FROM bolt WHERE nev like '%$keresett%' $brand $sort LIMIT $offset , $limit;");
+        $termekek = $db->Select("SELECT id,nev,ar,indeximg,learazas FROM bolt WHERE nev like '%$keresett%' $brand $sort LIMIT $offset , $limit;");
     } else {
         // Megnézi hogy az adott kategóriában milyen alkategóriák vannak
         $katcheck = $db->Select("SELECT alkategoriak_nev as kats FROM kat_view WHERE nev like '$keresett'");
@@ -53,7 +53,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
             $keresett = '%%';
         if ($katcheck == null || $katcheck[0]['kats'] == null || $keresett == '%%') {
             // Ha nincs kategoria akkor lekeri az osszes itemet
-            $termekek = $db->Select("SELECT id,nev,ar,indeximg FROM bolt WHERE knev like '$keresett' $brand $sort LIMIT $offset , $limit;");
+            $termekek = $db->Select("SELECT id,nev,ar,indeximg,learazas FROM bolt WHERE knev like '$keresett' $brand $sort LIMIT $offset , $limit;");
         } else {
             //megkeresi a kategoriakban levo kategoriakat es azokat keri le
             $kats = '';
@@ -62,7 +62,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
                 $kats .= $kat->subkats($k, $db);
             }
             $kats = str_replace(',', '\',\'', $kats);
-            $termekek = $db->Select("SELECT id,nev,ar,indeximg FROM bolt WHERE knev in ('$kats') $brand $sort LIMIT $offset , $limit;");
+            $termekek = $db->Select("SELECT id,nev,ar,indeximg,learazas FROM bolt WHERE knev in ('$kats') $brand $sort LIMIT $offset , $limit;");
         }
     }
     $arr = array();

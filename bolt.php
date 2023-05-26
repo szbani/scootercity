@@ -53,7 +53,9 @@ include_once "parts/navbar.php";
             }
             ?>
         </div>
-        <button class="btn btn-primary btn-lg w-75" id="loadButton" onclick="loadMoreItem()">Több termék</button>
+        <div class="w-100 text-center">
+            <button class="space-btn w-50 justify-content-center" id="loadButton" onclick="loadMoreItem()">Több termék</button>
+        </div>
     </main>
     <?php
     if (empty($_GET['page'])) {

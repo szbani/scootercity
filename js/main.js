@@ -16,7 +16,7 @@ let urlJSON = {
     reloadbrand: true,
 };
 
-const state = {content: '', brandContent: '', sort: '', urlJSON: urlJSON,newpage: true};
+const state = {content: '', brandContent: '', sort: '', urlJSON: urlJSON, newpage: true};
 $(document).ready(function () {
     var navbar = $("#mainNavbar");
     navcheck(navbar);
@@ -203,6 +203,9 @@ function loadItems() {
                 if (data.trim()) {
                     // console.log(data);
                     data = JSON.parse(data);
+
+                    // console.log(data);
+
                     if (data.length < limit) $('#loadButton').attr('hidden', true);
                     else $('#loadButton').attr('hidden', false);
                     if (urlJSON.pageNumber > 0) {
@@ -255,8 +258,7 @@ function reloadMarkak(page, keyword) {
             if (state.newpage === false) {
                 history.replaceState(state, '', state.url);
                 state.newpage = true;
-            }
-            else
+            } else
                 history.pushState(state, "", state.url);
 
         },
@@ -324,23 +326,35 @@ function createItem(data) {
     let index = 'product-placeholder.png';
     if (data['indeximg'] != null) index = data['indeximg'];
     let price = data['ar'].toLocaleString('hu-HU', {style: 'currency', currency: 'HUF', minimumFractionDigits: 0});
+    // let learazas = data['learazas'] ? data['learazas'].toLocaleString('hu-HU', {style: 'currency', currency: 'HUF', minimumFractionDigits: 0}) : null;
     let item = $('<div>').addClass('col mt-3');
     let card = $('<div>').addClass('card rounded shadow-sm')
     let indeximg = $('<img>').addClass('card-img-top align-self-center').attr('src', '/media/products/' + index).attr('alt', data['nev'])
-    let textblock = $('<div>').addClass('text-over-image').append(
+    let priceBlock;
+    if (data['learazas'] !== null) {
+        let learazas = data['learazas'].toLocaleString('hu-HU', {
+            style: 'currency',
+            currency: 'HUF',
+            minimumFractionDigits: 0
+        });
+        priceBlock = $('<h5>').addClass('mb-1 w-100')
+            .append($('<span>').addClass('w-50 d-inline-block')
+                .append($('<s>').text(price)))
+            .append($('<span>').text(learazas).addClass('w-50 d-inline-block text-end'));
+    } else
+        priceBlock = $('<h5>').append($('<span>').text(price));
+    let textBlock = $('<div>').addClass('text-over-image').append(
         $('<div>').addClass('item-text px-2').append(
             $('<p>').addClass('card-title fw-bold mb-0').text(data['nev'])
         )
     ).append(
         $('<div>').addClass('d-flex bg-price px-2').append(
-            $('<h5>').addClass('mb-1').append(
-                $('<span>').text(price.replace(/\.\d{2}/, ''))
-            )
+            priceBlock
         )
     );
     let href = $('<a>').addClass('card_click').attr('href', '/bolt/termek/' + data['id'] + '/' + data['nev']);
 
-    item.append(card.append(indeximg, textblock, href));
+    item.append(card.append(indeximg, textBlock, href));
     return item;
 }
 
@@ -415,7 +429,6 @@ function createSubCategory(data, currdata, last = false) {
                     if (data[i]['alkategoriak'] != null || data[i]['hasznalva'] > 0) {
                         let temp = createSubCategory(data, data[i]);
                         if (temp != null) ul.append(temp);
-                        else if (temp == null && data[i]['hasznalva'] == 0) subkat = null;
                     }
                     break;
                 } else if (i == data.length - 1) {

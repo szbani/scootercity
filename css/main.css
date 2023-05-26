@@ -17,6 +17,7 @@
   --white: #f8f8ff;
   --sidebar1:#CFDEE7;
   --sidebar2:#5E7CE2;
+  --load-more-button: #0296ff;
 }
 
 .bg-white {
@@ -87,6 +88,9 @@ nav .nav-link2:hover {
   border-bottom-left-radius:32px;
   border-top-left-radius: 32px;
 
+}
+#search:hover {
+  background-color: var(--white);
 }
 #search:focus {
   background-color: var(--white);
@@ -412,4 +416,107 @@ main {
 
 .cursor{
   cursor: pointer;
+}
+
+/*load more button*/
+
+.space-btn {
+  position: relative;
+  font-family: "Electrolize", sans-serif;
+  font-size: 1em;
+  text-transform: uppercase;
+  letter-spacing: 0.125em;
+  line-height: 1;
+  color: var(--load-more-button);
+  margin: 0;
+  padding: 1em;
+  background: none;
+  border: none;
+  cursor: pointer;
+  background-color: rgba(119, 152, 232, 0.07);
+}
+.space-btn:hover {
+  color: #1f59ee;
+}
+.space-btn:focus {
+  color: #42a3e7;
+  outline: none;
+}
+.space-btn:active {
+  color: var(--load-more-button);
+}
+.space-btn:before, .space-btn:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 1px;
+}
+.space-btn:before {
+  top: 0;
+  left: 0;
+  box-shadow: inset 1px 1px 0 0 var(--load-more-button);
+}
+.space-btn:after {
+  right: 0;
+  bottom: 0;
+  box-shadow: inset -1px -1px 0 0 var(--load-more-button);
+}
+
+.space-btn:hover:before {
+  animation: hoverShadowBefore 1s forwards;
+}
+.space-btn:hover:after {
+  animation: hoverShadowAfter 1s forwards;
+}
+
+@keyframes hoverShadowBefore {
+  0% {
+    width: 100%;
+    height: 1px;
+    top: 0;
+    left: 0;
+  }
+  33% {
+    width: 1px;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+  66% {
+    width: 1px;
+    height: 1px;
+    top: calc(100% - 1px);
+    left: 0;
+  }
+  100% {
+    width: 100%;
+    height: 1px;
+    top: calc(100% - 1px);
+    left: 0;
+  }
+}
+@keyframes hoverShadowAfter {
+  0% {
+    width: 100%;
+    height: 1px;
+  }
+  33% {
+    width: 1px;
+    height: 100%;
+    bottom: 0;
+    right: 0;
+  }
+  66% {
+    width: 1px;
+    height: 1px;
+    bottom: calc(100% - 1px);
+    right: 0;
+  }
+  100% {
+    width: 100%;
+    height: 1px;
+    bottom: calc(100% - 1px);
+    right: 0;
+  }
 }

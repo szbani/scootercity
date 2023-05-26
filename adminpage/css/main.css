@@ -181,7 +181,7 @@ table.dataTable tbody td.no-padding {
 
 /* modal */
 .modal-scroll-zone, .modal-scroll{
-  max-height: 175px;
+  max-height: 140px;
   min-height: 100px;
 }
 .del-row{

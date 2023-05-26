@@ -7,7 +7,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
         if ($_POST['table'] == 'termekek') {
             $sql = "SELECT t.*,k.nev as knev,
 		(SELECT nev FROM marka m WHERE m.id = t.marka) as markanev,
-		(SELECT discountPrice from discount d where d.termek_id = t.id) as learazas,
+		t.discountPrice as learazas,
 		(SELECT SUM(tm.mennyiseg) FROM termek_menny tm WHERE tm.termek_id = t.id) as mennyiseg,
 		(SELECT GROUP_CONCAT(tm.meret, ':', tm.mennyiseg) FROM termek_menny tm WHERE tm.termek_id = t.id) as meretek,
         (SELECT GROUP_CONCAT(file_name ORDER BY img_order) FROM kepek k WHERE k.termek_id = t.id) as images,

@@ -37,9 +37,14 @@ if (!defined('ACCESS_ALLOWED'))exit();
                         <a class="nav-link " aria-current="page" href="/bolt">Termékek</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/bolt/alkatreszek">Alkatrészek</a>
+                        <a class="nav-link " aria-current="page" href="/bolt/Ruhák">Ruhák</a>
                     </li>
-
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bolt/alkatrészek">Alkatrészek</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bolt/kedvezmenyek">Kedvezmények</a>
+                    </li>
                 </ul>
 
             </div>

@@ -9,37 +9,43 @@ require_once 'login.php';
 $errors = array();
 
 if (isset($_POST['upload']) || isset($_POST['edit'])) {
-    if (empty($_POST['nev'])) {
+    if (empty($_POST['nev']))
         array_push($errors, "Hiányzik a termék neve!");
-    }
-    if (empty($_POST['ar'])) {
+
+    if (empty($_POST['ar']))
         array_push($errors, "Hiányzik a termék ára!");
-    } else if (!is_numeric($_POST['ar'])) {
+    else if (!is_numeric($_POST['ar']))
         array_push($errors, "Az ár betűket is tartalmaz!");
-    }
-    if (empty($_POST['kategoria'])) {
+
+    if (empty($_POST['kategoria']))
         array_push($errors, "Hiányzik a termék kategóriája!");
-    }
+
+    if (intval($_POST['learazas']) > intval($_POST['ar']))
+        array_push($errors, 'Nagyobb a leárazás ára mint a termék eredeti ára.');
 
     if (count($errors) != 0) {
         $_SESSION['errors'] = json_encode($errors);
         back();
     }
+
+    if (isset($_POST['edit'])) $inputId = mysqli_real_escape_string($conn, $_POST['id']);
+    $inputNev = mysqli_real_escape_string($conn, $_POST['nev']);
+    $inputAr = mysqli_real_escape_string($conn, $_POST['ar']);
+    $inputLearaz = mysqli_real_escape_string($conn, $_POST['learazas']);
+    if ($inputLearaz == "") $inputLearaz = 'NULL';
+    $inputMarka = mysqli_real_escape_string($conn, $_POST['marka']);
+    if ($inputMarka == "") $inputMarka = 'NULL';
+    $inputKategoria = mysqli_real_escape_string($conn, $_POST['kategoria']);
+    $inputLeiras = '';
+    if (isset($_POST['leiras'])) $inputLeiras = mysqli_real_escape_string($conn, $_POST['leiras']);
 }
 // return var_dump($_POST);
 
 if (isset($_POST['upload'])) {
-    $inputNev = mysqli_real_escape_string($conn, $_POST['nev']);
-    $inputAr = mysqli_real_escape_string($conn, $_POST['ar']);
-    $inputMarka = mysqli_real_escape_string($conn,$_POST['marka']);
-    if ($inputMarka == "")$inputMarka='NULL';
-    $inputKategoria = mysqli_real_escape_string($conn, $_POST['kategoria']);
-    $inputLeiras = '';
-    if (isset($_POST['leiras'])) $inputLeiras = mysqli_real_escape_string($conn, $_POST['leiras']);
 
     //termek feltoltese
-    $sqlTermek = "INSERT INTO termekek(nev,ar,leiras,kategoria,marka)
-                    VALUES('$inputNev','$inputAr','$inputLeiras','$inputKategoria',$inputMarka);";
+    $sqlTermek = "INSERT INTO termekek(nev,ar,discountPrice,leiras,kategoria,marka)
+                    VALUES('$inputNev','$inputAr',$inputLearaz,'$inputLeiras','$inputKategoria',$inputMarka);";
     $sqlGetId = "SELECT id FROM termekek WHERE nev = '$inputNev';";
 //    var_dump($sqlTermek);
     mysqli_query($conn, $sqlTermek);
@@ -50,11 +56,9 @@ if (isset($_POST['upload'])) {
     if (isset($_POST['menny-nev'])) {
         uploadMennyiseg($conn, $id);
     }
-    // var_dump($sqlTulajdonsagok);
 
     //file feltoltes 
     $errors = uploadImages($conn, $id);
-
     logAction($conn, "Létrehozta ezt a terméket: " . $inputNev . ".", $_SESSION['user']);
     if ($errors != null) {
         $_SESSION['errors'] = json_encode($errors);
@@ -62,18 +66,10 @@ if (isset($_POST['upload'])) {
     $_SESSION['success'] = 'Sikeres Termék Felvétel';
     back();
 } else if (isset($_POST['edit'])) {
-    $inputId = mysqli_real_escape_string($conn, $_POST['id']);
-    $inputNev = mysqli_real_escape_string($conn, $_POST['nev']);
-    $inputAr = mysqli_real_escape_string($conn, $_POST['ar']);
-    $inputKategoria = mysqli_real_escape_string($conn, $_POST['kategoria']);
-    $inputMarka = mysqli_real_escape_string($conn,$_POST['marka']);
-    if ($inputMarka == "")$inputMarka='NULL';
-    $inputLeiras = '';
-    if (isset($_POST['leiras'])) $inputLeiras = mysqli_real_escape_string($conn, $_POST['leiras']);
 
     //termek update
     $sqlTermek = "UPDATE termekek
-                    SET nev = '$inputNev',ar = '$inputAr',leiras='$inputLeiras',kategoria='$inputKategoria',marka=$inputMarka
+                    SET nev = '$inputNev',ar = '$inputAr',discountPrice = $inputLearaz,leiras='$inputLeiras',kategoria='$inputKategoria',marka=$inputMarka
                     WHERE id = '$inputId'";
     mysqli_query($conn, $sqlTermek);
 
@@ -104,14 +100,9 @@ if (isset($_POST['upload'])) {
 
     $sql = "DELETE FROM termekek WHERE id = '$id';";
     mysqli_query($conn, $sql);
-    logAction($conn, "Törölte ezt a terméket: " . $nev . ". (".$id.")", $_SESSION['user']);
+    logAction($conn, "Törölte ezt a terméket: " . $nev . ". (" . $id . ")", $_SESSION['user']);
     echo json_encode(array('success' => true, 'messages' => array('Törölted (' . $id . ')' . $nev . ' nevű terméket.')));
-    // } else if (isset($_POST['mennyId'])) {
-    //     $id = $_POST['mennyId'];
-    //     $mennyiseg = $_POST['mennyiseg'];
-    //     $sql = "UPDATE termekek SET mennyiseg = '$mennyiseg' WHERE id = '$id';";
-    //     mysqli_query($conn, $sql);
-    //     echo "$mennyiseg";
+
 } else if (isset($_POST['reorder'])) {
     $images = "";
     $names = "";
@@ -169,7 +160,6 @@ function uploadTulajdonsagok($conn, $id)
 
 function uploadMennyiseg($conn, $id)
 {
-
     $values = '';
     $meretek = array();
     for ($i = 0; $i < count($_POST['menny-nev']); $i++) {

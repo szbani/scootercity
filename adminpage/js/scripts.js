@@ -145,13 +145,13 @@ $(document).ready(function () {
         var newRow =
             '<div class="col-12">' +
             '<div class="row gx-1">' +
-            '<div class="col-4">' +
+            '<div class="col-5">' +
             '<input class="form-control" type="text" name="menny-nev[]">' +
             "</div>" +
-            '<div class="col-4">' +
+            '<div class="col-5">' +
             '<input class="form-control" type="number" name="menny-ertek[]" min="0" value="0">' +
             "</div>" +
-            '<div class="col-4">' +
+            '<div class="col-2">' +
             '<a class="del-row" data-bs-toggle="tooltip" data-bs-placement="right" title="Sor törlése">' +
             '<i class="fa-solid fa-minus fa-2x" ></i>' +
             "</a>" +

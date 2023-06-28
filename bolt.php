@@ -13,21 +13,21 @@ if (empty($_GET['page'])) {
 <?php
 require_once 'parts/head.php';
 ?>
-
+</head>
 <body>
 <?php
 include_once "parts/navbar.php";
 ?>
 <!-- sidebar -->
 <div class="row me-0">
-    <nav id="sidebar" class="col-xxl-2 col-xl-3 col-lg-3 d-md-block pe-0 offcanvas-lg offcanvas-start bg-sidebar "
+    <nav id="sidebar" class="col-xxl-2 col-xl-3 col-lg-3 d-md-block pe-0 offcanvas-lg offcanvas-start bg-sidebar2 "
          tabindex="-1">
-        <div class="offcanvas-body d-block m-0 p-3">
+        <div class="offcanvas-body d-block pt-1">
             <ul class="list-unstyled ps-0 w-100">
 
-                <li class="mb-1 bg-sidebar2">
-                    <label class="fw-bold ms-2 ">Rendezés</label>
-                    <select id="sort" class="form-select form-select-sm rounded ">
+                <li class="mb-1 p-2">
+                    <label class="fw-bold ms-2">Rendezés</label>
+                    <select id="sort" class="form-select form-select-sm ">
                         <option value="">a-z sorrendben</option>
                         <option value="z-a">z-a sorrendben</option>
                         <option value="pup">ár szerint növekvő</option>

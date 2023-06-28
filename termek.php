@@ -21,7 +21,8 @@ $price = str_replace(',00', '', numfmt_format_currency($fmt, $termek['ar'], "HUF
 <?php
 require_once "parts/head.php";
 ?>
-
+<link rel="stylesheet" type="text/css" href="/css/swiper_termek.css">
+</head>
 <body>
 <?php
 require_once "parts/navbar.php";

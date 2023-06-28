@@ -14,4 +14,3 @@ if (!defined('ACCESS_ALLOWED'))exit();
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/swiper-bundle.min.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
-</head>

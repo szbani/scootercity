@@ -38,6 +38,18 @@ function navcheck(navbar) {
     }
 }
 
+    const mswiper = new Swiper(".mSwiper", {
+      slidesPerView: 7,
+      spaceBetween: 30,
+      loop:true,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+    });
+
+
+
 const swiper2 = new Swiper(".swiper-thumb", {
     loop: true,
     spaceBetween: 10,
@@ -374,8 +386,8 @@ function loadCategories() {
 }
 
 function createCategory(data) {
-    let kat = $('<li>').addClass('mb-1 bg-sidebar2').append(
-        $('<button>').addClass('btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed fw-bold w-100')
+    let kat = $('<li>').addClass('mb-1').append(
+        $('<button>').addClass('btn btn-toggle d-inline-flex align-items-center border-0 collapsed fw-bold w-100')
             .attr('data-bs-toggle', 'collapse')
             .attr('data-bs-target', '#kategoriakCollapse')
             .attr('aria-expanded', 'true')
@@ -394,7 +406,7 @@ function createCategory(data) {
         } else if (currdata['alkategoriak'] == null && currdata['hasznalva'] > 0 && currdata['subkat'] == null) {
             // console.log(currdata);
             div.append(
-                $('<li>').addClass('link-dark link rounded text-decoration-none fw-bold cursor')
+                $('<li>').addClass('link text-decoration-none fw-bold cursor')
                     .attr('href', '/bolt/' + currdata['nev']));
         }
 
@@ -407,11 +419,11 @@ function createSubCategory(data, currdata, last = false) {
     let ul;
     if (currdata['alkategoriak'] == null) {
         subkat.append($('<li>').append($('<a>')
-            .addClass('link-dark link rounded text-decoration-none fw-bold cursor')
+            .addClass('link text-decoration-none fw-bold cursor')
             .attr('href', '/bolt/' + currdata['nev'])
             .text(currdata['nev'])));
     } else {
-        subkat.append($('<button>').addClass('btn btn-toggle d-inline-flex align-items-center rounded border-0 fw-bold w-100')
+        subkat.append($('<button>').addClass('btn btn-toggle d-inline-flex align-items-center border-0 fw-bold w-100')
             .attr('data-bs-toggle', 'collapse')
             .attr('data-bs-target', '#' + currdata['id'] + '-' + currdata['nev'])
             .attr('aria-expanded', false)

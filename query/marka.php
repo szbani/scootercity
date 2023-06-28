@@ -32,17 +32,19 @@ $markak = $db->Select("SELECT marka as nev, COUNT(marka) as darab FROM bolt WHER
 //var_dump($markak);
 if (!empty($markak)) {
     ?>
-    <li class="mb-1 bg-sidebar2">
+    <li class="mb-1">
 
-        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed fw-bold w-100"
+        <button class="btn btn-toggle d-inline-flex align-items-center border-0 collapsed fw-bold w-100"
                 data-bs-toggle="collapse" data-bs-target="#markaCollapse" aria-expanded="true">
             Márka
         </button>
         <div class="collapse show" id="markaCollapse">
             <?php
             foreach ($markak as $marka) {
-                echo '<div class="form-check sidebar-item"><label  for="' . $marka['nev'] . '">' . $marka['nev'] . ' (' . $marka['darab'] . ') </label>
-                                  <input class="form-check-input marka" value="' . $marka['nev'] . '" id="' . $marka['nev'] . '" type="checkbox"></div>';
+                echo '<div class="form-check sidebar-item" for="' . $marka['nev'] . '">
+                <label class="w-100" for="' . $marka['nev'] . '">' . $marka['nev'] . ' (' . $marka['darab'] . ') </label>
+                <input class="form-check-input marka" value="' . $marka['nev'] . '" id="' . $marka['nev'] . '" type="checkbox">
+                </div>';
             }
             ?>
         </div>

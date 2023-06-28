@@ -3,6 +3,8 @@
 <?php
 define('ACCESS_ALLOWED', true);
 require_once 'parts/head.php'; ?>
+<link rel="stylesheet" type="text/css" href="/css/swiper_main.css">
+</head>
 
 <body>
   <?php
@@ -157,7 +159,30 @@ require_once 'parts/head.php'; ?>
     <div class="" style="height: 50px;">
 
     </div>
+    <div class="text-center">
+      <label class="fs-4 mb-3">Márkáink</label>
+    </div>
+    <div class="swiper mSwiper " style="height: 150px;">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">Slide 1</div>
+        <div class="swiper-slide">Slide 2</div>
+        <div class="swiper-slide">Slide 3</div>
+        <div class="swiper-slide">Slide 4</div>
+        <div class="swiper-slide">Slide 5</div>
+        <div class="swiper-slide">Slide 6</div>
+        <div class="swiper-slide">Slide 7</div>
+        <div class="swiper-slide">Slide 8</div>
+        <div class="swiper-slide">Slide 9</div>
+        <div class="swiper-slide">Slide 10</div>
+        <div class="swiper-slide">Slide 11</div>
+        <div class="swiper-slide">Slide 12</div>
+        <div class="swiper-slide">Slide 13</div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+    <div class="" style="height: 50px;">
 
+</div>
   </main>
   </div>
   <?php

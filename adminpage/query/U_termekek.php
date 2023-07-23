@@ -11,10 +11,7 @@ $errors = array();
 if (isset($_POST['upload']) || isset($_POST['edit'])) {
     if (empty($_POST['nev']))
         array_push($errors, "Hiányzik a termék neve!");
-
-    if (empty($_POST['ar']))
-        array_push($errors, "Hiányzik a termék ára!");
-    else if (!is_numeric($_POST['ar']))
+    if (!is_numeric($_POST['ar']) && trim($_POST['ar'],) !='')
         array_push($errors, "Az ár betűket is tartalmaz!");
 
     if (empty($_POST['kategoria']))
@@ -31,6 +28,7 @@ if (isset($_POST['upload']) || isset($_POST['edit'])) {
     if (isset($_POST['edit'])) $inputId = mysqli_real_escape_string($conn, $_POST['id']);
     $inputNev = mysqli_real_escape_string($conn, $_POST['nev']);
     $inputAr = mysqli_real_escape_string($conn, $_POST['ar']);
+    if($inputAr == "") $inputAr = 0;
     $inputLearaz = mysqli_real_escape_string($conn, $_POST['learazas']);
     if ($inputLearaz == "") $inputLearaz = 'NULL';
     $inputMarka = mysqli_real_escape_string($conn, $_POST['marka']);
@@ -45,7 +43,7 @@ if (isset($_POST['upload'])) {
 
     //termek feltoltese
     $sqlTermek = "INSERT INTO termekek(nev,ar,discountPrice,leiras,kategoria,marka)
-                    VALUES('$inputNev','$inputAr',$inputLearaz,'$inputLeiras','$inputKategoria',$inputMarka);";
+                    VALUES('$inputNev',$inputAr,$inputLearaz,'$inputLeiras','$inputKategoria',$inputMarka);";
     $sqlGetId = "SELECT id FROM termekek WHERE nev = '$inputNev';";
 //    var_dump($sqlTermek);
     mysqli_query($conn, $sqlTermek);
@@ -69,7 +67,7 @@ if (isset($_POST['upload'])) {
 
     //termek update
     $sqlTermek = "UPDATE termekek
-                    SET nev = '$inputNev',ar = '$inputAr',discountPrice = $inputLearaz,leiras='$inputLeiras',kategoria='$inputKategoria',marka=$inputMarka
+                    SET nev = '$inputNev',ar = $inputAr,discountPrice = $inputLearaz,leiras='$inputLeiras',kategoria='$inputKategoria',marka=$inputMarka
                     WHERE id = '$inputId'";
     mysqli_query($conn, $sqlTermek);
 

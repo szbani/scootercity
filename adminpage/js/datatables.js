@@ -142,6 +142,10 @@ function createTableTermekek() {
             {
                 data: "ar",
                 width: '8%',
+                render:function (data){
+                    if (data == 0)return 'Nincs ár megadva';
+                    return data;
+                }
             },
             {
                 data: "learazas",

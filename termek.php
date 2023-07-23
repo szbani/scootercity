@@ -97,7 +97,7 @@ require_once "parts/navbar.php";
                 <button type="button" class="btn btn-primary mt-3 align-self-center w-75"
                         data-bs-toggle="tooltip" data-bs-placement="top"
                         data-bs-custom-class="custom-tooltip"
-                        data-bs-title="A terméket a boltban tudjuk csak oda adni. Előzetes eggyeztetéshez írj emailt a info@scootercity.hu email címen vagy a +36-30-273-9402 telefonszámon keresztül lehetséges">
+                        data-bs-title="A terméket a boltban tudjuk csak oda adni. Előzetes eggyeztetéshez írj emailt a scootercityshop@gmail.com email címen vagy a +36-70/650-8555 telefonszámon keresztül lehetséges">
                     Termék vásárlása
                 </button>
             </div>
@@ -110,3 +110,6 @@ require_once "parts/footer.php";
 </body>
 
 </html>
+
+
+<!--termekek ebbol a kategoriabol-->

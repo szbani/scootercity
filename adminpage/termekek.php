@@ -75,7 +75,7 @@ include_once 'parts/navbar.html';
                                         <div class="row">
                                             <div class="col-6">
                                                 <label for="inputAr" class="form-label" >Termék ára:</label>
-                                                <input class="form-control" id="inputAr" type="number" name="ar" placeholder="0" required/>
+                                                <input class="form-control" id="inputAr" type="number" name="ar" placeholder="0"/>
                                             </div>
                                             <div class="col-6">
                                                 <label for="inputLearaz" class="form-label">Leárazott ár:</label>

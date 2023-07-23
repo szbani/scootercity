@@ -17,48 +17,36 @@ let urlJSON = {
 };
 
 const state = {content: '', brandContent: '', sort: '', urlJSON: urlJSON, newpage: true};
-$(document).ready(function () {
-    var navbar = $("#mainNavbar");
-    navcheck(navbar);
-    $(document).scroll(function (e) {
-        navcheck(navbar);
-    });
+
+const mswiper = new Swiper(".mSwiper", {
+    slidesPerView: 'auto',
+    spaceBetween: 40,
 });
-
-function navcheck(navbar) {
-    var height = screen.height * 0.1;
-    if ($(this).scrollTop() < height && !nav) {
-        $(navbar).toggleClass("bg-transparent", true);
-        $(navbar).toggleClass("shadow-lg", false);
-        nav = true;
-    } else if ($(this).scrollTop() > height && nav) {
-        $(navbar).toggleClass("bg-transparent", false);
-        $(navbar).toggleClass("shadow-lg", true);
-        nav = false;
-    }
-}
-
-    const mswiper = new Swiper(".mSwiper", {
-      slidesPerView: 7,
-      spaceBetween: 30,
-      loop:true,
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-    });
-
+const dswiper = new Swiper(".dSwiper", {
+    navigation: {
+        nextEl: ".ds-next",
+        prevEl: ".ds-prev",
+    },
+    spaceBetween: 30,
+    slidesPerView: 'auto',
+});
+const nswiper = new Swiper(".nSwiper", {
+    slidesPerView: 'auto',
+    spaceBetween: 30,
+    navigation: {
+        nextEl: ".ns-next",
+        prevEl: ".ns-prev",
+    },
+});
 
 
 const swiper2 = new Swiper(".swiper-thumb", {
-    loop: true,
     spaceBetween: 10,
     slidesPerView: 4,
     freeMode: true,
     watchSlidesProgress: true,
 });
 const swiper = new Swiper(".swiper-main", {
-    loop: true,
     spaceBetween: 10,
     navigation: {
         nextEl: ".swiper-button-next",
@@ -70,52 +58,95 @@ const swiper = new Swiper(".swiper-main", {
 });
 
 $(document).ready(function () {
+    $("#search").keyup(function (e) {
+        var search_query = $(this).val();
+
+        if (search_query != "") {
+            $.ajax({
+                url: "/query/search.php",
+                type: "POST",
+                data: {
+                    search: search_query,
+                },
+                success: function (data) {
+                    $("#list").fadeIn("fast").html(data);
+                },
+            });
+        } else {
+            $("#list").fadeOut();
+        }
+    });
+    $("#submit").on("click", function (e) {
+        e.preventDefault();
+        urlJSON.pageurl = '/bolt/kereses';
+        urlJSON.keyword = $('#search').val()
+        urlJSON.sort = '';
+        urlJSON.brand = '';
+        urlJSON.pageNumber = 0;
+        $('#sort').val('');
+        loadItems();
+    });
+    $("#search").focusin(function (e) {
+        if ($(this).val() != "") {
+            $("#list").fadeIn();
+        }
+    });
+    $("#search").focusout(function (e) {
+        $("#list").fadeOut();
+    });
     if (decodeURI(window.location.pathname).includes("/bolt")) {
         if (!decodeURI(window.location.pathname).includes('/bolt/termek/')) {
             state.newpage = false;
             loadItems();
         }
-        $("#search").keyup(function (e) {
-            var search_query = $(this).val();
-
-            if (search_query != "") {
-                $.ajax({
-                    url: "/query/search.php",
-                    type: "POST",
-                    async: false,
-                    data: {
-                        search: search_query,
-                    },
-                    success: function (data) {
-                        $("#list").fadeIn("fast").html(data);
-                    },
-                });
-            } else {
-                $("#list").fadeOut();
-            }
-        });
-        $("#submit").on("click", function (e) {
-            e.preventDefault();
-            urlJSON.pageurl = '/bolt/kereses';
-            urlJSON.keyword = $('#search').val()
-            urlJSON.sort = '';
-            urlJSON.brand = '';
-            urlJSON.pageNumber = 0;
-            $('#sort').val('');
-            loadItems();
-        });
-        $("#search").focusin(function (e) {
-            if ($(this).val() != "") {
-                $("#list").fadeIn();
-            }
-        });
-        $("#search").focusout(function (e) {
-            $("#list").fadeOut();
-        });
         loadCategories();
         checkSidebarValues();
+    } else {
+        loadDiscount();
+        loadNewest();
     }
 });
+
+function loadDiscount() {
+    $.ajax({
+        type: "GET",
+        url: "/query/indexload.php",
+        data: {
+            where: 'indeximg is not null and learazas is not null',
+            limit: 11,
+        },
+        dataType: "html",
+        success: function (data) {
+            if (data.trim()){
+                data = JSON.parse(data)
+                // console.log(data);
+                $(data).each(function () {
+                    $('#discounts').append(createItem($(this)[0],false));
+                });
+            }
+        }
+    })
+}
+function loadNewest(){
+    $.ajax({
+        type: "GET",
+        url: "/query/indexload.php",
+        data: {
+            where: 'indeximg is not null ORDER BY id',
+            limit: 11,
+        },
+        dataType: "html",
+        success: function (data) {
+            if (data.trim()){
+                data = JSON.parse(data)
+                // console.log(data);
+                $(data).each(function () {
+                    $('#newest').append(createItem($(this)[0],false));
+                });
+            }
+        }
+    })
+}
 
 window.addEventListener('popstate', (event) => {
     event.preventDefault();
@@ -334,12 +365,20 @@ function addToURL(url, param1, param2) {
     return url;
 }
 
-function createItem(data) {
+function createItem(data, col = true) {
     let index = 'product-placeholder.png';
     if (data['indeximg'] != null) index = data['indeximg'];
-    let price = data['ar'].toLocaleString('hu-HU', {style: 'currency', currency: 'HUF', minimumFractionDigits: 0});
+    let price;
+    if (data['ar'] != 0)
+        price = data['ar'].toLocaleString('hu-HU', {style: 'currency', currency: 'HUF', minimumFractionDigits: 0});
+    else
+        price = 'Rendelelhető';
     // let learazas = data['learazas'] ? data['learazas'].toLocaleString('hu-HU', {style: 'currency', currency: 'HUF', minimumFractionDigits: 0}) : null;
-    let item = $('<div>').addClass('col mt-3');
+    let item;
+    if (col === true)
+        item = $('<div>').addClass('col mt-3');
+    else
+        item = $('<div>').addClass('swiper-slide');
     let card = $('<div>').addClass('card rounded shadow-sm')
     let indeximg = $('<img>').addClass('card-img-top align-self-center').attr('src', '/media/products/' + index).attr('alt', data['nev'])
     let priceBlock;
@@ -350,11 +389,11 @@ function createItem(data) {
             minimumFractionDigits: 0
         });
         priceBlock = $('<h5>').addClass('mb-1 w-100')
-            .append($('<span>').addClass('w-50 d-inline-block')
+            .append($('<span>').addClass('w-100 d-inline-block fs-6')
                 .append($('<s>').text(price)))
-            .append($('<span>').text(learazas).addClass('w-50 d-inline-block text-end'));
+            .append($('<span>').addClass('w-100 d-inline-block fs-5').append($('<s>')).text(learazas));
     } else
-        priceBlock = $('<h5>').append($('<span>').text(price));
+        priceBlock = $('<h5>').append($('<span>').append($('<s>')).text(price));
     let textBlock = $('<div>').addClass('text-over-image').append(
         $('<div>').addClass('item-text px-2').append(
             $('<p>').addClass('card-title fw-bold mb-0').text(data['nev'])
@@ -411,6 +450,7 @@ function createCategory(data) {
         }
 
     }
+    // console.log(kat);
     $('#categories').append(kat.append(div));
 }
 
@@ -432,7 +472,6 @@ function createSubCategory(data, currdata, last = false) {
         ul = $('<ul>').addClass('btn-toggle-nav mx-auto list-unstyled');
     }
 
-
     if (currdata['alkategoriak'] != null) {
         let alkat = currdata['alkategoriak'].split(',');
         alkat.forEach((element) => {
@@ -444,7 +483,9 @@ function createSubCategory(data, currdata, last = false) {
                     }
                     break;
                 } else if (i == data.length - 1) {
-                    if (currdata['hasznalva'] == 0) {
+                    if (currdata['hasznalva'] == 0 && currdata['subkat'] != null) {
+                        // console.log(currdata);
+                        // console.log(subkat);
                         subkat = null;
                     }
                 }
@@ -457,7 +498,7 @@ function createSubCategory(data, currdata, last = false) {
             .attr('id', currdata['id'] + '-' + currdata['nev']).append(ul)
         );
     }
-
+    // console.log(subkat);
     return subkat;
 }
 

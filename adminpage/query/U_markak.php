@@ -23,7 +23,7 @@ if (!isset($_POST['delete'])) {
         }
         if ($_FILES['img']['name'] != '') {
             $errors = uploadImages($inputNev);
-            $inputFileImg = "'" . $inputNev . '-' . $_FILES['img']['name'] . "'";
+            $inputFileImg = "'" . $inputNev . '-M.' . pathinfo($_FILES['img']['name'], PATHINFO_EXTENSION). "'";
         } else $inputFileImg = 'NULL';
         if (count($errors) != 0) {
             array_push($errors, "Sikertelen Művelet");
@@ -86,7 +86,7 @@ function uploadImages($inputNev)
     $allowTypes = array('jpg', 'png', 'jpeg');
 
     //termek id lekeres eleje
-    $filename = $inputNev . '-M' . $_FILES['img']['name'];
+    $filename = $inputNev . '-M.'. pathinfo($_FILES['img']['name'], PATHINFO_EXTENSION);
     $target_dir = '../../media/main/' . $filename;
 
     $fileType = pathinfo($target_dir, PATHINFO_EXTENSION);

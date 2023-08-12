@@ -30,7 +30,7 @@ if (isset($_POST['upload']) || isset($_POST['edit'])) {
     $inputAr = mysqli_real_escape_string($conn, $_POST['ar']);
     if($inputAr == "") $inputAr = 0;
     $inputLearaz = mysqli_real_escape_string($conn, $_POST['learazas']);
-    if ($inputLearaz == "") $inputLearaz = 'NULL';
+    if ($inputLearaz == "" || $inputLearaz == 0) $inputLearaz = 'NULL';
     $inputMarka = mysqli_real_escape_string($conn, $_POST['marka']);
     if ($inputMarka == "") $inputMarka = 'NULL';
     $inputKategoria = mysqli_real_escape_string($conn, $_POST['kategoria']);
@@ -248,6 +248,7 @@ function uploadImages($conn, $inputId)
         foreach ($file_ary as $key => $val) {
             $filename = $inputId . '_' . basename($file_ary[$key]);
             $target_dir = '../../media/products/' . $filename;
+            $filename = mysqli_real_escape_string($conn,$filename);
 
             $fileType = pathinfo($target_dir, PATHINFO_EXTENSION);
             $upload = true;
@@ -271,6 +272,7 @@ function uploadImages($conn, $inputId)
                     mysqli_query($conn, $sql);
                     $count++;
                 } else {
+                    unlink($target_dir);
                     array_push($errors, 'Sikertelen kép feltöltés(' . $filename . ')');
                 }
             }

@@ -20,11 +20,14 @@ include_once "parts/navbar.php";
 ?>
 <!-- sidebar -->
 <div class="row me-0">
-    <nav id="sidebar" class="col-xxl-2 col-xl-3 col-lg-3 d-md-block pe-0 offcanvas-lg offcanvas-start bg-sidebar2 "
+    <nav id="sidebar" class="col-xxl-2 col-xl-3 col-lg-3 d-md-block pe-0  offcanvas-lg offcanvas-start bg-sidebar2 "
          tabindex="-1">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Szűrők</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas-start" aria-label="Close"></button>
+        </div>
         <div class="offcanvas-body d-block pt-1">
             <ul class="list-unstyled ps-0 w-100">
-
                 <li class="mb-1 p-2">
                     <label class="fw-bold ms-2">Rendezés</label>
                     <select id="sort" class="form-select form-select-sm ">
@@ -34,6 +37,9 @@ include_once "parts/navbar.php";
                         <option value="pdown">ár szerint csökkenő</option>
                     </select>
                 </li>
+                <div id="discount">
+
+                </div>
                 <div id="markak">
 
                 </div>
@@ -48,7 +54,7 @@ include_once "parts/navbar.php";
     <!-- termekek -->
     <main class="col-xxl-10 col-xl-9 col-lg-9 ms-sm-auto pb-md-4 px-3">
         <div id="pageContent"
-             class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 mb-3 me-0">
+             class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 mb-3 me-0 gx-4">
             <?php
             }
             ?>

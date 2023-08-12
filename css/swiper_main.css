@@ -38,6 +38,17 @@
     width: 20%;
 }
 
+@media (max-width: 992px) {
+    .swiper-slide:nth-child(n) {
+        width: 30%;
+    }
+}
+@media (max-width: 768px) {
+    .swiper-slide:nth-child(n) {
+        width: 40%;
+    }
+}
+
 .mSwiper {
     height: 150px !important;
 }

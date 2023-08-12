@@ -16,17 +16,26 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     } else {
         $sort = 'ORDER BY nev ASC';
     }
+
     if (!empty($_GET['brand'])) {
         $brand = $_GET['brand'];
         $brand = " AND marka IN ('" . str_replace('|', "','", $brand) . "')";
     } else {
         $brand = '';
     }
+
     if (!empty($_GET['keyword']) && $keresett == "kereses") {
         $keresett = $_GET['keyword'];
         $kereses = true;
-
     }
+
+    if (!empty($_GET['discount']) && $_GET['discount'] == 'true'){
+        $discount = "AND learazas is not null";
+    }
+    else{
+        $discount = "";
+    }
+
     if (!empty($_GET['pageNumber'])) $pageNumber = $_GET['pageNumber'];
     else $pageNumber = 0;
     if (!empty($_GET['limit'])) $limit = $_GET['limit'];
@@ -44,7 +53,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     }
     if ($kereses) {
         // Ha a keresés mezőből keresnek itemket.
-        $termekek = $db->Select("SELECT id,nev,ar,indeximg,learazas FROM bolt WHERE nev like '%$keresett%' $brand $sort LIMIT $offset , $limit;");
+        $termekek = $db->Select("SELECT id,nev,ar,indeximg,learazas FROM bolt WHERE nev like '%$keresett%' $brand $discount $sort  LIMIT $offset , $limit;");
     } else {
         // Megnézi hogy az adott kategóriában milyen alkategóriák vannak
         $katcheck = $db->Select("SELECT alkategoriak_nev as kats FROM kat_view WHERE nev like '$keresett'");
@@ -53,7 +62,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
             $keresett = '%%';
         if ($katcheck == null || $katcheck[0]['kats'] == null || $keresett == '%%') {
             // Ha nincs kategoria akkor lekeri az osszes itemet
-            $termekek = $db->Select("SELECT id,nev,ar,indeximg,learazas FROM bolt WHERE knev like '$keresett' $brand $sort LIMIT $offset , $limit;");
+            $termekek = $db->Select("SELECT id,nev,ar,indeximg,learazas FROM bolt WHERE knev like '$keresett' $brand $discount $sort  LIMIT $offset , $limit;");
         } else {
             //megkeresi a kategoriakban levo kategoriakat es azokat keri le
             $kats = '';
@@ -62,7 +71,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
                 $kats .= $kat->subkats($k, $db);
             }
             $kats = str_replace(',', '\',\'', $kats);
-            $termekek = $db->Select("SELECT id,nev,ar,indeximg,learazas FROM bolt WHERE knev in ('$kats') $brand $sort LIMIT $offset , $limit;");
+            $termekek = $db->Select("SELECT id,nev,ar,indeximg,learazas FROM bolt WHERE knev in ('$kats') $brand $discount $sort LIMIT $offset , $limit;");
         }
     }
     $arr = array();

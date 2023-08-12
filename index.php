@@ -10,34 +10,6 @@ require_once 'parts/head.php'; ?>
 
 <body>
 <?php
-// include 'parts/navbar2.php'
-?>
-<nav class="bg-information py-1">
-    <div class="container pb-1">
-        <div class="row pt-2">
-            <div class="col-12">
-                <a class="nav-link2" href="#">
-                    <span class="d-none d-md-inline-block "><i
-                                class="fa-solid fa-envelope"></i> scootercityshop@gmail.com</span>
-                </a>
-                <span class="mx-md-2 d-inline-block"></span>
-                <a class="nav-link2" href="#">
-                    <span class="d-none d-md-inline-block"><i class="fa-solid fa-phone"></i> +36-70/650-8555</span>
-                </a>
-                <span class="mx-md-2 d-inline-block"></span>
-                <a class="nav-link2" href="#">
-                    <span class="d-none d-md-inline-block"><i class="fa-solid fa-location-dot"></i> H-7681 Hetvehely, Rákóczi út 13/a</span>
-                </a>
-                <div class="float-end ">
-                    <a class="nav-link2" href="https://www.facebook.com/scootercitymotorosbolt/">
-                        <span class="d-none d-lg-inline-block"><i class="fa-brands fa-facebook"></i> Facebook</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</nav>
-<?php
 include 'parts/navbar.php'
 ?>
 
@@ -50,13 +22,11 @@ include 'parts/navbar.php'
         </div>
     </section>
     <section class="container-md">
-        <div class="m-3">
+        <div class="m-3 discover-title">
             <a class="fs-4 mb-3 discover-link ps-1" href="bolt/learazott">Leárazott termékeink</a>
         </div>
         <div class="swiper dSwiper pb-5">
-            <div class="swiper-wrapper" id="discounts">
-
-            </div>
+            <div class="swiper-wrapper" id="discounts"></div>
             <div class="swiper-button-next ds-next"></div>
             <div class="swiper-button-prev ds-prev"></div>
         </div>
@@ -65,13 +35,12 @@ include 'parts/navbar.php'
     <!--Kategoriak-->
     <section class="divider-between py-5">
         <div class="container">
-            <div class="row row-cols-sm-2 py-5">
+            <div class="row row-cols-2 py-5">
                 <?php
                 $kategoriak = $db->Select('SELECT nev,img FROM kat_view where img is not null');
-                for ($i = 0; $i < 3; $i++) {
-                    foreach ($kategoriak as $kat) {
-                        echo '
-                <div class="col-lg-4 col-md-4 col-3 card-margin">
+                foreach ($kategoriak as $kat) {
+                    echo '
+                <div class="col col-lg-4 col-md-4 card-margin">
                     <a href="/bolt/' . $kat['nev'] . '">
                         <div class="h-100 main-container">
                             <img src="/media/main/' . $kat['img'] . '" alt="">
@@ -85,7 +54,6 @@ include 'parts/navbar.php'
                         </div>
                     </a>
                 </div>';
-                    }
                 }
                 ?>
             </div>
@@ -100,10 +68,8 @@ include 'parts/navbar.php'
             <div class="swiper-wrapper">
                 <?php
                 $markak = $db->Select('SELECT nev,img FROM marka');
-                for ($i = 0; $i < 4; $i++) {
-                    foreach ($markak as $marka) {
-                        echo '<div class="swiper-slide"><a href="/bolt?brand=' . $marka["nev"] . '"><img src="media/main/' . $marka['img'] . '"></a></div>';
-                    }
+                foreach ($markak as $marka) {
+                    echo '<div class="swiper-slide"><a href="/bolt?brand=' . $marka["nev"] . '"><img src="media/main/' . $marka['img'] . '"></a></div>';
                 }
                 ?>
             </div>
@@ -113,8 +79,8 @@ include 'parts/navbar.php'
     </section>
 
     <section class="container-md mb-5">
-        <div class="m-3">
-            <a class="fs-4 mb-3" href="bolt/new">Legújabb termékeink</a>
+        <div class="m-3 discover-title">
+            <a class="fs-4 discover-link mb-3" href="bolt/new">Legújabb termékeink</a>
         </div>
         <div class="swiper nSwiper ">
             <div class="swiper-wrapper" id="newest">

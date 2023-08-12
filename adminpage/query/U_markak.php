@@ -88,6 +88,7 @@ function uploadImages($inputNev)
     //termek id lekeres eleje
     $filename = $inputNev . '-M.'. pathinfo($_FILES['img']['name'], PATHINFO_EXTENSION);
     $target_dir = '../../media/main/' . $filename;
+    $filename = mysqli_real_escape_string($conn,$filename);
 
     $fileType = pathinfo($target_dir, PATHINFO_EXTENSION);
     $upload = true;

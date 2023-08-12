@@ -25,12 +25,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['HTTP_X_REQUESTED_WI
                 if ($item['image'] != null) {
                     $image = $item['image'];
                 }
-                $html .= "<li class='list-group-item'><a class='row' href='/bolt/termek/" . $item['id'] . "/" . $item['nev'] . "'>
-            <div class='col-3'><img class='image-search' src='/media/products/" . $image . "'></div><div class='col-7'>" . $item['nev'] .
-                    "</div><div class='col-2'>" . $item['ar'] . "</div></a></li>";
+                $html .= "<li class='list-group-item mb-2'>
+                            <a class='row g-0' href='/bolt/termek/" . $item['id'] . "/" . $item['nev'] . "'>
+                             <div class='col-3'>
+                                <img src='/media/products/" . $image . "'>
+                             </div>
+                             <div class='col-9'>
+                                <div class='w-100'>" . $item['nev'] . "</div>
+                                <div class='w-100'>" . $item['ar'] . "</div>
+                             </div>
+                            </a>
+                           </li>";
             }
         }else {
-            $html .= '<li class="list-group-item">Nincs találat!</li>';
+            $html .= '<li class="list-group-item d-flex justify-content-center align-items-center h-auto">
+                        <p>Nincs találat!</p>
+                      </li>';
         }
 
         echo $html;

@@ -2,8 +2,15 @@
 define('ACCESS_ALLOWED', true);
 require_once 'query/conn.php';
 $url = explode("/", $_SERVER['REQUEST_URI']);
+if (empty($url[3])){
+    header('location: /bolt');
+}
+
 $db = new dataBase();
 $termek = $db->Select("SELECT * FROM bolt WHERE id = '$url[3]';");
+if (empty($termek)){
+    header('location: /bolt');
+}
 $termek = $termek[0];
 $mennyisegek = $db->Select("SELECT * FROM menny_pivot_2 WHERE termek_id = '$url[3]';");
 if ($mennyisegek != null) $mennyisegek = $mennyisegek[0];
@@ -32,12 +39,11 @@ require_once "parts/navbar.php";
     <div class="row row-cols-1 row-cols-sm-1 row-cols-lg-2 gx-4 gy-2 py-5 me-0 ">
         <div class="col">
             <div class="card p-2">
-                <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
-                     class="swiper swiper-main">
+                <div class="swiper swiper-main">
                     <div class="swiper-wrapper">
                         <?php
                         foreach ($kepek as $key => $val) {
-                            echo '<div class="swiper-slide"><img class="img-fluid" src="/media/products/' . $val . '"></div>';
+                            echo '<div class="swiper-slide"><div class="swiper-zoom-container"><img class="img-fluid" src="/media/products/' . $val . '"></div></div>';
                         }
                         ?>
                     </div>
@@ -102,8 +108,23 @@ require_once "parts/navbar.php";
                 </button>
             </div>
         </div>
+
     </div>
+
 </main>
+<section class="container-md mb-5">
+    <div class="m-3 discover-title">
+        <a class="fs-4 discover-link mb-3" href="bolt/new">Legújabb termékeink</a>
+    </div>
+    <div class="swiper nSwiper ">
+        <div class="swiper-wrapper" id="newest">
+
+        </div>
+        <div class="swiper-button-next ns-next"></div>
+        <div class="swiper-button-prev ns-prev"></div>
+    </div>
+
+</section>
 <?php
 require_once "parts/footer.php";
 ?>

@@ -2,6 +2,7 @@ const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
 let nav = true;
+let reloadDiscount = true;
 const loading = {
     active: false
 };
@@ -12,11 +13,12 @@ let urlJSON = {
     keyword: getKeyword(),
     sort: getSort(),
     brand: getBrand(),
+    discount: getDiscount(),
     pageNumber: 0,
     reloadbrand: true,
 };
 
-const state = {content: '', brandContent: '', sort: '', urlJSON: urlJSON, newpage: true};
+const state = {content: '', brandContent: '',discountContent:'', sort: '', urlJSON: urlJSON, newpage: true};
 
 const mswiper = new Swiper(".mSwiper", {
     slidesPerView: 'auto',
@@ -47,6 +49,7 @@ const swiper2 = new Swiper(".swiper-thumb", {
     watchSlidesProgress: true,
 });
 const swiper = new Swiper(".swiper-main", {
+    zoom: true,
     spaceBetween: 10,
     navigation: {
         nextEl: ".swiper-button-next",
@@ -58,6 +61,7 @@ const swiper = new Swiper(".swiper-main", {
 });
 
 $(document).ready(function () {
+    console.log(urlJSON);
     $("#search").keyup(function (e) {
         var search_query = $(this).val();
 
@@ -98,9 +102,12 @@ $(document).ready(function () {
         if (!decodeURI(window.location.pathname).includes('/bolt/termek/')) {
             state.newpage = false;
             loadItems();
+            loadCategories();
+            loadDiscountFilter();
+            checkSidebarValues();
+        } else {
+            loadNewest()
         }
-        loadCategories();
-        checkSidebarValues();
     } else {
         loadDiscount();
         loadNewest();
@@ -117,17 +124,20 @@ function loadDiscount() {
         },
         dataType: "html",
         success: function (data) {
-            if (data.trim()){
+            if (data.trim() == "") {
+                $('#discounts').parent().parent().remove();
+            } else if (data.trim()) {
                 data = JSON.parse(data)
                 // console.log(data);
                 $(data).each(function () {
-                    $('#discounts').append(createItem($(this)[0],false));
+                    $('#discounts').append(createItem($(this)[0], false));
                 });
             }
         }
     })
 }
-function loadNewest(){
+
+function loadNewest() {
     $.ajax({
         type: "GET",
         url: "/query/indexload.php",
@@ -137,11 +147,11 @@ function loadNewest(){
         },
         dataType: "html",
         success: function (data) {
-            if (data.trim()){
+            if (data.trim()) {
                 data = JSON.parse(data)
                 // console.log(data);
                 $(data).each(function () {
-                    $('#newest').append(createItem($(this)[0],false));
+                    $('#newest').append(createItem($(this)[0], false));
                 });
             }
         }
@@ -155,6 +165,7 @@ window.addEventListener('popstate', (event) => {
             // console.log(event);
             $("#pageContent").html(event.state.content);
             $("#markak").html(event.state.brandContent);
+            $('#discount').html(event.state.discountContent);
             urlJSON = event.state.urlJSON;
             $('#sort').val(urlJSON.sort);
         } catch (ex) {
@@ -186,6 +197,7 @@ $(document).on("click", "a.link", function (e) {
         urlJSON.sort = '';
         urlJSON.keyword = '';
         urlJSON.brand = '';
+        urlJSON.discount = '';
         urlJSON.pageNumber = 0;
         loadItems();
     }
@@ -203,17 +215,33 @@ $(document).on("change", '.marka', function (e) {
     urlJSON.brand = brand;
     urlJSON.reloadbrand = false;
     urlJSON.pageNumber = 0;
+    reloadDiscount = false;
     state.newpage = false;
     loadItems();
 });
 // Rendezés mező
 $('#sort').change(function (e) {
+
     e.preventDefault();
     if (!decodeURI(window.location.pathname).includes("/termek/")) {
         let sort = '';
         if ($(this).val() != '')
             sort = $(this).val();
         urlJSON.sort = sort;
+        urlJSON.reloadbrand = false;
+        urlJSON.pageNumber = 0;
+        state.newpage = false;
+        loadItems();
+    }
+})
+
+$(document).on("change", '#dcBox', function (e) {
+    console.log('asd');
+    e.preventDefault();
+    if (!decodeURI(window.location.pathname).includes("/termek/")) {
+        if ($(this).prop("checked")) urlJSON.discount = true;
+        else urlJSON.discount = false;
+        reloadDiscount = false;
         urlJSON.reloadbrand = false;
         urlJSON.pageNumber = 0;
         state.newpage = false;
@@ -239,6 +267,7 @@ function loadItems() {
                 sort: urlJSON.sort,
                 brand: urlJSON.brand,
                 pageNumber: urlJSON.pageNumber,
+                discount: urlJSON.discount,
                 limit: limit,
             },
             dataType: "html",
@@ -263,6 +292,11 @@ function loadItems() {
                         });
                         state.url = url;
                         state.content = $('#pageContent').html();
+                        if (reloadDiscount) loadDiscountFilter();
+                        else{
+                            reloadDiscount = true;
+                            state.discountContent = $('#discount').html();
+                        }
                         if (urlJSON.reloadbrand) reloadMarkak(urlJSON.pageurl, urlJSON.keyword);
                         else {
                             urlJSON.reloadbrand = true;
@@ -297,19 +331,47 @@ function reloadMarkak(page, keyword) {
         success: function (data2) {
             $('#markak').html(data2);
             state.brandContent = data2;
+            state.discountContent = $('#discount').html();
             state.urlJSON = urlJSON;
             if (state.newpage === false) {
                 history.replaceState(state, '', state.url);
                 state.newpage = true;
             } else
                 history.pushState(state, "", state.url);
-
         },
         error: function () {
             $('#markak').html('');
             state.brandContent = '';
         }
     });
+}
+
+function loadDiscountFilter() {
+    urlJSON.discount = false;
+    let page = urlJSON.pageurl.split('/');
+    $.ajax({
+        type: "GET",
+        url: "/query/discountLoad.php",
+        data: {
+            kat: page[2],
+            keyword: urlJSON.keyword,
+        },
+        dataType: "html",
+        success: function (data3) {
+            if (data3 != '' && data3 > 0) {
+                let div = $('<li>').addClass('form-check sidebar-item').append(
+                    $('<label>').addClass('w-100').text("Learazott (" + data3.toString() + ")"),
+                    $('<input>').addClass('form-check-input').attr('type', 'checkbox').attr('id', 'dcBox')
+                )
+                $('#discount').html(div);
+            }else{
+                $('#discount').html('');
+            }
+        },
+        error: function (data3) {
+            console.log(data3);
+        }
+    })
 }
 
 function checkSidebarValues() {
@@ -345,11 +407,19 @@ function getBrand() {
     return search;
 }
 
+function getDiscount() {
+    let dc = new URL(location.href).searchParams.get('discount');
+    let search = '';
+    if (dc != null) search += dc;
+    return search;
+}
+
 function makeURL() {
     let url = '';
     url = addToURL(url, 'keyword=', urlJSON.keyword);
     url = addToURL(url, 'sort=', urlJSON.sort);
     url = addToURL(url, 'brand=', urlJSON.brand);
+    url = addToURL(url, 'discount=', urlJSON.discount);
     if (url != '') url = '?' + url;
     url = urlJSON.pageurl + url;
     return url;

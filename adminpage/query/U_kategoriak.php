@@ -71,7 +71,7 @@ if (isset($_POST['upload'])) {
     $_SESSION['success'] = 'Sikeres Szerkesztés';
     back();
 } else if (isset($_POST['delete'])) {
-    $id  = $_POST['id'];
+    $id  = mysqli_real_escape_string($conn,$_POST['id']);
     $sqlDelSelect = "SELECT k.*, 
 	(SELECT COUNT(t.nev) FROM termekek t WHERE k.id = t.kategoria) as hasznalva,
 	(SELECT GROUP_CONCAT(id) FROM kategoriak k2 WHERE k2.subkat = k.id) AS alkategoriak

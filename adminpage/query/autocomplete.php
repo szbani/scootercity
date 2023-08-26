@@ -2,12 +2,12 @@
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest'){
     define('ACCESS_ALLOWED', true);
     include_once 'conn.php';
-    $searchTerm = $_GET['term'];
+    $searchTerm = mysqli_real_escape_string($conn,['term']);
     if ($_GET['auto'] == 'nev') {
         $query = $conn->query("SELECT DISTINCT tul_nev FROM termek_tul WHERE tul_nev LIKE '%" . $searchTerm . "%' ORDER BY tul_nev ASC;");
     }
     if($_GET['auto'] == 'ertek'){
-        $nev = $_GET['nev'];
+        $nev = mysqli_real_escape_string($conn,$_GET['nev']);
         $query = $conn->query("SELECT DISTINCT tul_nev FROM termek_tul WHERE tul_nev = '$nev' 
     AND tul_ertek LIKE '%" . $searchTerm . "%' ORDER BY tul_nev ASC;");
     }

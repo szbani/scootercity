@@ -67,7 +67,7 @@ include 'parts/navbar.php'
         <div class="swiper mSwiper ">
             <div class="swiper-wrapper">
                 <?php
-                $markak = $db->Select('SELECT nev,img FROM marka');
+                $markak = $db->Select('SELECT nev,img FROM marka WHERE img is not null');
                 foreach ($markak as $marka) {
                     echo '<div class="swiper-slide"><a href="/bolt?brand=' . $marka["nev"] . '"><img src="media/main/' . $marka['img'] . '"></a></div>';
                 }

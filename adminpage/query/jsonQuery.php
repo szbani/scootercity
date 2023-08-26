@@ -48,7 +48,8 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
                         $data += ['delete' => '<i class="fa fa-trash"/>'];
                     } else $data += ['delete' => ""];
                     array_push($array, array_merge($row, $data));
-                } else {
+                }
+                else {
                     array_push($array, $row);
                 }
             }

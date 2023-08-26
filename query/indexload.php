@@ -4,7 +4,13 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     $where = '';
     if (isset($_GET['where'])){
         $where = $_GET['where'];
+        if ($where == 'newest'){
+            $where = 'indeximg is not null ORDER BY id';
+        }else if ($where == 'discount'){
+            $where = 'indeximg is not null and learazas is not null';
+        }
     }
+
     $limit = 10;
     if (isset($_GET['limit'])){
         $limit = $_GET['limit'];

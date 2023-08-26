@@ -61,7 +61,7 @@ if (isset($_POST['upload'])) {
     $_SESSION['success'] = 'Sikeres Szerkesztés';
     back();
 } else if (isset($_POST['delete'])) {
-    $id  = $_POST['id'];
+    $id  = mysqli_real_escape_string($conn,$_POST['id']);
     $sqlDelSelect = "SELECT m.*, 
 	(SELECT COUNT(t.nev) FROM termekek t WHERE m.id = t.marka) as hasznalva
     FROM `marka` m WHERE m.id = '$id' GROUP BY nev;";

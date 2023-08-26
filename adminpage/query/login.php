@@ -22,11 +22,11 @@ if (defined('ACCESS_ALLOWED') || $_SERVER['REQUEST_METHOD'] == 'POST') {
 
 function login_page($conn)
 {
-    $user = $_POST['email'];
-    $pass = $_POST['pw'];
+    $user = mysqli_real_escape_string($conn,$_POST['email']);
+    $pass = mysqli_real_escape_string($conn,$_POST['pw']);
     if (login($user, $pass, $conn)) {
-        $_SESSION['user'] = $_POST['email'];
-        $_SESSION['pass'] = $_POST['pw'];
+        $_SESSION['user'] = $user;
+        $_SESSION['pass'] = $pass;
         logAction($conn, "Bejelentkezett", $user);
         $_SESSION['success'] = 'Sikeres Bejelentkezés';
         header('Location: ' . '../index.php');

@@ -49,7 +49,6 @@ const swiper2 = new Swiper(".swiper-thumb", {
     watchSlidesProgress: true,
 });
 const swiper = new Swiper(".swiper-main", {
-    zoom: true,
     spaceBetween: 10,
     navigation: {
         nextEl: ".swiper-button-next",
@@ -59,6 +58,11 @@ const swiper = new Swiper(".swiper-main", {
         swiper: swiper2,
     },
 });
+
+function imagezoom(src){
+    $('#zoomModal').modal('show');
+    $('#zoomIMG').attr('src',src);
+}
 
 $(document).ready(function () {
     console.log(urlJSON);
@@ -106,7 +110,11 @@ $(document).ready(function () {
             loadDiscountFilter();
             checkSidebarValues();
         } else {
-            loadNewest()
+            $('.zoom').on('click', function (e){
+                console.log($(this).attr('src'));
+                imagezoom($(this).attr('src'));
+            });
+            loadNewest();
         }
     } else {
         loadDiscount();
@@ -119,13 +127,13 @@ function loadDiscount() {
         type: "GET",
         url: "/query/indexload.php",
         data: {
-            where: 'indeximg is not null and learazas is not null',
+            where: 'discount',
             limit: 11,
         },
         dataType: "html",
         success: function (data) {
             if (data.trim() == "") {
-                $('#discounts').parent().parent().remove();
+                $('#discounts').parent().parent().replaceWith($('<div>').attr('style','min-height:250px'));
             } else if (data.trim()) {
                 data = JSON.parse(data)
                 // console.log(data);
@@ -142,7 +150,7 @@ function loadNewest() {
         type: "GET",
         url: "/query/indexload.php",
         data: {
-            where: 'indeximg is not null ORDER BY id',
+            where: 'newest',
             limit: 11,
         },
         dataType: "html",
@@ -179,12 +187,15 @@ window.addEventListener('popstate', (event) => {
 function startLoading() {
     // $('.ajax-link').addClass('disabled');
     //loading screen?
+    $('.loading').attr('hidden',false);
     loading.active = true;
 }
 
 function stopLoading() {
     // $('.ajax-link').removeClass('disabled');
     //loading screen?
+
+    $('.loading').attr('hidden',true);
     loading.active = false;
 }
 
@@ -360,7 +371,7 @@ function loadDiscountFilter() {
         success: function (data3) {
             if (data3 != '' && data3 > 0) {
                 let div = $('<li>').addClass('form-check sidebar-item').append(
-                    $('<label>').addClass('w-100').text("Learazott (" + data3.toString() + ")"),
+                    $('<label>').addClass('w-100').text("Learazott (" + data3.toString() + ")").attr('for','dcBox'),
                     $('<input>').addClass('form-check-input').attr('type', 'checkbox').attr('id', 'dcBox')
                 )
                 $('#discount').html(div);

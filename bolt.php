@@ -20,11 +20,11 @@ include_once "parts/navbar.php";
 ?>
 <!-- sidebar -->
 <div class="row me-0">
-    <nav id="sidebar" class="col-xxl-2 col-xl-3 col-lg-3 d-md-block pe-0  offcanvas-lg offcanvas-start bg-sidebar2 "
+    <nav id="sidebar" class="offcanvas-lg col-xxl-2 col-xl-3 col-lg-3 d-md-block pe-0 offcanvas-start bg-sidebar2 "
          tabindex="-1">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Szűrők</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas-start" aria-label="Close"></button>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body d-block pt-1">
             <ul class="list-unstyled ps-0 w-100">
@@ -63,6 +63,11 @@ include_once "parts/navbar.php";
             <button class="space-btn w-50 justify-content-center" id="loadButton" onclick="loadMoreItem()">Több termék</button>
         </div>
     </main>
+
+    <section>
+        <div class="loading" hidden></div>
+    </section>
+
     <?php
     if (empty($_GET['page'])) {
     ?>

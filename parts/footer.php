@@ -13,7 +13,7 @@ if (!defined('ACCESS_ALLOWED'))exit();
       <div class="col">
         <h5>Elérhetőségek</h5>
         <ul class="list-unstyled text-small">
-          <li><a class="link-secondary" href="#">H-7681 Hetvehely,<br> Rékóczi út 13/a</a></li>
+          <li><a class="link-secondary" href="#">H-7681 Hetvehely,<br> Rákóczi út 13/a</a></li>
           <li><a class="link-secondary" href="#">Tel.: +36-70/650-8555</a></li>
           <li><a class="link-secondary" href="#">E-mail: scootercityshop@gmail.com</a></li>
         </ul>

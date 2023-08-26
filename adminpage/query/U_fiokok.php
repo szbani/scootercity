@@ -86,7 +86,7 @@ if (isset($_POST['upload'])) {
     $_SESSION['errors'] = json_encode($errors);
     back();
 } else if (isset($_POST['delete'])) {
-    $id = $_POST["id"];
+    $id = mysqli_real_escape_string($conn, $_POST["id"]);
     $sql = "SELECT email FROM admin_users where id = '$id'";
     $result = mysqli_query($conn, $sql);
     $email = mysqli_fetch_assoc($result);

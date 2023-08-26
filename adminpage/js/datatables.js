@@ -433,6 +433,12 @@ function editTermekek() {
 }
 
 function createTableLogs() {
+
+    let geo = false;
+    if ("geolocation" in navigator){
+        geo = true;
+    }
+
     table = $("#table").DataTable({
         order: [[0, "desc"]],
         fixedHeader: {
@@ -454,7 +460,27 @@ function createTableLogs() {
             {data: "user"},
             {data: "action"},
             {data: "time"},
-            {data: "ip"},
+            {
+                //php feltoltse az egeszet egy json be amibol ki tudom majd szedni a dolgokat
+                data: "ip",
+                // render: function (data,type,row){
+                //     if (geo){
+                //         let asd = navigator.geolocation;
+                //         navigator.geolocation.watchPosition(
+                //             function (position){
+                //                 const  lat = position.coords.latitude;
+                //                 const lng = position.coords.longitude;
+                //                 console.log()
+                //             },
+                //             function (error){
+                //                 return data;
+                //             }
+                //         );
+                //     }
+                //     else return data;
+                // }
+
+            },
         ],
     });
     setInterval(function () {

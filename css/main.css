@@ -22,7 +22,6 @@
 }
 
 
-
 .bg-white {
     background-color: var(--white) !important;
     /* z-index: 100; */
@@ -77,11 +76,12 @@ body {
 }
 
 
-.information{
+.information {
     background-color: var(--light-dark);
 }
+
 @media (max-width: 768px) {
-    .information{
+    .information {
         display: none;
     }
 }
@@ -119,7 +119,7 @@ nav .nav-link2:hover {
     transition: border-radius 0.4s;
 }
 
-.search-field:focus-within{
+.search-field:focus-within {
     outline: none;
     border-radius: 23px;
     border-bottom-left-radius: 0px;
@@ -134,7 +134,7 @@ nav .nav-link2:hover {
     background-color: var(--white);
 }
 
-#search{
+#search {
     border-bottom-left-radius: inherit;
     border-top-left-radius: inherit;
 }
@@ -151,7 +151,7 @@ nav .nav-link2:hover {
     position: relative;
 }
 
-.lista ul{
+.lista ul {
     background-color: var(--white);
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
@@ -175,7 +175,8 @@ nav .nav-link2:hover {
     overflow: hidden;
     height: 100%;
 }
-.lista a:nth-child(n){
+
+.lista a:nth-child(n) {
     height: inherit;
 }
 
@@ -186,7 +187,8 @@ nav .nav-link2:hover {
     object-position: center;
     margin-left: 8px;
 }
-.lista li{
+
+.lista li {
     position: relative;
     height: 100px;
 }
@@ -306,13 +308,17 @@ main {
     min-height: 69.5vh;
 }
 
+.bg-card {
+    background-color: #fff;
+}
+
 .card {
     height: 100% !important;
-    background-color: var(--lightblue2);
 }
 
 .card-termek {
     min-height: auto;
+    border-radius: 0 !important;
 }
 
 .card_click {
@@ -560,11 +566,11 @@ main {
 product discover
 */
 
-.discover-title{
+.discover-title {
     /*display: none;*/
 }
 
-.discover-title:after{
+.discover-title:after {
     content: "";
     display: block;
     height: 1px;
@@ -598,11 +604,12 @@ product discover
     /*animation: porog 2s infinite linear;*/
 }
 
-.divider-between{
+.divider-between {
     position: relative;
     width: 100%;
 }
-.divider-between:before{
+
+.divider-between:before {
     top: 0;
     content: "";
     position: absolute;
@@ -625,6 +632,20 @@ product discover
 /*}*/
 
 
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(98, 100, 101, 0.4);
+}
+
+.zoomClose{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
 
 
 

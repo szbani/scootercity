@@ -85,11 +85,11 @@ if (isset($_POST['upload'])) {
     $_SESSION['success'] = 'Sikeres Módosítás';
     back();
 } else if (isset($_POST['delete'])) {
-    $id = $_POST['id'];
-    $nev = $_POST['nev'];
+    $id = mysqli_real_escape_string($conn,$_POST['id']);
+    $nev = mysqli_real_escape_string($conn,$_POST['nev']);
 
-    $sqlDelteImages = "SELECT file_name FROM kepek WHERE termek_id = '$id';";
-    $result = mysqli_query($conn, $sqlDelteImages);
+    $sqlDeleteImages = "SELECT file_name FROM kepek WHERE termek_id = '$id';";
+    $result = mysqli_query($conn, $sqlDeleteImages);
     if (mysqli_num_rows($result)) {
         while ($row = mysqli_fetch_assoc($result)) {
             unlink("../../media/products/" . $row['file_name']);

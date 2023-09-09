@@ -146,9 +146,9 @@ require_once "parts/navbar.php";
     <div class="modal fade" id="zoomModal">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
-                <div class="modal-body">
+                <div class="modal-body text-center">
                     <button type="button" class="btn-close zoomClose m-3 fs-4" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <img class="img-fluid" id="zoomIMG">
+                    <img class="img-fluid w-75" id="zoomIMG">
                 </div>
             </div>
         </div>

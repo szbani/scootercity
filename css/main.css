@@ -634,6 +634,7 @@ product discover
 
 .loading {
     position: fixed;
+    z-index: 1090;
     top: 0;
     left: 0;
     width: 100%;
@@ -646,7 +647,6 @@ product discover
     top: 0;
     right: 0;
 }
-
 
 
 

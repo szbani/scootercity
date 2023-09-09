@@ -9,6 +9,7 @@ if (!defined('ACCESS_ALLOWED'))exit();
     <meta name="author" content="ScooterCity">
     <meta name="keywords" content="ScooterCity">
     <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+    <meta name="referrer" content="origin">
     <meta title="ScooterCity - Motoros bolt">
 
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
